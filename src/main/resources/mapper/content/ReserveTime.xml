@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.binheSportSystem.model.content.Reserve">
+	
+	<select id="findReserveTime" parameterType="Map" resultType="Reserve">
+		select fieldtype,fieldno,starttime,endtime,state FROM cg_bill_field  WHERE starttime &gt;= #{starttime} AND endtime &lt;=#{endtime} AND fieldtype=#{venue};
+	</select>
+
+
+</mapper>
