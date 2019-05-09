@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.binheSportSystem.model.content.Holiday">
+	
+	<select id="findHoliday" parameterType="String" resultType="Holiday">
+		select * from cg_set_holiday where holiday=#{holiday};
+	</select>
+
+
+</mapper>
