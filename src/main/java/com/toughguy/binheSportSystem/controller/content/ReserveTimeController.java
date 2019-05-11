@@ -44,6 +44,8 @@ public class ReserveTimeController {
 		List<Holiday> list = holidayService.findHoliday(date);		//根据前端参数调用dao查询数据库是否为节假日
 		List<Reserve> reservelist=null;
 		
+		stime.setVenue(venue);
+		stime.setDate(date);
 		
 		//周末或节假日的参数设置
 		Map<String,Object> weekendMap = new HashMap<String,Object>();
