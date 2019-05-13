@@ -43,7 +43,7 @@ public class WXBindServiceImpl extends GenericServiceImpl<WXBind,Integer> implem
 			return info;
 		}else{
 			List<WXBind> listInfo = ((IWXBindDao)dao).findUsedBindInfo(map);					//通过卡号 取卡时间 手机号等查询
-			if(listInfo.size()>0 && listInfo.get(0).getUsermobile().length() < 7 ) {			//判断手机号是否是旧卡号的位数	
+			if(listInfo.size()>0 && listInfo.get(0).getUsermobile().length() < 7 && listInfo.get(0).getUsermobile().substring(0, 1).equals("0")) {			//判断手机号是否是旧卡号的位数	
 				listInfo.get(0).setState("200");
 				return listInfo;
 			}else {
