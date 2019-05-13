@@ -44,7 +44,7 @@ public class ReserveTimeController {
 		List<Holiday> list = holidayService.findHoliday(date);		//根据前端参数调用dao查询数据库是否为节假日
 		List<Reserve> reservelist=null;
 		
-		stime.setVenue(venue);
+		stime.setVenue(venue);		//设置返回参数场馆名和时间(能查询出来下面判断查询结果和传递参数是否一致   否则返回前端传递的数据)
 		stime.setDate(date);
 		
 		//周末或节假日的参数设置
@@ -90,10 +90,11 @@ public class ReserveTimeController {
 
 			for (Reserve item : reservelist) {
 				if(item.getFieldtype().equals(venue) && item.getStarttime().substring(0, 10).equals(date)) {
-					stime.setVenue(venue);
+					stime.setVenue(venue);				//能查询出结果判断传递的参数与数据库是否一致 
 					stime.setDate(date);
 				}else {
-					return stime;
+					Scheduled sc = new Scheduled();
+					return sc;
 				}
 				if (i == item.getFieldno() && item.getState() != 1) { 	//判断是否为X号馆  不能是计时
 					String start = item.getStarttime();
