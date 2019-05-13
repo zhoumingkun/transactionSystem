@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.binheSportSystem.model.content.ConsumeBill">
+
+		<select id="findRecharge" parameterType="Map" resultType="ConsumeBill">
+			SELECT cardno,mobile,addmoney,billtime 
+			FROM cg_bill_moneycard WHERE 
+			cardno=#{cardno} AND mobile=#{mobile} AND 
+			billtime &gt;= #{starttime} AND 
+			billtime &lt;= #{endtime} AND 
+			paystate="1"
+		</select>
+		
+		
+		<select id="findconsume" parameterType="Map" resultType="ConsumeBill">
+			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
+			FROM cg_record_consume WHERE cardno=#{cardno} AND 
+			billtime &gt;= #{starttime} AND 
+			intime &lt;= #{endtime} AND 
+			checkstate="1"
+		</select>
+</mapper>
