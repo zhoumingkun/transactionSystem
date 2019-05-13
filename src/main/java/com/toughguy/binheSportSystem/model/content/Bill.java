@@ -1,7 +1,7 @@
 package com.toughguy.binheSportSystem.model.content;
 
 /**
- * 查询用户消费账单   请求参数和返回参数实体类
+ * 查询用户消费账单实体类
  * @author qi
  *
  */
@@ -59,6 +59,7 @@ public class Bill {
 	public String toString() {
 		return "Bill [type=" + type + ", cardId=" + cardId + ", money=" + money + ", time=" + time + "]";
 	}
+	
 
 	
 	
