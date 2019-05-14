@@ -84,7 +84,7 @@ public class ReserveTimeController {
 					state = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 				}
 			}else {
-				reservelist=reserveTimeService.findReserveTime(map);		//是节假日查询时间段为08:00:00 到 22:00:00
+				reservelist=reserveTimeService.findReserveTime(weekendMap);		//是节假日查询时间段为08:00:00 到 22:00:00
 				state = new int[] { -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 			}
 
