@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.toughguy.binheSportSystem.model.content.InMsgEntity;
 import com.toughguy.binheSportSystem.model.content.WXBind;
 import com.toughguy.binheSportSystem.service.content.prototype.IWXBindService;
 
