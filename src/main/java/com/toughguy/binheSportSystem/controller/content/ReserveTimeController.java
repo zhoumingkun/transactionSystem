@@ -82,9 +82,7 @@ public class ReserveTimeController {
 				cal.setTime(datetime);
 				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY  || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 					reservelist=reserveTimeService.findReserveTime(weekendMap);		//是周六或周日查询时间段为08:00:00 到 22:00:00
-					state = new int[] { 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };			//1为未预定   2 为已经预定   -1为不可预定
-					
-					//-1   可预订       1  已预定    2 不可预定
+					state = new int[] { 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };			//-1   可预订       1  已预定    2 不可预定
 				}else {
 					reservelist=reserveTimeService.findReserveTime(map);	//非节假日非周末就按时间段为06:00:00  到 22:00:00查询
 					state = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
