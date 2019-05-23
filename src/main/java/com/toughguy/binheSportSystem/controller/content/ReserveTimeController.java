@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.toughguy.binheSportSystem.model.content.FieldList;
 import com.toughguy.binheSportSystem.model.content.Holiday;
@@ -37,8 +39,10 @@ public class ReserveTimeController {
 	 * @param venue
 	 * @throws ParseException 
 	 */
-	@RequestMapping("/findReserve")
-	public Scheduled findReserveTime( String date,  String venue) throws ParseException{
+	@RequestMapping("/getReservationList")
+	public Scheduled findReserveTime(@RequestParam(name = "date") Date time, @RequestParam(name = "current") String venue) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String date = format.format(time);
 		Scheduled stime =new Scheduled();
 		List<FieldList> fieldList = new ArrayList<>();
 		List<Holiday> list = holidayService.findHoliday(date);		//根据前端参数调用dao查询数据库是否为节假日
@@ -78,14 +82,14 @@ public class ReserveTimeController {
 				cal.setTime(datetime);
 				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY  || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 					reservelist=reserveTimeService.findReserveTime(weekendMap);		//是周六或周日查询时间段为08:00:00 到 22:00:00
-					state = new int[] { -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };			//1为未预定   2 为已经预定   -1为不可预定
+					state = new int[] { 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };			//-1   可预订       1  已预定    2 不可预定
 				}else {
 					reservelist=reserveTimeService.findReserveTime(map);	//非节假日非周末就按时间段为06:00:00  到 22:00:00查询
-					state = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+					state = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 				}
 			}else {
 				reservelist=reserveTimeService.findReserveTime(weekendMap);		//是节假日查询时间段为08:00:00 到 22:00:00
-				state = new int[] { -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+				state = new int[] { 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 			}
 
 			for (Reserve item : reservelist) {
@@ -108,7 +112,7 @@ public class ReserveTimeController {
 						n = 15;
 					}
 					for (int q = o; q <= n; q++) {
-						state[q] = 2;
+						state[q] = 1;
 					}
 				}
 			}
@@ -117,8 +121,8 @@ public class ReserveTimeController {
 					String start = item.getStarttime(); 		//取到计时的开始时间
 					int o = (Integer.parseInt(start.substring(11, 13))) - 6;  //截取 XX点
 					for (int w = o; w <= 15; w++) {
-						if (state[w] == 1) { // 判断计时开始的时间为未预定
-							state[w] = 2;
+						if (state[w] == -1) { // 判断计时开始的时间为未预定
+							state[w] = 1;
 						} else {
 							break;
 						}
