@@ -12,15 +12,30 @@ import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
  *
  */
 public interface IMemberBillDao extends IGenericDao<ConsumeBill, Integer> {
+	
 	/**
-	 * 查询用户充值记录
+	 * 查询用户全部充值记录
+	 * @return
+	 */
+	 public List<ConsumeBill> findAllRecharge(Map<String,Object> map);			
+	 
+	 
+	 /**
+	  * 查询用户全部消费记录
+	  * @return
+	  */
+	 public List<ConsumeBill> findAllconsume(Map<String,Object> map);
+	 
+	 
+	/**
+	 * 查询用户时间区间内的充值记录
 	 * @return
 	 */
 	 public List<ConsumeBill> findRecharge(Map<String,Object> map);			
 	 
 	 
 	 /**
-	  * 查询用户消费记录
+	  * 查询用户时间区间内的消费记录
 	  * @return
 	  */
 	 public List<ConsumeBill> findconsume(Map<String,Object> map);

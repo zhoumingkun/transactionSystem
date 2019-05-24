@@ -11,6 +11,22 @@ import com.toughguy.binheSportSystem.service.prototype.IGenericService;
  *
  */
 public interface IMemberBillService extends IGenericService<ConsumeBill, Integer> {
+	
+	
+	
+	
+	/**
+	 * 根据卡号 手机号 查询用户全部充值记录
+	 * @return
+	 */
+	public List<ConsumeBill> findAllRecharge(Map<String,Object> map);
+	
+	/**
+	 * 根据卡号 手机号 查询用户全部消费记录
+	 * @return
+	 */
+	public List<ConsumeBill> findAllconsume(Map<String,Object> map);
+	
 	/**
 	 * 根据卡号 手机号 日期查询用户充值记录
 	 * @return

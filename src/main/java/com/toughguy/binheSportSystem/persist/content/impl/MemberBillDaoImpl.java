@@ -16,6 +16,18 @@ import com.toughguy.binheSportSystem.persist.impl.GenericDaoImpl;
  */
 @Repository
 public class MemberBillDaoImpl extends GenericDaoImpl<ConsumeBill, Integer> implements IMemberBillDao {
+	
+	@Override
+	public List<ConsumeBill> findAllRecharge(Map<String,Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".findAllRecharge", map);
+	}
+
+	@Override
+	public List<ConsumeBill> findAllconsume(Map<String,Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".findAllconsume", map);
+	}
 
 	@Override
 	public List<ConsumeBill> findRecharge(Map<String,Object> map) {

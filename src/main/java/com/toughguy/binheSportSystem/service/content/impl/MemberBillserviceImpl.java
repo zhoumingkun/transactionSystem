@@ -16,6 +16,18 @@ import com.toughguy.binheSportSystem.service.impl.GenericServiceImpl;
  */
 @Service
 public class MemberBillserviceImpl extends GenericServiceImpl<ConsumeBill, Integer> implements IMemberBillService {
+	
+	@Override
+	public List<ConsumeBill> findAllRecharge(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return ((IMemberBillDao)dao).findAllRecharge(map);
+	}
+
+	@Override
+	public List<ConsumeBill> findAllconsume(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return ((IMemberBillDao)dao).findAllconsume(map);
+	}
 
 	@Override
 	public List<ConsumeBill> findRecharge(Map<String, Object> map) {
