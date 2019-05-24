@@ -2,21 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.binheSportSystem.model.content.ConsumeBill">
 
-		<select id="findRecharge" parameterType="Map" resultType="ConsumeBill">
+		<!-- 通过卡号,手机号,查询用户全部的充值记录 -->
+		<select id="findAllRecharge" parameterType="Map" resultType="ConsumeBill">
 			SELECT cardno,mobile,addmoney,billtime 
 			FROM cg_bill_moneycard WHERE 
-			cardno=#{cardno} AND mobile=#{mobile} AND 
-			billtime &gt;= #{starttime} AND 
-			billtime &lt;= #{endtime} AND 
+			cardno=#{cardno} AND mobile=#{mobile} AND
 			paystate="1"
 		</select>
 		
+		<!-- 通过卡号,手机号,查询用户全部的消费记录 -->
+		<select id="findAllconsume" parameterType="Map" resultType="ConsumeBill">
+			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
+			FROM cg_record_consume WHERE cardno=#{cardno} AND 
+			checkstate="1"
+		</select>
 		
+		
+		<!-- 通过卡号,手机号,开始时间,结束时间 查询用户时间区间内的充值记录 -->
+		<select id="findRecharge" parameterType="Map" resultType="ConsumeBill">
+			SELECT cardno,mobile,addmoney,billtime 
+			FROM cg_bill_moneycard WHERE cardno=#{cardno} AND 
+			mobile=#{mobile} AND 
+			billtime &gt;= #{starttime} AND  
+			billtime &lt;= #{endtime} 
+			AND paystate="1"
+		</select>
+		
+		<!-- 通过卡号,手机号,开始时间,结束时间 查询用户时间区间内的消费记录 -->
 		<select id="findconsume" parameterType="Map" resultType="ConsumeBill">
 			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
 			FROM cg_record_consume WHERE cardno=#{cardno} AND 
-			billtime &gt;= #{starttime} AND 
-			intime &lt;= #{endtime} AND 
+			intime &gt;= #{starttime} AND 
+			outtime &lt;= #{endtime} AND 
 			checkstate="1"
 		</select>
 </mapper>
