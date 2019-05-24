@@ -27,11 +27,11 @@
 
 
 	<!-- 根据卡号时间查询用户信息 -->
-	<select id="findUsedBindInfo" parameterType="Map" resultType="WXBind">
+	<!-- <select id="findUsedBindInfo" parameterType="Map" resultType="WXBind">
 		SELECT ci.username,cm.cardno,ci.usermobile,cm.cashleft 
 		FROM cg_user_moneycard cm ,cg_user_info ci 
 		WHERE cm.cardno=#{cardno} AND 
 		cm.gettime IS NOT NULL AND 
 		cm.usermobile=ci.usermobile
-	</select>
+	</select> -->
 </mapper>
