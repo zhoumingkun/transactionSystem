@@ -6,7 +6,7 @@ package com.toughguy.binheSportSystem.model.content;
  *
  */
 public class Bill {
-	private String type;		//状态   1为充值   2为消费
+	private int type;		//状态   1为充值   2为消费
 	private String cardId;		//卡号
 	private String money;		//消费金额
 	private String time;		//时间
@@ -15,7 +15,7 @@ public class Bill {
 		super();
 	}
 
-	public Bill(String type, String cardId, String money, String time) {
+	public Bill(int type, String cardId, String money, String time) {
 		super();
 		this.type = type;
 		this.cardId = cardId;
@@ -23,11 +23,11 @@ public class Bill {
 		this.time = time;
 	}
 
-	public String getType() {
+	public int getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
