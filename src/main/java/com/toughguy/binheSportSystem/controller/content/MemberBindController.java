@@ -1,5 +1,6 @@
 package com.toughguy.binheSportSystem.controller.content;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.toughguy.binheSportSystem.model.content.WXBind;
@@ -32,14 +34,24 @@ public class MemberBindController {
 	 * @param
 	 */
 	@RequestMapping("/findinfo")
-	public List<WXBind> findBindInfo(@RequestBody WXBind bind) {
+	public List<WXBind> findBindInfo(@RequestParam(name = "cardnumber") String cardno, @RequestParam(name = "tel") String usermobile) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cardno", bind.getCardno());
-		map.put("usermobile", bind.getUsermobile());
+		map.put("cardno", cardno);
+		map.put("usermobile",usermobile);
 		List<WXBind> list = wxbindservice.findBindInfo(map); 	//返回数据为绑定成功 返回null 为绑定失败
 		return list;
 	}
 	
+	/**
+	 * 会员卡绑定生成随机4位数字验证码
+	 */
+	@RequestMapping("/RandowFourNumber")
+	public Map BindVerificationCode(){
+		Map map = new HashMap<>();
+		int four =(int)((Math.random()*9+1)*1000);
+		map.put("value", four+"");
+		return map;
+	}
 	
 	/**
 	 * 通过存放在session中的openid查询该用户是否绑定过会员卡
