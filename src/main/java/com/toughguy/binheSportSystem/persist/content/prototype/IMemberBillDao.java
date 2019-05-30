@@ -21,10 +21,17 @@ public interface IMemberBillDao extends IGenericDao<ConsumeBill, Integer> {
 	 
 	 
 	 /**
-	  * 查询用户全部消费记录
+	  * 查询用户全部场馆消费记录
 	  * @return
 	  */
 	 public List<ConsumeBill> findAllconsume(Map<String,Object> map);
+	 
+	 
+	 /**
+	  * 查询用户全部商品和游泳记录
+	  * @return
+	  */
+	 public List<ConsumeBill> findAllOtherBill(Map<String,Object> map);
 	 
 	 
 	/**
@@ -39,5 +46,12 @@ public interface IMemberBillDao extends IGenericDao<ConsumeBill, Integer> {
 	  * @return
 	  */
 	 public List<ConsumeBill> findconsume(Map<String,Object> map);
+	 
+	 
+	 /**
+	  * 查询用户时间区间内的商品和游泳记录
+	  * @return
+	  */
+	 public List<ConsumeBill> findOtherBill(Map<String,Object> map);
 
 }

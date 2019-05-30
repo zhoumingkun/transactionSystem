@@ -28,6 +28,12 @@ public class MemberBillserviceImpl extends GenericServiceImpl<ConsumeBill, Integ
 		// TODO Auto-generated method stub
 		return ((IMemberBillDao)dao).findAllconsume(map);
 	}
+	
+	@Override
+	public List<ConsumeBill> findAllOtherBill(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return ((IMemberBillDao)dao).findAllOtherBill(map);
+	}
 
 	@Override
 	public List<ConsumeBill> findRecharge(Map<String, Object> map) {
@@ -41,7 +47,11 @@ public class MemberBillserviceImpl extends GenericServiceImpl<ConsumeBill, Integ
 		return ((IMemberBillDao)dao).findconsume(map);
 	}
 
-	
+	@Override
+	public List<ConsumeBill> findOtherBill(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return ((IMemberBillDao)dao).findOtherBill(map);
+	}
 
 
 }

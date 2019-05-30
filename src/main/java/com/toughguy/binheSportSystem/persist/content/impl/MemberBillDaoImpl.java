@@ -30,6 +30,12 @@ public class MemberBillDaoImpl extends GenericDaoImpl<ConsumeBill, Integer> impl
 	}
 
 	@Override
+	public List<ConsumeBill> findAllOtherBill(Map<String,Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".findAllOtherBill", map);
+	}
+	
+	@Override
 	public List<ConsumeBill> findRecharge(Map<String,Object> map) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList(typeNameSpace + ".findRecharge", map);
@@ -41,5 +47,9 @@ public class MemberBillDaoImpl extends GenericDaoImpl<ConsumeBill, Integer> impl
 		return sqlSessionTemplate.selectList(typeNameSpace + ".findconsume", map);
 	}
 
-	
+	@Override
+	public List<ConsumeBill> findOtherBill(Map<String,Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".findOtherBill", map);
+	}
 }
