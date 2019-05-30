@@ -7,15 +7,27 @@
 			SELECT cardno,mobile,addmoney,billtime 
 			FROM cg_bill_moneycard WHERE 
 			cardno=#{cardno} AND mobile=#{mobile} AND
-			paystate="1"
+			paystate="1";
 		</select>
 		
 		<!-- 通过卡号,手机号,查询用户全部的消费记录 -->
 		<select id="findAllconsume" parameterType="Map" resultType="ConsumeBill">
 			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
 			FROM cg_record_consume WHERE cardno=#{cardno} AND 
-			checkstate="1"
+			(consumetype="羽毛球" or consumetype="篮球" or consumetype="乒乓球" ) AND
+			checkstate="1";
 		</select>
+		
+		<!-- 通过卡号 查询  用户全部商品和游泳记录 -->
+		<select id="findAllOtherBill" parameterType="Map" resultType="ConsumeBill"> 
+			select cardno,consumetype,keyno,billtime,timeminute,paid from 
+			cg_record_consume where 
+			cardno=#{cardno} AND (consumetype="商品" or 
+			consumetype="游泳") AND 
+			checkstate="1";
+		</select>
+		
+		
 		
 		
 		<!-- 通过卡号,手机号,开始时间,结束时间 查询用户时间区间内的充值记录 -->
@@ -25,7 +37,7 @@
 			mobile=#{mobile} AND 
 			billtime &gt;= #{starttime} AND  
 			billtime &lt;= #{endtime} 
-			AND paystate="1"
+			AND paystate="1";
 		</select>
 		
 		<!-- 通过卡号,手机号,开始时间,结束时间 查询用户时间区间内的消费记录 -->
@@ -34,6 +46,18 @@
 			FROM cg_record_consume WHERE cardno=#{cardno} AND 
 			intime &gt;= #{starttime} AND 
 			outtime &lt;= #{endtime} AND 
-			checkstate="1"
+			checkstate="1";
 		</select>
+		
+		<!-- 根据卡号 开始时间  结束时间  查询 该用户  游泳和商品的账单记录 -->
+		<select id="findOtherBill" parameterType="Map" resultType="ConsumeBill">
+			select cardno,consumetype,keyno,billtime,timeminute,paid 
+			from cg_record_consume where 
+			cardno=#{cardno} AND (consumetype="商品" or 
+			consumetype="游泳") AND billtime &gt;=#{starttime} AND 
+			billtime &lt;=#{endtime} AND
+			checkstate="1";
+		</select>
+		
+		
 </mapper>
