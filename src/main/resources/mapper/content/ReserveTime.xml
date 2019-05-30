@@ -6,6 +6,10 @@
 	<select id="findReserveTime" parameterType="Map" resultType="Reserve">
 		select fieldtype,fieldno,starttime,endtime,state FROM cg_bill_field  WHERE starttime &gt;= #{starttime} AND endtime &lt;=#{endtime} AND fieldtype=#{venue};
 	</select>
-
-
+	
+	<!-- 通过场馆名查询该场馆的场地数量 -->
+	<select id="findVenueNumber" parameterType="String" resultType="String">
+		select fieldnum from cg_field_type where fieldtype=#{venue};
+	
+	</select>
 </mapper>
