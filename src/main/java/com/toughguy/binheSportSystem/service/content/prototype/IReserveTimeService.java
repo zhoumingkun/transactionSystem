@@ -22,5 +22,12 @@ public interface IReserveTimeService extends IGenericService<Reserve, Integer> {
 	 * @return
 	 */
 	public List<Reserve> findReserveTime(Map<String,Object> map);
+	
+	/**
+	 * 根据场馆名查询该场馆的场地数量
+	 * @param venue
+	 * @return
+	 */
+	public String findVenueNumber(String venue);
 
 }

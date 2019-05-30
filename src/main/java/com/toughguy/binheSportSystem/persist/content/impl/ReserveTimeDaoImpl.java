@@ -22,4 +22,10 @@ public class ReserveTimeDaoImpl extends GenericDaoImpl<Reserve, Integer>  implem
 		return sqlSessionTemplate.selectList(typeNameSpace + ".findReserveTime", map);
 	}
 
+	@Override
+	public String findVenueNumber(String venue) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".findVenueNumber", venue);
+	}
+
 }
