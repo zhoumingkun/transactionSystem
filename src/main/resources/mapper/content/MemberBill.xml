@@ -14,7 +14,7 @@
 		<select id="findAllconsume" parameterType="Map" resultType="ConsumeBill">
 			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
 			FROM cg_record_consume WHERE cardno=#{cardno} AND 
-			(consumetype="羽毛球" or consumetype="篮球" or consumetype="乒乓球" ) AND
+			(consumetype="羽毛球" or consumetype="篮球" or consumetype="乒乓球" or consumetype="网球") AND
 			checkstate="1";
 		</select>
 		
