@@ -63,14 +63,13 @@ public class ReserveTimeController {
 		map.put("endtime", date+" 22:00:00");
 		map.put("venue", venue);
 		int max = 0;
-		if(venue.equals("篮球")) {
-			max=4;
-		}else if(venue.equals("乒乓球")) {
-			max=8;
-		}else {
-			max=10;
+		String number = reserveTimeService.findVenueNumber(venue);			//根据场馆名查询该馆的场地数量
+		if(number==null || number.equals("") || number.equals("null")) {
+			max=0;
+		}else{
+			max=Integer.parseInt(number);
 		}
-		
+	
 		for (int i = 1; i <= max; i++) { 
 			FieldList field = new FieldList();
 			field.setFieldName(i + "号馆");
