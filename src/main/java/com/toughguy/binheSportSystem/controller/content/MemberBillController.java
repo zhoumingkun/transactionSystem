@@ -61,8 +61,24 @@ public class MemberBillController {
 				Bill b = new Bill();
 				b.setType(2);						//消费
 				b.setCardId(arr.getCardno());		//卡号
-				b.setMoney(arr.getPaid());			//充值金额
-				b.setTime(arr.getIntime().substring(0, 10));		//充值时间  yyyy-MM-dd
+				b.setMoney(arr.getPaid());			//消费金额
+				b.setTime(arr.getIntime().substring(0, 10));		//消费时间  yyyy-MM-dd
+				b.setConsumetype(arr.getConsumetype());				//账单类型
+				list.add(b);
+			}else {
+				return list;
+			}
+		}
+		
+		List<ConsumeBill> allOther = memberBillservice.findAllOtherBill(map);
+		for(ConsumeBill arr:allOther) {
+			if(arr.getCardno().equals(cardno)) {					//判断卡号是否相等
+				Bill b = new Bill();
+				b.setType(2);						//消费
+				b.setCardId(arr.getCardno());		//卡号
+				b.setMoney(arr.getPaid());			//消费金额
+				b.setTime(arr.getBilltime().substring(0, 10));		//消费时间  yyyy-MM-dd
+				b.setConsumetype(arr.getConsumetype());				//账单类型
 				list.add(b);
 			}else {
 				return list;
@@ -81,7 +97,6 @@ public class MemberBillController {
 	 */
 	@RequestMapping("/findbill")
 	public List<Bill> findBill(BillRequest bill) {		//需要传递参数卡号 手机号  起始时间和结束时间
-		System.out.println(bill);
 		Map<String,Object> map = new HashMap<String, Object>();		
 		map.put("cardno",bill.getCardId());
 		map.put("mobile",bill.getMobile());
@@ -104,14 +119,30 @@ public class MemberBillController {
 			}
 		}
 		
-		List<ConsumeBill> consume = memberBillservice.findconsume(map);
+		List<ConsumeBill> consume = memberBillservice.findconsume(map);		//查询场馆的消费记录
 		for(ConsumeBill arr:consume) {
 			if(arr.getCardno().equals(bill.getCardId())) {					//判断卡号是否相等
 				Bill b = new Bill();
 				b.setType(2);						//消费
 				b.setCardId(arr.getCardno());		//卡号
+				b.setMoney(arr.getPaid());			//消费金额
+				b.setTime(arr.getIntime().substring(0, 10));		//消费时间  yyyy-MM-dd
+				b.setConsumetype(arr.getConsumetype());				//消费类型
+				list.add(b);
+			}else {
+				return list;
+			}
+		}
+		
+		List<ConsumeBill> otherBill = memberBillservice.findOtherBill(map);			//根据时间查询  该用户的商品和游泳账单
+		for(ConsumeBill arr:otherBill) {
+			if(arr.getCardno().equals(bill.getCardId())) {					//判断卡号是否相等
+				Bill b = new Bill();
+				b.setType(2);						//消费
+				b.setCardId(arr.getCardno());		//卡号
 				b.setMoney(arr.getPaid());			//充值金额
-				b.setTime(arr.getIntime().substring(0, 10));		//充值时间  yyyy-MM-dd
+				b.setTime(arr.getBilltime());		//充值时间  yyyy-MM-dd
+				b.setConsumetype(arr.getConsumetype());				//消费类型
 				list.add(b);
 			}else {
 				return list;
