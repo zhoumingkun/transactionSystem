@@ -12,19 +12,24 @@
 		
 		<!-- 通过卡号,手机号,查询用户全部的消费记录 -->
 		<select id="findAllconsume" parameterType="Map" resultType="ConsumeBill">
-			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
-			FROM cg_record_consume WHERE cardno=#{cardno} AND 
-			(consumetype="羽毛球" or consumetype="篮球" or consumetype="乒乓球" or consumetype="网球") AND
-			checkstate="1";
+			SELECT cardno,consumetype,keyno,billtime,timeminute,paid 
+			FROM cg_record_consume WHERE cardno=#{cardno} AND
+			<foreach collection="list" item="type" open="consumetype IN(" close=")" separator="," > 
+				#{type}
+			</foreach>
+			AND	checkstate="1";
 		</select>
 		
 		<!-- 通过卡号 查询  用户全部商品和游泳记录 -->
 		<select id="findAllOtherBill" parameterType="Map" resultType="ConsumeBill"> 
 			select cardno,consumetype,keyno,billtime,timeminute,paid from 
 			cg_record_consume where 
-			cardno=#{cardno} AND (consumetype="商品" or 
-			consumetype="游泳") AND 
-			checkstate="1";
+			cardno=#{cardno} AND 
+			(consumetype="商品" or consumetype="游泳" or
+			<foreach collection="other" item="type" open="consumetype IN(" close=")" separator="," > 
+				#{type}
+			</foreach>
+			) AND checkstate="1";
 		</select>
 		
 		
@@ -42,8 +47,11 @@
 		
 		<!-- 通过卡号,手机号,开始时间,结束时间 查询用户时间区间内的消费记录 -->
 		<select id="findconsume" parameterType="Map" resultType="ConsumeBill">
-			SELECT cardno,consumetype,keyno,intime,timeminute,paid 
+			SELECT cardno,consumetype,keyno,billtime,timeminute,paid 
 			FROM cg_record_consume WHERE cardno=#{cardno} AND 
+			<foreach collection="list" item="type" open="consumetype IN(" close=")" separator="," > 
+				#{type}
+			</foreach> AND 
 			intime &gt;= #{starttime} AND 
 			outtime &lt;= #{endtime} AND 
 			checkstate="1";
@@ -54,7 +62,11 @@
 			select cardno,consumetype,keyno,billtime,timeminute,paid 
 			from cg_record_consume where 
 			cardno=#{cardno} AND (consumetype="商品" or 
-			consumetype="游泳") AND billtime &gt;=#{starttime} AND 
+			consumetype="游泳" or 
+			<foreach collection="other" item="type" open="consumetype IN(" close=")" separator="," > 
+				#{type}
+			</foreach>
+			) AND billtime &gt;=#{starttime} AND 
 			billtime &lt;=#{endtime} AND
 			checkstate="1";
 		</select>
