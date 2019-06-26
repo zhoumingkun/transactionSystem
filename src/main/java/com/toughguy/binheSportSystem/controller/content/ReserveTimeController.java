@@ -72,7 +72,7 @@ public class ReserveTimeController {
 	
 		for (int i = 1; i <= max; i++) { 
 			FieldList field = new FieldList();
-			field.setFieldName(i + "号馆");
+			field.setFieldName(i + "号场地");
 			int[] state = null;		//此数组为06:00~22:00已每小时为单位16个时间格中每个时间格的预定情况
 			DateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Date datetime=sf.parse(date);
