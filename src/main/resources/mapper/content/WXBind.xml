@@ -2,36 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.binheSportSystem.model.content.WXBind">
 
-		<!-- 绑定成功添加用户信息与openid到数据库 -->
-		
-	<!-- <insert id="save" parameterType="WXBind"> 
-		insert into cg_wx values(#{openid},#{username},#{cardno},#{usermobile},#{cashleft})
-	</insert> -->
+
+	<!-- 用户卡号手机号与openid绑定 -->	
+	<insert id="insertBind" parameterType="WXBind"> 
+		insert into cg_wx values(#{openid},#{cardno},#{usermobile})
+	</insert>
 	
 	
-	<!-- 根据openid查询用户是否绑定过信息 -->
+	<!-- 解绑(用户信息与openid解除绑定)-->	
+	<insert id="deleteTime" parameterType="WXBind">
+		delete from cg_wx where openid=#{openid}
+	</insert>
 	
-	<!-- <select id="findOne" parameterType="String" resultType="WXBind">
+	
+	<!-- 通过openid查询该用户是否绑定过会员卡 -->
+	<select id="selectOpenid" parameterType="WXBind" resultType="WXBind">
 		select * from cg_wx where openid=#{openid} 
-	</select> -->
-	
+	</select>
+
+		<!-- 通过卡号手机号openid查询该用户是否绑定过会员卡 -->
+	<select id="selecUserBind" parameterType="WXBind" resultType="WXBind">
+		select * from cg_wx where cardno=#{cardno} AND usermobile=#{usermobile} AND openid=#{openid}
+	</select>
 	
 	<!-- 根据卡号手机号查询用户信息 -->
 	<select id="findBindInfo" parameterType="Map" resultType="WXBind">		
 		SELECT ci.username,cm.cardno,cm.usermobile,cm.cashleft 
 		FROM cg_user_moneycard cm ,cg_user_info ci  
-		WHERE cm.cardno=#{cardno} AND 
-		cm.usermobile=#{usermobile} AND 
-		ci.usermobile=#{usermobile}
+		WHERE cm.cardno=#{cardnumber} AND 
+		cm.usermobile=#{tel} AND 
+		ci.usermobile=#{tel} AND
+		cm.cardstate="1";
 	</select>
 
-
-	<!-- 根据卡号时间查询用户信息 -->
-	<!-- <select id="findUsedBindInfo" parameterType="Map" resultType="WXBind">
-		SELECT ci.username,cm.cardno,ci.usermobile,cm.cashleft 
-		FROM cg_user_moneycard cm ,cg_user_info ci 
-		WHERE cm.cardno=#{cardno} AND 
-		cm.gettime IS NOT NULL AND 
-		cm.usermobile=ci.usermobile
-	</select> -->
 </mapper>

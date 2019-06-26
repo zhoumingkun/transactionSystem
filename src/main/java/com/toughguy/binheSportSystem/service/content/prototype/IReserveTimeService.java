@@ -30,4 +30,13 @@ public interface IReserveTimeService extends IGenericService<Reserve, Integer> {
 	 */
 	public String findVenueNumber(String venue);
 
+	/**
+	 * 查询全部的场馆名称
+	 */
+	public List<String> findAllType();
+	
+	/**
+	 * 查询全部的其他消费的类型名称
+	 */
+	public List<String> findAllOtherType();
 }

@@ -34,4 +34,22 @@ public class ReserveTimeServiceImpl extends GenericServiceImpl<Reserve, Integer>
 		return ((IReserveTimeDao)dao).findVenueNumber(venue);
 	}
 
+	
+	/**
+	 * 查询全部的场馆名称
+	 */
+	@Override
+	public List<String> findAllType() {
+		// TODO Auto-generated method stub
+		return ((IReserveTimeDao)dao).findAllType();
+	}
+	
+	
+	/**
+	 * 查询全部的其他消费的类型名称
+	 */
+	public List<String> findAllOtherType(){
+		// TODO Auto-generated method stub
+		return ((IReserveTimeDao)dao).findAllOtherType();
+	}
 }
