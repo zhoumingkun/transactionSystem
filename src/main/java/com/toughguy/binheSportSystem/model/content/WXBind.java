@@ -17,7 +17,9 @@ public class WXBind {
 		super();
 	}
 
-	public WXBind(String openid, String username, String cardno, String usermobile, String cashleft, String state) {
+	
+	public WXBind(String openid, String username, String cardno, String usermobile, String cashleft,
+			String state) {
 		super();
 		this.openid = openid;
 		this.username = username;
@@ -26,6 +28,7 @@ public class WXBind {
 		this.cashleft = cashleft;
 		this.state = state;
 	}
+
 
 	public String getOpenid() {
 		return openid;
@@ -75,11 +78,11 @@ public class WXBind {
 		this.state = state;
 	}
 
+
 	@Override
 	public String toString() {
 		return "WXBind [openid=" + openid + ", username=" + username + ", cardno=" + cardno + ", usermobile="
 				+ usermobile + ", cashleft=" + cashleft + ", state=" + state + "]";
 	}
-
 	
 }
