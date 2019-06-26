@@ -16,22 +16,35 @@ import com.toughguy.binheSportSystem.persist.impl.GenericDaoImpl;
 public class WXBindDaoImpl extends GenericDaoImpl<WXBind, Integer> implements IWXBindDao{
 
 	
-/*	@Override
-	public WXBind findOne(String openid) {
+	@Override
+	public void insertBind(WXBind bind) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne(typeNameSpace + ".findOne", openid);
-	}*/
-
+		sqlSessionTemplate.insert(typeNameSpace + ".insertBind", bind);
+	}
 
 	@Override
-	public List<WXBind> findBindInfo(Map<String, Object> map) {
+	public void deleteTime(WXBind wx) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete(typeNameSpace + ".deleteTime",wx);
+	}
+
+	
+	@Override
+	public WXBind selectOpenid(WXBind wx) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".selectOpenid",wx);
+	}
+	
+	
+	@Override
+	public List<WXBind> findBindInfo(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList(typeNameSpace + ".findBindInfo", map);
 	}
 
 	@Override
-	public List<WXBind> findUsedBindInfo(Map<String, Object> map) {
+	public WXBind selecUserBind(WXBind bind) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList(typeNameSpace + ".findUsedBindInfo", map);
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".selecUserBind", bind);
 	}
 }

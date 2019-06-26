@@ -14,29 +14,38 @@ import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
 public interface IWXBindDao extends IGenericDao<WXBind, Integer>{
 	
 	/**
-	 * 绑定成功数据库添加openid和用户信息绑定
+	 * 数据库添加用户卡号手机号openid
 	 */
-	//public void save(WXBind wx);
+	public void insertBind(WXBind bind);
+	
 	
 	/**
-	 * 查询用户是否绑定过卡
-	 * @param openid
-	 * @return
+	 * 解除绑定(删除数据库卡号与openid的信息)
 	 */
-	//public WXBind findOne(String openid);
+	public void deleteTime(WXBind wx);
+	
 	
 	/**
-	 * 通过卡号手机号查询是否存在用户
+	 * 查询用户是否绑定过
+	 */
+	public WXBind selectOpenid(WXBind wx);
+	
+	
+	/**
+	 * 通过卡号手机号查询用户信息
 	 * @param map
 	 * @return
 	 */
-	public List<WXBind> findBindInfo(Map<String,Object> map);
+	public List<WXBind> findBindInfo(Map<String,String> map);
 	
-	
+
 	/**
-	 * 通过卡号 取卡时间 手机号等查询是否存在该用户
+	 * 通过卡号手机号openid查询用户信息
 	 * @param map
 	 * @return
 	 */
-	public List<WXBind> findUsedBindInfo(Map<String,Object> map);
+	public WXBind selecUserBind(WXBind bind);
+	
+	
+	
 }
