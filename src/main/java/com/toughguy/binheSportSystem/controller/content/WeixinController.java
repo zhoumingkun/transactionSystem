@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,16 +33,16 @@ public class WeixinController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getOpenId", method = RequestMethod.GET)//此处填自己要用到的项目名。
+	@RequestMapping(value = "/getOpenId")//此处填自己要用到的项目名。
 	//@RequiresPermissions("/wechat:getOpenId")
-	 public static String getOpenId(@RequestParam(value="code",required=false)String code) {//接收用户传过来的code，required=false表明如果这个参数没有传过来也可以。
+	 public static Map<String,String> getOpenId(@RequestParam(value="code",required=true)String code) {//接收用户传过来的code，required=false表明如果这个参数没有传过来也可以。
 		  //接收从客户端获取的code
 		  //向微信后台发起请求获取openid的url
-		  String WX_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
+		  String WX_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 	           //这三个参数就是之后要填上自己的值。
 	      //替换appid，appsecret，和code  wx018a842493263886  wx97731b21bc479485   8d6fe3ed2c65892c383c6b236537ca0f   d7e22e49c4861348410f33de06aec667
-	      String requestUrl = WX_URL.replace("APPID", "wx6e8430d23cc3e686").//填写自己的appid
-	        replace("SECRET", "19cbf4d8b20783cabdfa0724a53e163c").replace("JSCODE", code).//填写自己的appsecret，
+	      String requestUrl = WX_URL.replace("APPID", "wx34e5351380c0d745").//填写自己的appid
+	        replace("SECRET", "63b7358c6e8a56e23e76a150cf6dc3db").replace("CODE", code).//填写自己的appsecret，
 	        replace("authorization_code", "authorization_code");
 		   
 	       //调用get方法发起get请求，并把返回值赋值给returnvalue
@@ -60,8 +61,9 @@ public class WeixinController {
 	       //把openid和sessionkey分别赋值给openid和sessionkey
 	       String openid=(String) convertvalue.get("openid");
 	       String sessionkey=(String) convertvalue.get("session_key");//定义两个变量存储得到的openid和session_key.
-	 
-	       return openid;//返回openid
+	       Map<String,String> map = new HashMap<>();
+	       map.put("openid", openid);
+	       return map;//返回openid
 	 }
 	        //发起get请求的方法。
 		public static String GET(String url) {
@@ -101,7 +103,7 @@ public class WeixinController {
 			return result;
 		}
 		 /**
-		 * 微信小程序获取微信公众号文章
+		 * 微信服务号获取微信公众号文章
 		 * @return
 		 */
 		@ResponseBody	
@@ -110,9 +112,9 @@ public class WeixinController {
 		public  String getToken() throws Exception {
 		String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	    //appid  wx4ee5d28863963b5d  wxff1f016244a86d99
-	    String APPID = "wx4ee5d28863963b5d";
+	    String APPID = "wx34e5351380c0d745";
 	    //appsecret  1f3447adc6ab9128479f6447fb7546c4  978de69900cf3c35570622fefb5ea06a
-	    String APPSECRET = "1f3447adc6ab9128479f6447fb7546c4";        
+	    String APPSECRET = "63b7358c6e8a56e23e76a150cf6dc3db";        
 	    String request_url = TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
 	    HttpsUtil httpsUtil = new HttpsUtil();
 	    System.out.println(request_url);
