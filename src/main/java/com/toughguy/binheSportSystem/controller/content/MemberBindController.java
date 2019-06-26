@@ -28,19 +28,6 @@ public class MemberBindController {
 	
 	@Autowired
 	private IWXBindService wxbindservice;
-
-	/**
-	 * 会员信息的绑定 返回List<WXBind> 对象非空绑定成功  对象为null绑定失败
-	 * @param
-	 */
-	@RequestMapping("/findinfo")
-	public List<WXBind> findBindInfo(@RequestParam(name = "cardnumber") String cardno, @RequestParam(name = "tel") String usermobile) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cardno", cardno);
-		map.put("usermobile",usermobile);
-		List<WXBind> list = wxbindservice.findBindInfo(map); 	//返回数据为绑定成功 返回null 为绑定失败
-		return list;
-	}
 	
 	/**
 	 * 会员卡绑定生成随机4位数字验证码
@@ -54,15 +41,56 @@ public class MemberBindController {
 	}
 	
 	/**
-	 * 通过存放在session中的openid查询该用户是否绑定过会员卡
+	 * 将会员的卡号手机号与openid进行绑定(绑定前查询这个人是否真实存在)
 	 * @param request
 	 * @return
 	 */
-//	@RequestMapping("/findOne")
-//	public WXBind findOne(HttpServletRequest request) {
-//		HttpSession session = request.getSession(true);
-//		String openid = (String)session.getAttribute("openid");		//从session中获取openid
-//		WXBind wxBind = wxbindservice.findOne(openid);			//查询数据库该openid是否绑定过
-//		return wxBind;
-//	}
+	@RequestMapping("/insertTime")
+	public Map<String,String> insertBind(@RequestParam(name = "cardnumber") String cardno, @RequestParam(name = "tel") String usermobile, @RequestParam(name = "openid") String openid) {
+		WXBind wxBind =new WXBind();
+		wxBind.setCardno(cardno);
+		wxBind.setOpenid(openid);
+		wxBind.setUsermobile(usermobile);
+		System.out.println(openid+"  "+cardno+"  "+usermobile);
+		return wxbindservice.insertBind(wxBind);			
+	}
+	
+	/**
+	 * 解除绑定(删除数据库的绑定信息)
+	 * @param openid
+	 * @return
+	 */
+	@RequestMapping("/deleteTime")
+	public Map<String,String> deleteTime(@RequestParam(name = "openid") String openid) {
+		WXBind bind =new WXBind();
+		bind.setOpenid(openid);
+		return wxbindservice.deleteTime(bind);			
+	}
+	
+	/**
+	 * 根据openid查询数据库是否绑定过,绑定过返回余额
+	 * @param openid
+	 * @return
+	 */
+	@RequestMapping("/selectOpenid")
+	public Map<String,String> selectOpenid(@RequestParam(name = "openid") String openid) {
+		WXBind wxBind =new WXBind();
+		wxBind.setOpenid(openid);
+		return wxbindservice.selectOpenid(wxBind);			
+	}
+	
+	/**
+	 * 通过卡号手机号openid查询数据库是否绑定过,绑过返回余额
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/selecUserBind")
+	public Map<String,String> selecUserBind(@RequestParam(name = "cardnumber") String cardno, @RequestParam(name = "tel") String usermobile,@RequestParam(name = "openid") String openid){
+		WXBind wxBind =new WXBind();
+		wxBind.setCardno(cardno);
+		wxBind.setOpenid(openid);
+		wxBind.setUsermobile(usermobile);
+		return wxbindservice.selecUserBind(wxBind);		
+	}
+	
 }
