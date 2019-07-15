@@ -51,7 +51,6 @@ public class MemberBindController {
 		wxBind.setCardno(cardno);
 		wxBind.setOpenid(openid);
 		wxBind.setUsermobile(usermobile);
-		System.out.println(openid+"  "+cardno+"  "+usermobile);
 		return wxbindservice.insertBind(wxBind);			
 	}
 	

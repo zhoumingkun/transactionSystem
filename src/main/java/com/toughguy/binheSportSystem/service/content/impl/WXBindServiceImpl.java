@@ -65,7 +65,6 @@ public class WXBindServiceImpl extends GenericServiceImpl<WXBind,Integer> implem
 	public Map<String,String> selectOpenid(WXBind wx) {
 		Map<String,String> map = new HashMap<>();
 		WXBind bind=((IWXBindDao)dao).selectOpenid(wx);
-		System.out.println(bind);
 		if(bind!=null) {
 			if((bind.getCardno()!="" && bind.getUsermobile()!="") ||(bind.getCardno()!=null && bind.getUsermobile()!=null)) {
 				map.put("state", "200");
