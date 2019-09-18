@@ -1,13 +1,14 @@
-package com.toughguy.binheSportSystem.ueditor.upload;
+package com.toughguy.transactionSystem.ueditor.upload;
 
-import com.toughguy.binheSportSystem.ueditor.PathFormat;
-import com.toughguy.binheSportSystem.ueditor.define.AppInfo;
-import com.toughguy.binheSportSystem.ueditor.define.BaseState;
-import com.toughguy.binheSportSystem.ueditor.define.FileType;
-import com.toughguy.binheSportSystem.ueditor.define.State;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.toughguy.transactionSystem.ueditor.PathFormat;
+import com.toughguy.transactionSystem.ueditor.define.AppInfo;
+import com.toughguy.transactionSystem.ueditor.define.BaseState;
+import com.toughguy.transactionSystem.ueditor.define.FileType;
+import com.toughguy.transactionSystem.ueditor.define.State;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.util;
+package com.toughguy.transactionSystem.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

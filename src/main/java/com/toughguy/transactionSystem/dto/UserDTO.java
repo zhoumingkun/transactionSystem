@@ -1,6 +1,6 @@
-package com.toughguy.binheSportSystem.dto;
+package com.toughguy.transactionSystem.dto;
 
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * 用户基本信息（前台）

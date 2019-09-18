@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.service.authority.impl;
+package com.toughguy.transactionSystem.service.authority.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,11 +8,11 @@ import java.util.Map;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Role;
-import com.toughguy.binheSportSystem.persist.authority.prototype.IRoleDao;
-import com.toughguy.binheSportSystem.service.authority.prototype.IRoleService;
-import com.toughguy.binheSportSystem.service.impl.GenericServiceImpl;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Role;
+import com.toughguy.transactionSystem.persist.authority.prototype.IRoleDao;
+import com.toughguy.transactionSystem.service.authority.prototype.IRoleService;
+import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

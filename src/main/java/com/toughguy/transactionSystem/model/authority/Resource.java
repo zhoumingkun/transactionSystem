@@ -1,12 +1,12 @@
-package com.toughguy.binheSportSystem.model.authority;
+package com.toughguy.transactionSystem.model.authority;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.toughguy.binheSportSystem.dto.OperationDTO;
-import com.toughguy.binheSportSystem.model.AbstractModel;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.dto.OperationDTO;
+import com.toughguy.transactionSystem.model.AbstractModel;
+import com.toughguy.transactionSystem.util.JsonUtil;
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

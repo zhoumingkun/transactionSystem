@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.config;
+package com.toughguy.transactionSystem.config;
 
 import java.util.Properties;
 

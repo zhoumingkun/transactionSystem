@@ -1,9 +1,10 @@
-package com.toughguy.binheSportSystem.service.content.prototype;
+package com.toughguy.transactionSystem.service.content.prototype;
 
 import java.util.List;
 import java.util.Map;
-import com.toughguy.binheSportSystem.model.content.WXBind;
-import com.toughguy.binheSportSystem.service.prototype.IGenericService;
+
+import com.toughguy.transactionSystem.model.content.WXBind;
+import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 /**
  * 用户信息查询绑定service接口类

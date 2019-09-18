@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.config;
+package com.toughguy.transactionSystem.config;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,8 +19,9 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.toughguy.binheSportSystem.security.CustomRealmAuthenticator;
-import com.toughguy.binheSportSystem.security.SystemRealm;
+
+import com.toughguy.transactionSystem.security.CustomRealmAuthenticator;
+import com.toughguy.transactionSystem.security.SystemRealm;
 
 @Configuration
 public class ShiroConfig {

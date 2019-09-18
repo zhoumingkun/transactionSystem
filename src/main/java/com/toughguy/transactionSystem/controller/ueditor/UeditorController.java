@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.controller.ueditor;
+package com.toughguy.transactionSystem.controller.ueditor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.toughguy.binheSportSystem.ueditor.ActionEnter;
+import com.toughguy.transactionSystem.ueditor.ActionEnter;
 
 
 @Controller

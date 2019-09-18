@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.exception;
+package com.toughguy.transactionSystem.exception;
 
 
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

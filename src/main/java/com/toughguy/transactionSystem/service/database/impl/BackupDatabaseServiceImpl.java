@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.service.database.impl;
+package com.toughguy.transactionSystem.service.database.impl;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,10 +17,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Repository;
 
-import com.toughguy.binheSportSystem.model.database.BackupDatabaseInfo;
-import com.toughguy.binheSportSystem.model.database.ProgressSingleton;
-import com.toughguy.binheSportSystem.service.database.prototype.IBackupDatabaseService;
-import com.toughguy.binheSportSystem.service.impl.GenericServiceImpl;
+import com.toughguy.transactionSystem.model.database.BackupDatabaseInfo;
+import com.toughguy.transactionSystem.model.database.ProgressSingleton;
+import com.toughguy.transactionSystem.service.database.prototype.IBackupDatabaseService;
+import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
 
 @Repository
 public class BackupDatabaseServiceImpl extends GenericServiceImpl<BackupDatabaseInfo, Integer>implements IBackupDatabaseService {

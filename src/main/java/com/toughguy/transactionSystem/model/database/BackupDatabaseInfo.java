@@ -1,9 +1,9 @@
-package com.toughguy.binheSportSystem.model.database;
+package com.toughguy.transactionSystem.model.database;
 
 import java.text.NumberFormat;
 
-import com.toughguy.binheSportSystem.model.AbstractModel;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.model.AbstractModel;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

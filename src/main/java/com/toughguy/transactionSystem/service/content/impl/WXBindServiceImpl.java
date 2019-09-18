@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.service.content.impl;
+package com.toughguy.transactionSystem.service.content.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.util.StringUtil;
 import org.springframework.stereotype.Service;
-import com.toughguy.binheSportSystem.model.content.WXBind;
-import com.toughguy.binheSportSystem.persist.content.prototype.IWXBindDao;
-import com.toughguy.binheSportSystem.service.content.prototype.IWXBindService;
-import com.toughguy.binheSportSystem.service.impl.GenericServiceImpl;
+
+import com.toughguy.transactionSystem.model.content.WXBind;
+import com.toughguy.transactionSystem.persist.content.prototype.IWXBindDao;
+import com.toughguy.transactionSystem.service.content.prototype.IWXBindService;
+import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
 
 
 /**

@@ -1,11 +1,11 @@
-package com.toughguy.binheSportSystem.service.database.prototype;
+package com.toughguy.transactionSystem.service.database.prototype;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
-import com.toughguy.binheSportSystem.model.database.BackupDatabaseInfo;
-import com.toughguy.binheSportSystem.service.prototype.IGenericService;
+import com.toughguy.transactionSystem.model.database.BackupDatabaseInfo;
+import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 /**
  * 数据库备份服务接口类

@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.service.impl;
+package com.toughguy.transactionSystem.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.toughguy.binheSportSystem.pagination.PagerModel;
-import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
-import com.toughguy.binheSportSystem.service.prototype.IGenericService;
+import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
+import com.toughguy.transactionSystem.service.prototype.IGenericService;
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

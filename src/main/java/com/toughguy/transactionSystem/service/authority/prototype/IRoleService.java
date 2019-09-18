@@ -1,10 +1,10 @@
-package com.toughguy.binheSportSystem.service.authority.prototype;
+package com.toughguy.transactionSystem.service.authority.prototype;
 
 import java.util.List;
 
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Role;
-import com.toughguy.binheSportSystem.service.prototype.IGenericService;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Role;
+import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

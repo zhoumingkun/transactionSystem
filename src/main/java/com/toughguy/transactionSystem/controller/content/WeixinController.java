@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.controller.content;
+package com.toughguy.transactionSystem.controller.content;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.toughguy.binheSportSystem.model.content.Material;
-import com.toughguy.binheSportSystem.model.content.MaterialParam;
-import com.toughguy.binheSportSystem.util.CommonUtil;
-import com.toughguy.binheSportSystem.util.HttpsUtil;
+
+import com.toughguy.transactionSystem.model.content.Material;
+import com.toughguy.transactionSystem.model.content.MaterialParam;
+import com.toughguy.transactionSystem.util.CommonUtil;
+import com.toughguy.transactionSystem.util.HttpsUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

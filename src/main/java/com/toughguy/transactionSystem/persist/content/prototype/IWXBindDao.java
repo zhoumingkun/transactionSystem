@@ -1,9 +1,10 @@
-package com.toughguy.binheSportSystem.persist.content.prototype;
+package com.toughguy.transactionSystem.persist.content.prototype;
 
 import java.util.List;
 import java.util.Map;
-import com.toughguy.binheSportSystem.model.content.WXBind;
-import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
+
+import com.toughguy.transactionSystem.model.content.WXBind;
+import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 
 
 /**

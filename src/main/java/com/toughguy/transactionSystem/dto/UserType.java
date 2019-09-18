@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.dto;
+package com.toughguy.transactionSystem.dto;
 
 public class UserType {
 

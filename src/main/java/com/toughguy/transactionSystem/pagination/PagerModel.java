@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.pagination;
+package com.toughguy.transactionSystem.pagination;
 
 import java.util.List;
 

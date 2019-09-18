@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.persist.impl;
+package com.toughguy.transactionSystem.persist.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -10,9 +10,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.toughguy.binheSportSystem.pagination.PagerModel;
-import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
-import com.toughguy.binheSportSystem.system.SystemContext;
+import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
+import com.toughguy.transactionSystem.system.SystemContext;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

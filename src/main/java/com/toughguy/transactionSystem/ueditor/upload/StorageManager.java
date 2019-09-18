@@ -1,8 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor.upload;
-
-import com.toughguy.binheSportSystem.ueditor.define.AppInfo;
-import com.toughguy.binheSportSystem.ueditor.define.BaseState;
-import com.toughguy.binheSportSystem.ueditor.define.State;
+package com.toughguy.transactionSystem.ueditor.upload;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,6 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+
+import com.toughguy.transactionSystem.ueditor.define.AppInfo;
+import com.toughguy.transactionSystem.ueditor.define.BaseState;
+import com.toughguy.transactionSystem.ueditor.define.State;
 
 public class StorageManager {
     public static final int BUFFER_SIZE = 8192;

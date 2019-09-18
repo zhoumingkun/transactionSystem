@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor;
+package com.toughguy.transactionSystem.ueditor;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

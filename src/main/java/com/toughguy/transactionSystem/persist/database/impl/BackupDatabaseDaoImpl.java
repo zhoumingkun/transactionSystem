@@ -1,10 +1,10 @@
-package com.toughguy.binheSportSystem.persist.database.impl;
+package com.toughguy.transactionSystem.persist.database.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.toughguy.binheSportSystem.model.database.BackupDatabaseInfo;
-import com.toughguy.binheSportSystem.persist.database.prototype.IBackupDatabaseDao;
-import com.toughguy.binheSportSystem.persist.impl.GenericDaoImpl;
+import com.toughguy.transactionSystem.model.database.BackupDatabaseInfo;
+import com.toughguy.transactionSystem.persist.database.prototype.IBackupDatabaseDao;
+import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

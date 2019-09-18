@@ -1,10 +1,10 @@
-package com.toughguy.binheSportSystem.ueditor.define;
+package com.toughguy.transactionSystem.ueditor.define;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.toughguy.binheSportSystem.ueditor.Encoder;
+import com.toughguy.transactionSystem.ueditor.Encoder;
 
 public class BaseState implements State {
 

@@ -1,11 +1,11 @@
-package com.toughguy.binheSportSystem.model;
+package com.toughguy.transactionSystem.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.toughguy.binheSportSystem.util.DateUtil;
+import com.toughguy.transactionSystem.util.DateUtil;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

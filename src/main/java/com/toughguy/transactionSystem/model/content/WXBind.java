@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.model.content;
+package com.toughguy.transactionSystem.model.content;
 
 /**
  * 微信与会员的绑定类

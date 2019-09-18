@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor.define;
+package com.toughguy.transactionSystem.ueditor.define;
 
 /**
  * 处理状态接口

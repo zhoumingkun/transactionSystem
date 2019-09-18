@@ -1,9 +1,9 @@
-package com.toughguy.binheSportSystem.persist.authority.prototype;
+package com.toughguy.transactionSystem.persist.authority.prototype;
 
 import java.util.List;
 
-import com.toughguy.binheSportSystem.model.authority.Resource;
-import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
+import com.toughguy.transactionSystem.model.authority.Resource;
+import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

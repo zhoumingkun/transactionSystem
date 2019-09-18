@@ -1,11 +1,12 @@
-package com.toughguy.binheSportSystem.persist.content.impl;
+package com.toughguy.transactionSystem.persist.content.impl;
 
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
-import com.toughguy.binheSportSystem.model.content.WXBind;
-import com.toughguy.binheSportSystem.persist.content.prototype.IWXBindDao;
-import com.toughguy.binheSportSystem.persist.impl.GenericDaoImpl;
+
+import com.toughguy.transactionSystem.model.content.WXBind;
+import com.toughguy.transactionSystem.persist.content.prototype.IWXBindDao;
+import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 
 /**
  *用户信息查询绑定Dao实现类

@@ -1,10 +1,10 @@
-package com.toughguy.binheSportSystem.model.content;
+package com.toughguy.transactionSystem.model.content;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.toughguy.binheSportSystem.model.AbstractModel;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.model.AbstractModel;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * 微信小程序元素获取实体类

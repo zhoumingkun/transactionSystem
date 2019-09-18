@@ -1,5 +1,5 @@
 
-package com.toughguy.binheSportSystem.security;
+package com.toughguy.transactionSystem.security;
 
 
 import java.util.List;
@@ -18,10 +18,10 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.User;
-import com.toughguy.binheSportSystem.service.authority.prototype.IAuthorityService;
-import com.toughguy.binheSportSystem.service.authority.prototype.IUserService;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.User;
+import com.toughguy.transactionSystem.service.authority.prototype.IAuthorityService;
+import com.toughguy.transactionSystem.service.authority.prototype.IUserService;
 
 /**
  * 管理员realm

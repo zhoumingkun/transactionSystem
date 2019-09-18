@@ -1,12 +1,12 @@
-package com.toughguy.binheSportSystem.persist.authority.impl;
+package com.toughguy.transactionSystem.persist.authority.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.toughguy.binheSportSystem.model.authority.Resource;
-import com.toughguy.binheSportSystem.persist.authority.prototype.IResourceDao;
-import com.toughguy.binheSportSystem.persist.impl.GenericDaoImpl;
+import com.toughguy.transactionSystem.model.authority.Resource;
+import com.toughguy.transactionSystem.persist.authority.prototype.IResourceDao;
+import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

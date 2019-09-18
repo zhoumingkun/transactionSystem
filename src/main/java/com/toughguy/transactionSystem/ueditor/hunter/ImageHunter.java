@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor.hunter;
+package com.toughguy.transactionSystem.ueditor.hunter;
 
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.toughguy.binheSportSystem.ueditor.PathFormat;
-import com.toughguy.binheSportSystem.ueditor.define.AppInfo;
-import com.toughguy.binheSportSystem.ueditor.define.BaseState;
-import com.toughguy.binheSportSystem.ueditor.define.MIMEType;
-import com.toughguy.binheSportSystem.ueditor.define.MultiState;
-import com.toughguy.binheSportSystem.ueditor.define.State;
-import com.toughguy.binheSportSystem.ueditor.upload.StorageManager;
+import com.toughguy.transactionSystem.ueditor.PathFormat;
+import com.toughguy.transactionSystem.ueditor.define.AppInfo;
+import com.toughguy.transactionSystem.ueditor.define.BaseState;
+import com.toughguy.transactionSystem.ueditor.define.MIMEType;
+import com.toughguy.transactionSystem.ueditor.define.MultiState;
+import com.toughguy.transactionSystem.ueditor.define.State;
+import com.toughguy.transactionSystem.ueditor.upload.StorageManager;
 
 /**
  * 图片抓取器

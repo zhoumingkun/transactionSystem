@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor.define;
+package com.toughguy.transactionSystem.ueditor.define;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.toughguy.binheSportSystem.ueditor.Encoder;
+import com.toughguy.transactionSystem.ueditor.Encoder;
 
 /**
  * 多状态集合状态

@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.security;
+package com.toughguy.transactionSystem.security;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.context.annotation.Bean;

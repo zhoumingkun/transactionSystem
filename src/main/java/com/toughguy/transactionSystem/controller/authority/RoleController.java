@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.controller.authority;
+package com.toughguy.transactionSystem.controller.authority;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Role;
-import com.toughguy.binheSportSystem.pagination.PagerModel;
-import com.toughguy.binheSportSystem.service.authority.prototype.IAuthorityService;
-import com.toughguy.binheSportSystem.service.authority.prototype.IRoleService;
-import com.toughguy.binheSportSystem.util.PinyinUtil;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Role;
+import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.service.authority.prototype.IAuthorityService;
+import com.toughguy.transactionSystem.service.authority.prototype.IRoleService;
+import com.toughguy.transactionSystem.util.PinyinUtil;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

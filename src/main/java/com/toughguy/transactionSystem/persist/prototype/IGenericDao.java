@@ -1,10 +1,10 @@
-package com.toughguy.binheSportSystem.persist.prototype;
+package com.toughguy.transactionSystem.persist.prototype;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.toughguy.binheSportSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 
 
 

@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.util;
+package com.toughguy.transactionSystem.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,9 +10,11 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
+import com.toughguy.transactionSystem.model.content.MyX509TrustManager;
+
 import java.io.InputStream;
 import net.sf.json.JSONObject;
-import com.toughguy.binheSportSystem.model.content.MyX509TrustManager;
 
 
 

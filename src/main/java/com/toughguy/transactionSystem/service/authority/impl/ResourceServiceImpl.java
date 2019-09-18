@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.service.authority.impl;
+package com.toughguy.transactionSystem.service.authority.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,16 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.toughguy.binheSportSystem.dto.OperationDTO;
-import com.toughguy.binheSportSystem.dto.TreeDTO;
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Resource;
-import com.toughguy.binheSportSystem.model.authority.Role;
-import com.toughguy.binheSportSystem.persist.authority.prototype.IOperationDao;
-import com.toughguy.binheSportSystem.persist.authority.prototype.IResourceDao;
-import com.toughguy.binheSportSystem.persist.authority.prototype.IRoleDao;
-import com.toughguy.binheSportSystem.service.authority.prototype.IResourceService;
-import com.toughguy.binheSportSystem.service.impl.GenericServiceImpl;
+import com.toughguy.transactionSystem.dto.OperationDTO;
+import com.toughguy.transactionSystem.dto.TreeDTO;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Resource;
+import com.toughguy.transactionSystem.model.authority.Role;
+import com.toughguy.transactionSystem.persist.authority.prototype.IOperationDao;
+import com.toughguy.transactionSystem.persist.authority.prototype.IResourceDao;
+import com.toughguy.transactionSystem.persist.authority.prototype.IRoleDao;
+import com.toughguy.transactionSystem.service.authority.prototype.IResourceService;
+import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
 ;
 
 @Service

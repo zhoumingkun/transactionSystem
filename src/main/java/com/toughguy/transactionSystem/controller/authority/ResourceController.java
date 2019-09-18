@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.controller.authority;
+package com.toughguy.transactionSystem.controller.authority;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.toughguy.binheSportSystem.dto.TreeDTO;
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Resource;
-import com.toughguy.binheSportSystem.service.authority.prototype.IAuthorityService;
-import com.toughguy.binheSportSystem.service.authority.prototype.IOperationService;
-import com.toughguy.binheSportSystem.service.authority.prototype.IResourceService;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.dto.TreeDTO;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Resource;
+import com.toughguy.transactionSystem.service.authority.prototype.IAuthorityService;
+import com.toughguy.transactionSystem.service.authority.prototype.IOperationService;
+import com.toughguy.transactionSystem.service.authority.prototype.IResourceService;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 
 /**

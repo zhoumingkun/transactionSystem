@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.ueditor.define;
+package com.toughguy.transactionSystem.ueditor.define;
 
 import java.util.Map;
 import java.util.HashMap;

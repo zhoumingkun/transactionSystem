@@ -1,11 +1,11 @@
-package com.toughguy.binheSportSystem.service.authority.prototype;
+package com.toughguy.transactionSystem.service.authority.prototype;
 
 import java.util.List;
 
-import com.toughguy.binheSportSystem.dto.TreeDTO;
-import com.toughguy.binheSportSystem.model.authority.Operation;
-import com.toughguy.binheSportSystem.model.authority.Resource;
-import com.toughguy.binheSportSystem.model.authority.Role;
+import com.toughguy.transactionSystem.dto.TreeDTO;
+import com.toughguy.transactionSystem.model.authority.Operation;
+import com.toughguy.transactionSystem.model.authority.Resource;
+import com.toughguy.transactionSystem.model.authority.Role;
 
 
 /**

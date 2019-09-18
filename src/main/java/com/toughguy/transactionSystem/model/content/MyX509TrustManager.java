@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.model.content;
+package com.toughguy.transactionSystem.model.content;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -8,8 +8,8 @@ import javax.net.ssl.X509TrustManager;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.toughguy.binheSportSystem.model.AbstractModel;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.model.AbstractModel;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * 管理器实体类

@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.controller.authority;
+package com.toughguy.transactionSystem.controller.authority;
 
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toughguy.binheSportSystem.dto.TreeDTO;
-import com.toughguy.binheSportSystem.model.authority.Role;
-import com.toughguy.binheSportSystem.model.authority.User;
-import com.toughguy.binheSportSystem.service.authority.prototype.IAuthorityService;
-import com.toughguy.binheSportSystem.service.authority.prototype.IUserService;
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.dto.TreeDTO;
+import com.toughguy.transactionSystem.model.authority.Role;
+import com.toughguy.transactionSystem.model.authority.User;
+import com.toughguy.transactionSystem.service.authority.prototype.IAuthorityService;
+import com.toughguy.transactionSystem.service.authority.prototype.IUserService;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

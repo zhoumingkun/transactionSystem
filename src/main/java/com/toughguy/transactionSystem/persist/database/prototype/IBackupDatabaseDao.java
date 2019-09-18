@@ -1,7 +1,7 @@
-package com.toughguy.binheSportSystem.persist.database.prototype;
+package com.toughguy.transactionSystem.persist.database.prototype;
 
-import com.toughguy.binheSportSystem.model.database.BackupDatabaseInfo;
-import com.toughguy.binheSportSystem.persist.prototype.IGenericDao;
+import com.toughguy.transactionSystem.model.database.BackupDatabaseInfo;
+import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

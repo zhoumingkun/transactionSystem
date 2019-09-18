@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.config;
+package com.toughguy.transactionSystem.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

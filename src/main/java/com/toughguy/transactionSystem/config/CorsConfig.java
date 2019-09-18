@@ -1,4 +1,4 @@
-package com.toughguy.binheSportSystem.config;
+package com.toughguy.transactionSystem.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.toughguy.binheSportSystem.ueditor.ActionEnter;
-import com.toughguy.binheSportSystem.ueditor.ConfigManager;
-import com.toughguy.binheSportSystem.ueditor.UEditorConfig;
+import com.toughguy.transactionSystem.ueditor.ActionEnter;
+import com.toughguy.transactionSystem.ueditor.ConfigManager;
+import com.toughguy.transactionSystem.ueditor.UEditorConfig;
 /**
  * 跨域请求配置
  * @author BOBO

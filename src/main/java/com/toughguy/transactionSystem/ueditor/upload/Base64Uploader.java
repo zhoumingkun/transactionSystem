@@ -1,14 +1,14 @@
-package com.toughguy.binheSportSystem.ueditor.upload;
-
-import com.toughguy.binheSportSystem.ueditor.PathFormat;
-import com.toughguy.binheSportSystem.ueditor.define.AppInfo;
-import com.toughguy.binheSportSystem.ueditor.define.BaseState;
-import com.toughguy.binheSportSystem.ueditor.define.FileType;
-import com.toughguy.binheSportSystem.ueditor.define.State;
+package com.toughguy.transactionSystem.ueditor.upload;
 
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
+
+import com.toughguy.transactionSystem.ueditor.PathFormat;
+import com.toughguy.transactionSystem.ueditor.define.AppInfo;
+import com.toughguy.transactionSystem.ueditor.define.BaseState;
+import com.toughguy.transactionSystem.ueditor.define.FileType;
+import com.toughguy.transactionSystem.ueditor.define.State;
 
 public final class Base64Uploader {
 

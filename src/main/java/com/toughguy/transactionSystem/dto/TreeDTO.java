@@ -1,8 +1,8 @@
-package com.toughguy.binheSportSystem.dto;
+package com.toughguy.transactionSystem.dto;
 
 import java.util.List;
 
-import com.toughguy.binheSportSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 
 /**
