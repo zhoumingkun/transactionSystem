@@ -1,12 +1,16 @@
 package com.toughguy.transactionSystem.model.content.po;
-
-public class transactionMemberCompany {
-	private int companyId;
-	private int memberId;
-	private String companyName;
-	private String companyCardType;
-	private String companyCardId;
-	public transactionMemberCompany(int companyId, int memberId, String companyName, String companyCardType,
+/**
+ * 	会员企业实体类
+ * @author Guozhenze
+ *
+ */
+public class TransactionMemberCompany {
+	private int companyId;					// -企业的自增长id
+	private int memberId;					// -会员ID
+	private String companyName;				// -企业的名字
+	private String companyCardType;			// -企业的证件类型
+	private String companyCardId;			// -企业的证件号码
+	public TransactionMemberCompany(int companyId, int memberId, String companyName, String companyCardType,
 			String companyCardId) {
 		super();
 		this.companyId = companyId;
@@ -15,14 +19,14 @@ public class transactionMemberCompany {
 		this.companyCardType = companyCardType;
 		this.companyCardId = companyCardId;
 	}
-	public transactionMemberCompany(int memberId, String companyName, String companyCardType, String companyCardId) {
+	public TransactionMemberCompany(int memberId, String companyName, String companyCardType, String companyCardId) {
 		super();
 		this.memberId = memberId;
 		this.companyName = companyName;
 		this.companyCardType = companyCardType;
 		this.companyCardId = companyCardId;
 	}
-	public transactionMemberCompany() {
+	public TransactionMemberCompany() {
 		super();
 	}
 	public int getCompanyId() {
@@ -74,7 +78,7 @@ public class transactionMemberCompany {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		transactionMemberCompany other = (transactionMemberCompany) obj;
+		TransactionMemberCompany other = (TransactionMemberCompany) obj;
 		if (companyCardId == null) {
 			if (other.companyCardId != null)
 				return false;
