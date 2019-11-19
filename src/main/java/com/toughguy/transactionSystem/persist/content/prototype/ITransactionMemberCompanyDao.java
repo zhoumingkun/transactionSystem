@@ -12,5 +12,6 @@ import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
  */
 public interface ITransactionMemberCompanyDao 
 		extends IGenericDao<TransactionMemberCompany, Integer>{
-
+		List<TransactionMemberCompany> findAllInfo();
+		
 }

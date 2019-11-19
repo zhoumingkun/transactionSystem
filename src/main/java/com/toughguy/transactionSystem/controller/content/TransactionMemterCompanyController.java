@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMemberCompany;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionMemberCompanyService;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSON;
 
 @RestController
 @RequestMapping("/MemterCompany")
@@ -26,15 +28,16 @@ public class TransactionMemterCompanyController {
 	private ITransactionMemberCompanyService memberCompanyService;
 	
 	
-	@RequestMapping("/a")
+	@RequestMapping("/test")
 	@ResponseBody
-	public Map<String, Object> getFindAll() {
-		List<TransactionMemberCompany> list = memberCompanyService.findAll();
-		Map<String,Object> map = new HashMap<String,Object>();
+	public String getFindAll() {
+		List<TransactionMemberCompany> list = memberCompanyService.findAllInfo();
+		System.out.println(list.size());
 		for (TransactionMemberCompany transactionMemberCompany : list) {
-			map.put("company", transactionMemberCompany);		
+			System.out.println(transactionMemberCompany);
 		}
-		return map;
+		String result = JsonUtil.objectToJson(list);
+		return result;
 	}
 	
 	@RequestMapping("/b")
@@ -45,7 +48,7 @@ public class TransactionMemterCompanyController {
 		for (TransactionMemberCompany transactionMemberCompany : list) {
 			map.put("company", transactionMemberCompany);		
 		}*/
-		return "b";
+		return "c";
 	}
 	
 }
