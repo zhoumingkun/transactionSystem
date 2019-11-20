@@ -10,7 +10,7 @@ import com.toughguy.transactionSystem.util.JsonUtil;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL) //为空字段不返回
-public class MaterialImage extends AbstractModel {
+public class MaterialImage {
 	//要获取的素材的media_id
 	 private String media_id;
 	 //文件名称

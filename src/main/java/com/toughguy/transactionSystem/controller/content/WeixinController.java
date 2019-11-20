@@ -1,7 +1,4 @@
 package com.toughguy.transactionSystem.controller.content;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,20 +6,31 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.toughguy.transactionSystem.model.content.Material;
+import com.toughguy.transactionSystem.model.content.MaterialImage;
 import com.toughguy.transactionSystem.model.content.MaterialParam;
 import com.toughguy.transactionSystem.util.CommonUtil;
+import com.toughguy.transactionSystem.util.DateUtil;
 import com.toughguy.transactionSystem.util.HttpsUtil;
+import com.toughguy.transactionSystem.util.JsonUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping("/wechat")
@@ -66,6 +74,10 @@ public class WeixinController {
 	       map.put("openid", openid);
 	       return map;//返回openid
 	 }
+	
+	
+	
+	
 	        //发起get请求的方法。
 		public static String GET(String url) {
 			String result = "";
@@ -103,8 +115,12 @@ public class WeixinController {
 			}
 			return result;
 		}
+		
+		
+		
+		
 		 /**
-		 * 微信服务号获取微信公众号文章
+		 * 获取Token
 		 * @return
 		 */
 		@ResponseBody	
@@ -113,9 +129,9 @@ public class WeixinController {
 		public  String getToken() throws Exception {
 		String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	    //appid  wx4ee5d28863963b5d  wxff1f016244a86d99
-	    String APPID = "wx34e5351380c0d745";
+	    String APPID = "wxff1f016244a86d99";
 	    //appsecret  1f3447adc6ab9128479f6447fb7546c4  978de69900cf3c35570622fefb5ea06a
-	    String APPSECRET = "63b7358c6e8a56e23e76a150cf6dc3db";        
+	    String APPSECRET = "caf84e25fac2fdf8f5169c9de291d469";        
 	    String request_url = TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
 	    HttpsUtil httpsUtil = new HttpsUtil();
 	    System.out.println(request_url);
@@ -134,13 +150,23 @@ public class WeixinController {
 	    }
 			return request_url;                
 	}    
+		
+		
+		/**
+		 *  获取news图文列表
+		 * @param offset
+		 * @param count
+		 * @return
+		 * @throws Exception
+		 */
+		
 		@ResponseBody	
 		@RequestMapping(value = "/getContent")
 		//@RequiresPermissions("weixinContent:getContent")
-		public static List<Material> getMaterialList(String ACCESS_TOKEN,String type ,String offset, String count) throws Exception {
+		public static String getMaterialList(String offset, String count) throws Exception {
 			String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
 //			String ACCESS_TOKEN = "16_QsdYWJqGge2bIMaAkp7faaNqsm-mONl23_Z-Q490YBM2V4CIjpG3gSIAnCkGbrMDP4xS8ZD077oHglscdOAgexsBRJN6iy4gVP0uWDhH_OYEfwrwkX1Q6UAzhO0OrRSfGZ7iDhhak8AwW2lwBWTjAIARMJ";
-			String request_url = TOKEN_URL.replace("ACCESS_TOKEN", ACCESS_TOKEN);
+			String request_url = TOKEN_URL.replace("ACCESS_TOKEN", new WeixinController().getToken());
 	        String outputStr = "";
 	        HttpsUtil httpsUtil = new HttpsUtil();
 	        System.out.println(request_url);
@@ -154,10 +180,11 @@ public class WeixinController {
 	        JSONObject jsonObject = new JSONObject();
 	        jsonObject = JSONObject.fromObject(para);
 	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
-	        System.out.println(jsonObject);
+	        System.out.println(jsonObject + "1");
 
 	        jsonObject = CommonUtil.httpsRequest(request_url, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
-	    // 如果请求成功  
+	   System.out.println(jsonObject);
+	        // 如果请求成功  
 	    		if (null != jsonObject) {
 	    		try {  
 	    		JSONArray jsonArray = jsonObject.getJSONArray("item");
@@ -199,9 +226,176 @@ public class WeixinController {
 	    		System.out.println("获取Material失败");  
 	    		}  
 	    		}  
-	    		return lists;  
+	    		return JsonUtil.objectToJson(lists);  
 	    		} 
-
+		
+		
+		/**
+		 * 获取图片的列表
+		 *
+		 * @param offset
+		 * @param count
+		 * @return
+		 * @throws Exception
+		 */
+		@ResponseBody	
+		@RequestMapping(value = "/getImage")
+		//@RequiresPermissions("weixinContent:getContent")
+		public static String getImage(String offset, String count) throws Exception {
+			String requestUrl = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
+			requestUrl = requestUrl.replace("ACCESS_TOKEN", new WeixinController().getToken());
+			
+			//POST请求发送的json参数
+	        MaterialParam para = new MaterialParam();//调用接口所需要的参数实体类
+	        para.setType("image");
+	        para.setOffset(offset);
+	        para.setCount(count);
+	        
+	        String outputStr="";
+	        JSONObject jsonObject = new JSONObject();
+	        jsonObject = JSONObject.fromObject(para);
+	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
+	        jsonObject = CommonUtil.httpsRequest(requestUrl, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
+	        System.out.println(jsonObject);
+	        
+	        
+	        List<MaterialImage> lists = new ArrayList<MaterialImage>();//定义图片素材实体类集合
+	        // -循环遍历获得的json，放入到list集合中
+	        if(jsonObject!=null) {
+	        	JSONArray jsonArray = jsonObject.getJSONArray("item");
+	        	for (int i = 0; i < jsonArray.size(); i++) {
+					try {
+						JSONObject object = (JSONObject) jsonArray.get(i);
+						System.out.println("cccc" + object);
+						//object = object.getJSONObject("content");
+						System.out.println(object);
+						MaterialImage materImg = new MaterialImage();
+						materImg.setName(object.getString("name"));
+						materImg.setUrl(object.getString("url"));
+						lists.add(materImg);
+					} catch (Exception e) {
+						System.out.println("获取MaterialImage失败");  
+						e.printStackTrace();
+					}
+				}
+	        }
+			return	JsonUtil.objectToJson(lists);
+	   } 
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * 获取音频的列表
+		 *
+		 * @param offset
+		 * @param count
+		 * @return
+		 * @throws Exception
+		 */
+		@ResponseBody	
+		@RequestMapping(value = "/getVoice")
+		//@RequiresPermissions("weixinContent:getContent")
+		public static String getVoice(String offset, String count) throws Exception {
+			String requestUrl = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
+			requestUrl = requestUrl.replace("ACCESS_TOKEN", new WeixinController().getToken());
+			
+			//POST请求发送的json参数
+	        MaterialParam para = new MaterialParam();//调用接口所需要的参数实体类
+	        para.setType("voice");
+	        para.setOffset(offset);
+	        para.setCount(count);
+	        
+	        String outputStr="";
+	        JSONObject jsonObject = new JSONObject();
+	        jsonObject = JSONObject.fromObject(para);
+	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
+	        jsonObject = CommonUtil.httpsRequest(requestUrl, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
+	        System.out.println(jsonObject);
+	        
+	        
+	        List<MaterialImage> lists = new ArrayList<MaterialImage>();//定义图片素材实体类集合
+	        // -循环遍历获得的json，放入到list集合中
+	        if(jsonObject!=null) {
+	        	JSONArray jsonArray = jsonObject.getJSONArray("item");
+	        	for (int i = 0; i < jsonArray.size(); i++) {
+					try {
+						JSONObject object = (JSONObject) jsonArray.get(i);
+						System.out.println("cccc" + object);
+						//object = object.getJSONObject("content");
+						System.out.println(object);
+						MaterialImage materImg = new MaterialImage();
+						materImg.setName(object.getString("name"));
+						materImg.setUrl(object.getString("url"));
+						lists.add(materImg);
+					} catch (Exception e) {
+						System.out.println("获取MaterialImage失败");  
+						e.printStackTrace();
+					}
+				}
+	        }
+			return	JsonUtil.objectToJson(lists);
+	   } 
+		
+		
+		
+		
+		
+		
+		/**
+		 * 获取视频的列表
+		 *
+		 * @param offset
+		 * @param count
+		 * @return
+		 * @throws Exception
+		 */
+		@ResponseBody	
+		@RequestMapping(value = "/getVideo")
+		//@RequiresPermissions("weixinContent:getContent")
+		public static String getVideo(String offset, String count) throws Exception {
+			String requestUrl = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
+			requestUrl = requestUrl.replace("ACCESS_TOKEN", new WeixinController().getToken());
+			
+			//POST请求发送的json参数
+	        MaterialParam para = new MaterialParam();//调用接口所需要的参数实体类
+	        para.setType("video");
+	        para.setOffset(offset);
+	        para.setCount(count);
+	        
+	        String outputStr="";
+	        JSONObject jsonObject = new JSONObject();
+	        jsonObject = JSONObject.fromObject(para);
+	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
+	        jsonObject = CommonUtil.httpsRequest(requestUrl, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
+	        System.out.println(jsonObject);
+	        
+	        
+	        List<MaterialImage> lists = new ArrayList<MaterialImage>();//定义图片素材实体类集合
+	        // -循环遍历获得的json，放入到list集合中
+	        if(jsonObject!=null) {
+	        	JSONArray jsonArray = jsonObject.getJSONArray("item");
+	        	for (int i = 0; i < jsonArray.size(); i++) {
+					try {
+						JSONObject object = (JSONObject) jsonArray.get(i);
+						System.out.println("cccc" + object);
+						//object = object.getJSONObject("content");
+						System.out.println(object);
+						MaterialImage materImg = new MaterialImage();
+						materImg.setName(object.getString("name"));
+						materImg.setUrl(object.getString("url"));
+						lists.add(materImg);
+					} catch (Exception e) {
+						System.out.println("获取MaterialImage失败");  
+						e.printStackTrace();
+					}
+				}
+	        }
+			return	JsonUtil.objectToJson(lists);
+	   }
 }
 
 
