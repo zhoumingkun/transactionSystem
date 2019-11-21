@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionRichText">
+	
+	<!-- 查询全部 -->
+	<select id="findAllInfo" resultType="TransactionRichText">
+		select * from transaction_rich_text;
+	</select>
+	
+	<!-- 插入一条信息 -->
+	<insert id="saveInfo" parameterType="TransactionRichText">
+		insert into 
+		transaction_rich_text(title, content, create_time, update_time, title_status) 
+		values(#{title}, #{content}, #{createTime}, #{updateTime},#{titleStatus});
+	</insert>	
+	
+	<!-- 删除一条信息 -->
+	<delete id="deleteInfo" parameterType="int">
+		delete from transaction_rich_text
+		where title_id=#{id}; 
+	</delete>
+	
+	<!-- 更新一条信息 -->
+	<update id="updateInfo" parameterType="TransactionRichText">
+		update transaction_rich_text
+		set title=#{title}, content=#{content},create_time=#{createTime},update_time=#{updateTime},title_status=#{titleStatus}
+		where title_id=#{titleId};
+	</update>
+</mapper>

@@ -3,16 +3,17 @@ package com.toughguy.transactionSystem.model.content.vo;
 import java.util.Date;
 
 public class MemberCompanyInfo {
-	private int memberId;
-	private String memberTel;
-	private String memberPwd;
-	private Date memberDate;
-	private String memberName;
-	private String memberCard;
-	private int companyId;
-	private String companyName;
-	private String companyCardType;
-	private String companyCardId;
+	private int memberId;	     // 会员id
+	private String memberTel;	 // 会员电话
+	private String memberPwd;	 // 会员密码
+	private Date memberDate;	 // 会员注册日期
+	private String memberName;   // 会员姓名
+	private String memberCard;   // 会员身份证
+	private int companyId;          // 企业id
+	private String companyName;     // 企业名称
+	private String companyCardType; // 企业证件类型
+	private String companyCardId;   // 企业证件号
+	
 	public MemberCompanyInfo(int memberId, String memberTel, String memberPwd, Date memberDate, String memberName,
 			String memberCard, int companyId, String companyName, String companyCardType, String companyCardId) {
 		super();
