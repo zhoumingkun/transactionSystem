@@ -180,7 +180,6 @@ public class WeixinController {
 	        JSONObject jsonObject = new JSONObject();
 	        jsonObject = JSONObject.fromObject(para);
 	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
-	        System.out.println(jsonObject + "1");
 
 	        jsonObject = CommonUtil.httpsRequest(request_url, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
 	   System.out.println(jsonObject);
@@ -208,7 +207,6 @@ public class WeixinController {
 	    		System.out.println(thumb_media_id);
 	    		String url = json.getString("url");
 	    		String content = json.getString("content");
-	    		System.out.println("时间"+update_time);
 	    		material.setTitle(title);
 	    		material.setAuthor(author);
 	    		material.setDigest(digest);
@@ -256,7 +254,6 @@ public class WeixinController {
 	        jsonObject = JSONObject.fromObject(para);
 	        outputStr = jsonObject.toString();//将参数对象转换成json字符串
 	        jsonObject = CommonUtil.httpsRequest(requestUrl, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数);
-	        System.out.println(jsonObject);
 	        
 	        
 	        List<MaterialImage> lists = new ArrayList<MaterialImage>();//定义图片素材实体类集合
@@ -266,9 +263,7 @@ public class WeixinController {
 	        	for (int i = 0; i < jsonArray.size(); i++) {
 					try {
 						JSONObject object = (JSONObject) jsonArray.get(i);
-						System.out.println("cccc" + object);
 						//object = object.getJSONObject("content");
-						System.out.println(object);
 						MaterialImage materImg = new MaterialImage();
 						materImg.setName(object.getString("name"));
 						materImg.setUrl(object.getString("url"));
@@ -324,9 +319,7 @@ public class WeixinController {
 	        	for (int i = 0; i < jsonArray.size(); i++) {
 					try {
 						JSONObject object = (JSONObject) jsonArray.get(i);
-						System.out.println("cccc" + object);
 						//object = object.getJSONObject("content");
-						System.out.println(object);
 						MaterialImage materImg = new MaterialImage();
 						materImg.setName(object.getString("name"));
 						materImg.setUrl(object.getString("url"));
@@ -381,9 +374,7 @@ public class WeixinController {
 	        	for (int i = 0; i < jsonArray.size(); i++) {
 					try {
 						JSONObject object = (JSONObject) jsonArray.get(i);
-						System.out.println("cccc" + object);
 						//object = object.getJSONObject("content");
-						System.out.println(object);
 						MaterialImage materImg = new MaterialImage();
 						materImg.setName(object.getString("name"));
 						materImg.setUrl(object.getString("url"));
