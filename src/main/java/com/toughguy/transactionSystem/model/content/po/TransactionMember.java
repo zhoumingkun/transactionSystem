@@ -1,15 +1,19 @@
 package com.toughguy.transactionSystem.model.content.po;
 
 import java.util.Date;
-
-public class transactionMember {
-	private int memberId;
-	private String memberTel;
-	private String memberPwd;
-	private Date memberDate;
-	private String memberName;
-	private String memberCard;
-	public transactionMember(int memberId, String memberTel, String memberPwd, Date memberDate, String memberName,
+/**
+ * 会员实体类
+ * @author s
+ *
+ */
+public class TransactionMember {
+	private int memberId;  				//会员的id
+	private String memberTel;			//会员的电话
+	private String memberPwd;			//会员的密码
+	private Date memberDate;			//会员的注册时间
+	private String memberName;			//会员的姓名
+	private String memberCard;			//会员的身份证号
+	public TransactionMember(int memberId, String memberTel, String memberPwd, Date memberDate, String memberName,
 			String memberCard) {
 		super();
 		this.memberId = memberId;
@@ -19,7 +23,7 @@ public class transactionMember {
 		this.memberName = memberName;
 		this.memberCard = memberCard;
 	}
-	public transactionMember(String memberTel, String memberPwd, Date memberDate, String memberName,
+	public TransactionMember(String memberTel, String memberPwd, Date memberDate, String memberName,
 			String memberCard) {
 		super();
 		this.memberTel = memberTel;
@@ -28,7 +32,7 @@ public class transactionMember {
 		this.memberName = memberName;
 		this.memberCard = memberCard;
 	}
-	public transactionMember() {
+	public TransactionMember() {
 		super();
 	}
 	public int getMemberId() {
@@ -87,7 +91,7 @@ public class transactionMember {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		transactionMember other = (transactionMember) obj;
+		TransactionMember other = (TransactionMember) obj;
 		if (memberCard == null) {
 			if (other.memberCard != null)
 				return false;
