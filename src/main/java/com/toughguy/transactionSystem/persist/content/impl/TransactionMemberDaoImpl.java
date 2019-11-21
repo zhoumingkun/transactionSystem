@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.persist.content.prototype.ITransactionMemberDao;
 import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
+/**
+ * 会员dao实现
+ * @author liDongSheng
+ *
+ */
 @Repository
 public class TransactionMemberDaoImpl extends GenericDaoImpl<TransactionMember, Integer>implements ITransactionMemberDao{
 
