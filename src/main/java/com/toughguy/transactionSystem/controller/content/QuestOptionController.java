@@ -86,13 +86,16 @@ public class QuestOptionController {
 				option.setQuestId(infos.get(i).getQuestId());
 				List<TransactionOption> ops = optionService.findOption(option);
 				List<Map<String,Object>> lists  = new ArrayList<>();
+				int num = 0;
 				for (int j = 0; j < ops.size(); j++) {
 					Map<String,Object> map3 = new HashMap<>();
 					map3.put("optionId", ops.get(j).getOptionId());
 					map3.put("optionContent", ops.get(j).getOptionContent());
 					map3.put("optionCount", ops.get(j).getOptionCount());
+					num += ops.get(j).getOptionCount();
 					lists.add(map3);
 				}
+			map2.put("count", num);
 			map2.put("data", lists);
 			}
 			map.put("dates", lis);

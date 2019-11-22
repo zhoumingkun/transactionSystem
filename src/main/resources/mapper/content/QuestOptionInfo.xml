@@ -12,7 +12,7 @@
 		<if test="copiesTitle != null and copiesTitle != '' ">
 			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
 		</if>
-		limit #{offset} , #{limit}
+		
 	</select>	
 	<select id="findPaginated" parameterType="Map" resultType="QuestOptionInfo">
 		select * from transaction_copies where copies_end_time &lt; now()
@@ -28,7 +28,7 @@
 		<if test="copiesTitle != null and copiesTitle != '' ">
 			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
 		</if>
-		limit #{offset} , #{limit}
+		
 	</select>
 
 	
