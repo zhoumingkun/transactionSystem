@@ -317,11 +317,18 @@
 		</dependency>
 		<!-- 热部署 -->
 		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-devtools</artifactId>
-    		<version>1.5.8.RELEASE</version>
-	        <optional>true</optional>
-    	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<version>1.5.8.RELEASE</version>
+			<optional>true</optional>
+		</dependency>
+		<!-- alibaba fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.58</version>
+		</dependency>
+
 	</dependencies>
 	<repositories>
 		<repository>

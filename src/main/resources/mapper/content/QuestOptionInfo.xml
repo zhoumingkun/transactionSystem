@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.QuestOptionInfo">
+	<!-- 根据copiesid查询所有的问题 -->
+	<select id="findOneInfo"  parameterType="QuestOptionInfo" resultType="QuestOptionInfo">
+		select a.*,b.copies_title,b.copies_start_time,b.copies_end_time from transaction_quest a 
+		left join transaction_copies b  on a.copies_id = b.copies_id where a.copies_id = #{copiesId} 
+		
+	</select>
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_copies where copies_end_time &lt; now()
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset} , #{limit}
+	</select>	
+	<select id="findPaginated" parameterType="Map" resultType="QuestOptionInfo">
+		select * from transaction_copies where copies_end_time &lt; now()
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset} , #{limit}
+	</select>
+		
+		
+	<select id="getTotalOfItemsNoEnd" parameterType="Map" resultType="int">
+		select count(*) from transaction_copies where copies_end_time &gt; now() 
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset} , #{limit}
+	</select>
+
+	
+	<select id="selectNoEnd" parameterType="Map" resultType="QuestOptionInfo">
+		select * from transaction_copies where copies_end_time &gt; now() 
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset} , #{limit}
+	</select>
+	
+	
+	<!-- 插入一个卷子 -->
+	<insert id="insertOneInfo" parameterType="QuestOptionInfo" useGeneratedKeys="true" keyProperty="copiesId">
+		insert into  transaction_copies (copies_title) value (#{copiesTitle})
+	</insert>
+	<!-- 插入一个问卷调差的问题 -->
+	<insert id="insertOneInfo2" parameterType="QuestOptionInfo">
+		insert into  transaction_quest(quest_content,copies_id) value (#{questContent},#{copiesId})
+	</insert>
+
+
+
+
+</mapper>

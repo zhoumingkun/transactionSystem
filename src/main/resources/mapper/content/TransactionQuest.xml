@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionQuest">
+	<!-- 查询全部的企业用户 -->
+	<select id="findInfoAll"  parameterType="TransactionQuest" resultType="TransactionQuest">
+		select * from transaction_quest where copies_id = #{copiesId}
+	</select>
+	
+	<insert id="insertQuest" parameterType="TransactionQuest">
+		insert into  transaction_quest(quest_content,copies_id) value (#{questContent},#{copiesId})
+	</insert>
+
+</mapper>

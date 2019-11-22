@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionOption">
+	<!-- 查询某个问题的全部的选项 -->
+	<select id="findOption"  parameterType="TransactionOption" resultType="TransactionOption">
+		select * from transaction_option where quest_id = #{questId}
+	</select>
+	
+	<insert id="insertOption" parameterType="TransactionOption">
+		insert into  transaction_option(quest_id,option_content,option_count) 
+		value (#{questId},#{optionContent},#{optionCount})
+	</insert>
+	<update id="updateCount" parameterType="TransactionOption">
+		update transaction_option set 
+		option_count = (option_count+1) 
+		where option_id = #{optionId} and quest_id = #{questId}
+	</update>	
+</mapper>
