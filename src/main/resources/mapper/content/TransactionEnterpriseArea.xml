@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseArea">
+	<select id="findAll" resultType="TransactionEnterpriseArea">
+		select * from transaction_enterprise_area;
+	</select>
+	
+	<update id="update" parameterType="TransactionEnterpriseArea">
+		update transaction_enterprise_area
+		set enterprise_area=#{enterpriseArea}
+		where enterprise_area_id=#{enterpriseAreaId};
+	</update>
+	
+	<delete id="delete" parameterType="TransactionEnterpriseArea">
+		delete from transaction_enterprise_area
+		where enterprise_area_id=#{enterpriseAreaId};
+	</delete>
+	
+	<insert id="save" parameterType="TransactionEnterpriseArea">
+		insert into transaction_enterprise_area(enterprise_area)
+		values(#{enterpriseArea});	
+	</insert>
+	
+</mapper>

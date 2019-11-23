@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseAuditStatus">
+	<select id="findAll" resultType="TransactionEnterpriseAuditStatus">
+		select * from transaction_enterprise_audit_status;
+	</select>
+	
+	<update id="update" parameterType="TransactionEnterpriseAuditStatus">
+		update transaction_enterprise_audit_status
+		set audit_status_type=#{auditStatusType}
+		where audit_status_id=#{auditStatusId};
+	</update>
+	
+	<delete id="delete" parameterType="TransactionEnterpriseAuditStatus">
+		delete from transaction_enterprise_audit_status
+		where audit_status_id=#{auditStatusId};
+	</delete>
+	
+	<insert id="save" parameterType="TransactionEnterpriseAuditStatus">
+		insert into transaction_enterprise_audit_status(audit_status_type)
+		values(#{auditStatusType});	
+	</insert>
+	
+</mapper>

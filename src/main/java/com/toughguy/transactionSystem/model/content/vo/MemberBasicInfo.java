@@ -1,12 +1,13 @@
-package com.toughguy.transactionSystem.model.content.po;
+package com.toughguy.transactionSystem.model.content.vo;
 
 import java.util.Date;
+
 /**
- * 会员实体类
- * @author liDongSheng
+ * 
+ * @author 会员基本信息
  *
  */
-public class TransactionMember {
+public class MemberBasicInfo {
 	private int memberId;  				//会员的id
 	private String openId;				//openid
 	private String memberTel;			//会员的电话
@@ -18,32 +19,39 @@ public class TransactionMember {
 	private int memberRank;				//会员等级
 	private int memberOnlineTimes;		//会员签到次数
 	
-	public TransactionMember() {
-		super();
-	}	
+	private String enterpriseName;				// 企业名称
+	private String enterpriseCardType;			// 企业证件类型
+	private String enterpriseCardId;			// 企业证件号
 	
-	public TransactionMember(String openId) {
-		super();
-		this.openId = openId;
-	}
-
-	public TransactionMember(String openId, String memberTel, String memberPwd) {
+	/**
+	 * 基本资料
+	 * @param memberTel
+	 * @param memberPwd
+	 * @param memberDate
+	 * @param memberName
+	 * @param memberCard
+	 * @param openId
+	 * @param enterpriseName
+	 * @param enterpriseCardType
+	 * @param enterpriseCardId
+	 */
+	public MemberBasicInfo(String openId, String memberTel, String memberPwd, Date memberDate, String memberName,
+			String memberCard, String enterpriseName, String enterpriseCardType, String enterpriseCardId) {
 		super();
 		this.openId = openId;
 		this.memberTel = memberTel;
 		this.memberPwd = memberPwd;
+		this.memberDate = memberDate;
+		this.memberName = memberName;
+		this.memberCard = memberCard;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+		this.enterpriseCardId = enterpriseCardId;
 	}
 
-	public TransactionMember(int memberId, String openId, String memberTel, String memberPwd) {
-		super();
-		this.memberId = memberId;
-		this.openId = openId;
-		this.memberTel = memberTel;
-		this.memberPwd = memberPwd;
-	}
-
-	public TransactionMember(int memberId, String openId, String memberTel, String memberPwd, Date memberDate,
-			String memberName, String memberCard, int memberIntegral, int memberRank, int memberOnlineTimes) {
+	public MemberBasicInfo(int memberId, String openId, String memberTel, String memberPwd, Date memberDate,
+			String memberName, String memberCard, int memberIntegral, int memberRank, int memberOnlineTimes,
+			String enterpriseName, String enterpriseCardType, String enterpriseCardId) {
 		super();
 		this.memberId = memberId;
 		this.openId = openId;
@@ -55,6 +63,22 @@ public class TransactionMember {
 		this.memberIntegral = memberIntegral;
 		this.memberRank = memberRank;
 		this.memberOnlineTimes = memberOnlineTimes;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+		this.enterpriseCardId = enterpriseCardId;
+	}
+
+	public MemberBasicInfo() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "MemberBasicInfo [memberId=" + memberId + ", openId=" + openId + ", memberTel=" + memberTel
+				+ ", memberPwd=" + memberPwd + ", memberDate=" + memberDate + ", memberName=" + memberName
+				+ ", memberCard=" + memberCard + ", memberIntegral=" + memberIntegral + ", memberRank=" + memberRank
+				+ ", memberOnlineTimes=" + memberOnlineTimes + ", enterpriseName=" + enterpriseName
+				+ ", enterpriseCardType=" + enterpriseCardType + ", enterpriseCardId=" + enterpriseCardId + "]";
 	}
 
 	public int getMemberId() {
@@ -137,10 +161,37 @@ public class TransactionMember {
 		this.memberOnlineTimes = memberOnlineTimes;
 	}
 
+	public String getEnterpriseName() {
+		return enterpriseName;
+	}
+
+	public void setEnterpriseName(String enterpriseName) {
+		this.enterpriseName = enterpriseName;
+	}
+
+	public String getEnterpriseCardType() {
+		return enterpriseCardType;
+	}
+
+	public void setEnterpriseCardType(String enterpriseCardType) {
+		this.enterpriseCardType = enterpriseCardType;
+	}
+
+	public String getEnterpriseCardId() {
+		return enterpriseCardId;
+	}
+
+	public void setEnterpriseCardId(String enterpriseCardId) {
+		this.enterpriseCardId = enterpriseCardId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((enterpriseCardId == null) ? 0 : enterpriseCardId.hashCode());
+		result = prime * result + ((enterpriseCardType == null) ? 0 : enterpriseCardType.hashCode());
+		result = prime * result + ((enterpriseName == null) ? 0 : enterpriseName.hashCode());
 		result = prime * result + ((memberCard == null) ? 0 : memberCard.hashCode());
 		result = prime * result + ((memberDate == null) ? 0 : memberDate.hashCode());
 		result = prime * result + memberId;
@@ -162,7 +213,22 @@ public class TransactionMember {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TransactionMember other = (TransactionMember) obj;
+		MemberBasicInfo other = (MemberBasicInfo) obj;
+		if (enterpriseCardId == null) {
+			if (other.enterpriseCardId != null)
+				return false;
+		} else if (!enterpriseCardId.equals(other.enterpriseCardId))
+			return false;
+		if (enterpriseCardType == null) {
+			if (other.enterpriseCardType != null)
+				return false;
+		} else if (!enterpriseCardType.equals(other.enterpriseCardType))
+			return false;
+		if (enterpriseName == null) {
+			if (other.enterpriseName != null)
+				return false;
+		} else if (!enterpriseName.equals(other.enterpriseName))
+			return false;
 		if (memberCard == null) {
 			if (other.memberCard != null)
 				return false;
@@ -203,14 +269,5 @@ public class TransactionMember {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "TransactionMember [memberId=" + memberId + ", openId=" + openId + ", memberTel=" + memberTel
-				+ ", memberPwd=" + memberPwd + ", memberDate=" + memberDate + ", memberName=" + memberName
-				+ ", memberCard=" + memberCard + ", memberIntegral=" + memberIntegral + ", memberRank=" + memberRank
-				+ ", memberOnlineTimes=" + memberOnlineTimes + "]";
-	}
-	
 	
 }

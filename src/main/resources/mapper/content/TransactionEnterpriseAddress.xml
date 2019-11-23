@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseAddress">
+	<select id="findAll" resultType="TransactionEnterpriseAddress">
+		select * from transaction_enterprise_address;
+	</select>
+	
+	<update id="update" parameterType="TransactionEnterpriseAddress">
+		update transaction_enterprise_address
+		set address_name=#{addressName}
+		where address_id=#{addressId};
+	</update>
+	
+	<delete id="delete" parameterType="TransactionEnterpriseAddress">
+		delete from transaction_enterprise_address
+		where address_id=#{addressId};
+	</delete>
+	
+	<insert id="save" parameterType="TransactionEnterpriseAddress">
+		insert into transaction_enterprise_address(address_name)
+		values(#{addressName});	
+	</insert>
+	
+</mapper>

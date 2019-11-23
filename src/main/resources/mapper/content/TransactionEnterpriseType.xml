@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseType">
+	<select id="findAll" resultType="TransactionEnterpriseType">
+		select * from transaction_enterprise_type;
+	</select>
+	
+	<update id="update" parameterType="TransactionEnterpriseType">
+		update transaction_enterprise_type
+		set enterprise_type=#{enterpriseType}
+		where enterprise_type_id=#{enterpriseTypeId};
+	</update>
+	
+	<delete id="delete" parameterType="TransactionEnterpriseType">
+		delete from transaction_enterprise_type
+		where enterprise_type_id=#{enterpriseTypeId};
+	</delete>
+	
+	<insert id="save" parameterType="TransactionEnterpriseType">
+		insert into transaction_enterprise_type(enterprise_type)
+		values(#{enterpriseType});	
+	</insert>
+	
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo">
+	<update id="saveCompleteInfo" parameterType="MemberCompleteInfo">
+		update transaction_enterprise set 
+		enterprise_type_id=#{enterpriseTypeId},
+		enterprise_trade_id=#{enterpriseTradeId},
+		enterprise_area_id=#{enterpriseAreaId},
+		enterprise_address_id=#{enterpriseAddressId},
+		enterprise_taxpayer=#{enterpriseTaxpayer},
+		enterprise_validity_date_start=#{enterpriseValidityDateStart},
+		enterprise_validity_date_end=#{enterpriseValidityDateEnd},
+		enterprise_certification_unit=#{enterpriseCertificationUnit},
+		enterprise_reg_address=#{enterpriseRegAddress},
+		enterprise_status_id=#{enterpriseStatusId},
+		enterprise_reg_date=#{enterpriseRegDate},
+		enterprise_reg_money=#{enterpriseRegMoney},
+		enterprise_legal_person_name=#{enterpriseLegalPersonName},
+		enterprise_legal_person_card=#{enterpriseLegalPersonCard},
+		enterprise_audit_status_id=#{enterpriseAuditStatusId}
+		
+		where member_id=#{memberId};
+	</update>
+	
+	<select id="findEnterpriseInfo" resultType="MemberCompleteInfo">
+		select * from transaction_enterprise 
+		where member_id = #{memberId};
+	</select>
+</mapper>
