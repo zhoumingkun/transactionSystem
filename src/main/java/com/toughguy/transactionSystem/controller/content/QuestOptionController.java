@@ -1,7 +1,5 @@
 package com.toughguy.transactionSystem.controller.content;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,8 +24,9 @@ import com.toughguy.transactionSystem.service.content.prototype.IQuestOptionInfo
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionOptionService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
 import com.toughguy.transactionSystem.util.JsonUtil;
-import com.toughguy.transactionSystem.util.requestJSONUtil;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -56,6 +54,9 @@ public class QuestOptionController {
 	 * 
 	 * @return
 	 */
+	@ApiOperation(value = "问卷调查",notes = "查询某个问卷的所有的问题以及选项")
+    @ApiImplicitParam(name = "copiesId", value = "问卷ID",
+            required = true, dataType = "int", paramType = "query")
 	@RequestMapping(value = "/getQuest", method = RequestMethod.GET)
 	public String getQuestOption(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
@@ -71,6 +72,11 @@ public class QuestOptionController {
 			QuestOptionInfo t = new QuestOptionInfo();
 			t.setCopiesId(copiesId);
 			List<QuestOptionInfo> infos = infoService.findOne(t);
+			if(infos.size()==0||infos==null) {
+				map.put("code", "404");
+				map.put("msg", "没有找到该问卷");
+				return JSON.toJSONString(map).toString();
+			}
 			map.put("copiesId", infos.get(0).getCopiesId());
 			map.put("copiesTitle", infos.get(0).getCopiesTitle());
 			map.put("startTime", infos.get(0).getCopiesStartTime());
@@ -162,11 +168,11 @@ public class QuestOptionController {
 		return JsonUtil.objectToJson(map);
 	}
 
-	@RequestMapping("/test")
+/*	@RequestMapping("/test")
 	public String getTest(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject josn = requestJSONUtil.request(request, response);
 		return JSON.toJSONString(josn);
-	}
+	}*/
 
 	/**
 	 * 获取全部的未结束的问卷调差
