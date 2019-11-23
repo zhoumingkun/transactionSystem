@@ -39,8 +39,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("SpringBoot利用swagger构建api文档")
-                .description("简单优雅的restful风格")
+                .title("太原市股权托管交易中心微信公众号开发接口说明")
+                .description("微信公众号开发接口文档")
                 .version("1.0")
                 .build();
     }
