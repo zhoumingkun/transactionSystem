@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo">
+	<!-- 分页查看未开始的活动的报名人数 -->
+	<select id="findPaginated" parameterType="Map" resultType="ActivitySignupInfo">
+		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+		from transaction_activity act
+		left JOIN (select activity_id as bid,count(*) as sum 
+			  from transaction_signup
+			  GROUP BY activity_id) b
+		ON act.activity_id=b.bid
+		where now() &lt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 查看未开始的活动的总条数-->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_activity
+		where now() &lt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select>
+	
+	<!-- 分页查看结束活动的报名人数 -->
+	<select id="findEndActivitySignup" parameterType="Map" resultType="ActivitySignupInfo">
+		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+		from transaction_activity act
+		left JOIN (select activity_id as bid,count(*) as sum 
+			  from transaction_signup
+			  GROUP BY activity_id) b
+		ON act.activity_id=b.bid
+		where now() &gt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 查看结束的活动的总条数-->
+	<select id="getTotalEndActivitySignup" parameterType="Map" resultType="int">
+		select count(*) from transaction_activity
+		where now() &gt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select>
+	
+	
+	<!-- 查看结束的活动到场的人数-->
+	<select id="findEndActivity" parameterType="Map" resultType="ActivitySignupInfo">
+		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+		from transaction_activity act
+		left JOIN (select activity_id as bid,count(*) as sum 
+			  from transaction_signup
+			  where signup_status=1
+			  GROUP BY activity_id) b
+		ON act.activity_id=b.bid
+		where now() &gt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 查看结束的活动的总条数-->
+	<select id="getTotalEndActivity" parameterType="Map" resultType="int">
+		select count(*) from transaction_activity
+		where now() &gt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select>
+	
+	
+</mapper>

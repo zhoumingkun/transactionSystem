@@ -16,9 +16,12 @@ public class TransactionActivity {
 	private Date activitySignupEnd;			//报名结束时间
 	private Date activityStart;				//活动开始时间
 	private Date activityEnd;				//活动结束时间
+	private String activityInbusiness;		//与会企业
+	private String activityAddress;		    //活动地址
+	private String activityTel;		        //活动电话
 	public TransactionActivity(int activityId, String activityName, String activityPerson, String activityContent,
-			String activityImg, Date activitySignupStart, Date activitySignupEnd, Date activityStart,
-			Date activityEnd) {
+			String activityImg, Date activitySignupStart, Date activitySignupEnd, Date activityStart, Date activityEnd,
+			String activityInbusiness, String activityAddress, String activityTel) {
 		super();
 		this.activityId = activityId;
 		this.activityName = activityName;
@@ -29,9 +32,13 @@ public class TransactionActivity {
 		this.activitySignupEnd = activitySignupEnd;
 		this.activityStart = activityStart;
 		this.activityEnd = activityEnd;
+		this.activityInbusiness = activityInbusiness;
+		this.activityAddress = activityAddress;
+		this.activityTel = activityTel;
 	}
 	public TransactionActivity(String activityName, String activityPerson, String activityContent, String activityImg,
-			Date activitySignupStart, Date activitySignupEnd, Date activityStart, Date activityEnd) {
+			Date activitySignupStart, Date activitySignupEnd, Date activityStart, Date activityEnd,
+			String activityInbusiness, String activityAddress, String activityTel) {
 		super();
 		this.activityName = activityName;
 		this.activityPerson = activityPerson;
@@ -41,6 +48,9 @@ public class TransactionActivity {
 		this.activitySignupEnd = activitySignupEnd;
 		this.activityStart = activityStart;
 		this.activityEnd = activityEnd;
+		this.activityInbusiness = activityInbusiness;
+		this.activityAddress = activityAddress;
+		this.activityTel = activityTel;
 	}
 	public TransactionActivity() {
 		super();
@@ -99,19 +109,40 @@ public class TransactionActivity {
 	public void setActivityEnd(Date activityEnd) {
 		this.activityEnd = activityEnd;
 	}
+	public String getActivityInbusiness() {
+		return activityInbusiness;
+	}
+	public void setActivityInbusiness(String activityInbusiness) {
+		this.activityInbusiness = activityInbusiness;
+	}
+	public String getActivityAddress() {
+		return activityAddress;
+	}
+	public void setActivityAddress(String activityAddress) {
+		this.activityAddress = activityAddress;
+	}
+	public String getActivityTel() {
+		return activityTel;
+	}
+	public void setActivityTel(String activityTel) {
+		this.activityTel = activityTel;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((activityAddress == null) ? 0 : activityAddress.hashCode());
 		result = prime * result + ((activityContent == null) ? 0 : activityContent.hashCode());
 		result = prime * result + ((activityEnd == null) ? 0 : activityEnd.hashCode());
 		result = prime * result + activityId;
 		result = prime * result + ((activityImg == null) ? 0 : activityImg.hashCode());
+		result = prime * result + ((activityInbusiness == null) ? 0 : activityInbusiness.hashCode());
 		result = prime * result + ((activityName == null) ? 0 : activityName.hashCode());
 		result = prime * result + ((activityPerson == null) ? 0 : activityPerson.hashCode());
 		result = prime * result + ((activitySignupEnd == null) ? 0 : activitySignupEnd.hashCode());
 		result = prime * result + ((activitySignupStart == null) ? 0 : activitySignupStart.hashCode());
 		result = prime * result + ((activityStart == null) ? 0 : activityStart.hashCode());
+		result = prime * result + ((activityTel == null) ? 0 : activityTel.hashCode());
 		return result;
 	}
 	@Override
@@ -123,6 +154,11 @@ public class TransactionActivity {
 		if (getClass() != obj.getClass())
 			return false;
 		TransactionActivity other = (TransactionActivity) obj;
+		if (activityAddress == null) {
+			if (other.activityAddress != null)
+				return false;
+		} else if (!activityAddress.equals(other.activityAddress))
+			return false;
 		if (activityContent == null) {
 			if (other.activityContent != null)
 				return false;
@@ -139,6 +175,11 @@ public class TransactionActivity {
 			if (other.activityImg != null)
 				return false;
 		} else if (!activityImg.equals(other.activityImg))
+			return false;
+		if (activityInbusiness == null) {
+			if (other.activityInbusiness != null)
+				return false;
+		} else if (!activityInbusiness.equals(other.activityInbusiness))
 			return false;
 		if (activityName == null) {
 			if (other.activityName != null)
@@ -165,6 +206,11 @@ public class TransactionActivity {
 				return false;
 		} else if (!activityStart.equals(other.activityStart))
 			return false;
+		if (activityTel == null) {
+			if (other.activityTel != null)
+				return false;
+		} else if (!activityTel.equals(other.activityTel))
+			return false;
 		return true;
 	}
 	@Override
@@ -172,9 +218,8 @@ public class TransactionActivity {
 		return "TransactionActivity [activityId=" + activityId + ", activityName=" + activityName + ", activityPerson="
 				+ activityPerson + ", activityContent=" + activityContent + ", activityImg=" + activityImg
 				+ ", activitySignupStart=" + activitySignupStart + ", activitySignupEnd=" + activitySignupEnd
-				+ ", activityStart=" + activityStart + ", activityEnd=" + activityEnd + "]";
+				+ ", activityStart=" + activityStart + ", activityEnd=" + activityEnd + ", activityInbusiness="
+				+ activityInbusiness + ", activityAddress=" + activityAddress + ", activityTel=" + activityTel + "]";
 	}
-	
-	
 	
 }

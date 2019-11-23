@@ -2,9 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionActivity">
 
-	
-	<insert id="insertActivity" parameterType="TransactionActivity">
-		insert into transaction_activity()
+	<!-- 新增活动发布 -->
+	<insert id="save" parameterType="TransactionActivity">
+		insert into transaction_activity(activity_name,activity_person,activity_content,activity_img,activity_signup_start,activity_signup_end,activity_start,activity_end,activity_inbusiness,activity_address,activity_tel) values(#{activityName},#{activityPerson},#{activityContent},#{activityImg},#{activitySignupStart},#{activitySignupEnd},#{activityStart},#{activityEnd},#{activityInbusiness},#{activityAddress},#{activityTel}) 
 	</insert>
+	
+	<!-- 查看活动 -->
+	<select id="find" parameterType="int" resultType="TransactionActivity">
+		select * from transaction_activity where activity_id =#{activityId}
+	</select>
+	
+	
+	
+	<!-- 编辑活动 -->
+	<update id="update" parameterType="TransactionActivity">
+		update transaction_activity set activity_name=#{activityName},activity_person=#{activityPerson},activity_content=#{activityContent},activity_img=#{activityImg},activity_signup_start=#{activitySignupStart},activity_signup_end=#{activitySignupEnd},activity_start=#{activityStart},activity_end=#{activityEnd},activity_inbusiness=#{activityInbusiness},activity_address=#{activityAddress},activity_tel=#{activityTel} where activity_id=#{activityId}
+	</update>
+	
+	<!-- 查看未结束的活动的数据-->
+	<select id="findPaginated" parameterType="Map" resultType="TransactionActivity">
+		select * from transaction_activity
+		where now() &lt; activity_end
+		 <if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 查看未结束的活动的总条数 -->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_activity
+		where now() &lt; activity_end
+		 <if test="activityName != null and activityName != null">
+	    	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select> 
+	
+	<!-- 查看结束的活动的数据-->
+	<!-- 查看结束的活动的总条数-->
+	<!-- <select id="findEndActivity" parameterType="Map" resultType="TransactionActivity">
+		select * from transaction_activity
+		where now() &gt; activity_end
+	 	<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	
+	<select id="getTotalEndActivity" parameterType="Map" resultType="int">
+		select count(*) from transaction_activity
+		where now() &gt; activity_end
+		<if test="activityName != null and activityName != null">
+		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select> -->
+	
 	
 </mapper>

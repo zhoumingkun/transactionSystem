@@ -9,24 +9,33 @@ import java.util.Date;
 
 public class TransactionSignup {
 	private int signupId;				//报名编号
-	private int acttivityId;			//活动编号
+	private int activityId;			//活动编号
 	private int memberId;				//会员编号（报名人）
 	private Date signupDate;			//报名时间
 	private String signupCode;			//报名二维码
 	private boolean signupStatus;		//是否到场		
-	public TransactionSignup(int signupId, int acttivityId, int memberId, Date signupDate, String signupCode,
+	public TransactionSignup(int signupId, int activityId, int memberId, Date signupDate, String signupCode,
 			boolean signupStatus) {
 		super();
 		this.signupId = signupId;
-		this.acttivityId = acttivityId;
+		this.activityId = activityId;
 		this.memberId = memberId;
 		this.signupDate = signupDate;
 		this.signupCode = signupCode;
 		this.signupStatus = signupStatus;
 	}
-	public TransactionSignup(int acttivityId, int memberId, Date signupDate, String signupCode, boolean signupStatus) {
+	
+	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode) {
 		super();
-		this.acttivityId = acttivityId;
+		this.activityId = activityId;
+		this.memberId = memberId;
+		this.signupDate = signupDate;
+		this.signupCode = signupCode;
+	}
+
+	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode, boolean signupStatus) {
+		super();
+		this.activityId = activityId;
 		this.memberId = memberId;
 		this.signupDate = signupDate;
 		this.signupCode = signupCode;
@@ -42,11 +51,11 @@ public class TransactionSignup {
 	public void setSignupId(int signupId) {
 		this.signupId = signupId;
 	}
-	public int getActtivityId() {
-		return acttivityId;
+	public int getActivityId() {
+		return activityId;
 	}
-	public void setActtivityId(int acttivityId) {
-		this.acttivityId = acttivityId;
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
 	}
 	public int getMemberId() {
 		return memberId;
@@ -76,7 +85,7 @@ public class TransactionSignup {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + acttivityId;
+		result = prime * result + activityId;
 		result = prime * result + memberId;
 		result = prime * result + ((signupCode == null) ? 0 : signupCode.hashCode());
 		result = prime * result + ((signupDate == null) ? 0 : signupDate.hashCode());
@@ -93,7 +102,7 @@ public class TransactionSignup {
 		if (getClass() != obj.getClass())
 			return false;
 		TransactionSignup other = (TransactionSignup) obj;
-		if (acttivityId != other.acttivityId)
+		if (activityId != other.activityId)
 			return false;
 		if (memberId != other.memberId)
 			return false;
@@ -115,7 +124,7 @@ public class TransactionSignup {
 	}
 	@Override
 	public String toString() {
-		return "TransactionSignup [signupId=" + signupId + ", acttivityId=" + acttivityId + ", memberId=" + memberId
+		return "TransactionSignup [signupId=" + signupId + ", activityId=" + activityId + ", memberId=" + memberId
 				+ ", signupDate=" + signupDate + ", signupCode=" + signupCode + ", signupStatus=" + signupStatus + "]";
 	}
 	

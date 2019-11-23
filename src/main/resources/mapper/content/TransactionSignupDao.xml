@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionSignup">
+	
+	<!-- 新增公司报名 -->
+	<insert id="save" parameterType="TransactionSignup">
+		insert into transaction_signup(activity_id,member_id,signup_date,signup_code) values(#{activityId},#{memberId},#{signupDate},#{signupCode}) 
+	</insert>
+	
+	<!-- 修改到场状态 -->
+	<update  id="update" parameterType="TransactionSignup">
+		update transaction_signup set signup_status=#{signupStatus} where signup_id = #{signupId}
+	</update>
+	
+	<!-- 分页查看用户 -->
+	<!-- <select id="findPaginated" parameterType="Map" resultType="TransactionSignup">
+		select * from transaction_signup 
+		<include refid="paramsSQL"/>
+		limit #{offset}, #{limit}
+	</select> -->
+	
+	<!-- <select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_signup
+		<include refid="paramsSQL"/>
+	</select> -->
+	
+	
+	<!-- 通用的设置条件的查询SQL语句 -->
+	<!-- <sql id="paramsSQL">
+		<where>
+			<if test=" signupStatus != null and signupStatus  != '' ">
+				signup_status  = #{signupStatus}
+			</if>
+		</where>
+	</sql> -->
+	
+	
+	
+</mapper>
