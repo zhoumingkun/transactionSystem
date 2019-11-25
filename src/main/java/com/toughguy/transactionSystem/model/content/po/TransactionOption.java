@@ -10,6 +10,7 @@ public class TransactionOption {
 	private int questId;				// -问题id
 	private String optionContent;		// -选项内容
 	private int optionCount;			// -选择的人数的统计
+
 	public int getOptionId() {
 		return optionId;
 	}

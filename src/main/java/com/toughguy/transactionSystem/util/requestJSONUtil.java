@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 /**

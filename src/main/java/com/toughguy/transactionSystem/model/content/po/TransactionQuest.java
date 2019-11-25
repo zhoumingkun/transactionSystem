@@ -8,6 +8,7 @@ public class TransactionQuest {
 	private int questId;				// -问题id
 	private String questContent;		// -问题的内容
 	private int copiesId;				// -问卷调差的id
+
 	public int getQuestId() {
 		return questId;
 	}

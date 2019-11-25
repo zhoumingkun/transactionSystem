@@ -29,9 +29,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 问卷调查controller
  * 
- * @author LENOVO
+ * 		问卷调查controller
+ * @author Guozhenze
  *
  */
 @RestController
@@ -276,12 +276,14 @@ public class QuestOptionController {
 	    		qo.setCopiesStartTime(infos.getData().get(i).getCopiesStartTime());
 	    		qo.setCopiesId(infos.getData().get(i).getCopiesId());
 	    		qo.setCopiesTitle(infos.getData().get(i).getCopiesTitle());
-	
+	    		
 				TransactionQuest quest =  new TransactionQuest();
 				quest.setQuestId(infos.getData().get(i).getQuestId());
 				quest.setCopiesId(infos.getData().get(i).getCopiesId());
 				 // -获取每个调查问卷的所有的问题
+				
 				List<TransactionQuest>  lists= questService.findInfoAll(quest);
+				qo.setQuestCount(lists.size());
 				int num = 0;
 				for (int j = 0; j < lists.size(); j++) {
 					System.out.println(lists.get(j));
@@ -297,7 +299,7 @@ public class QuestOptionController {
 				qo.setOptionCount(num);
 				qos.add( qo);			
 			}  
-	    	map.put("date", qos);
+	    	map.put("data", qos);
 	    	map.put("total",qos.size());
 			map.put("code", "200");
 		} catch (Exception e) {

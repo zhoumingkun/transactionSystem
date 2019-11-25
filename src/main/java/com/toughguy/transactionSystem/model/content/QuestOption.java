@@ -10,6 +10,15 @@ public class QuestOption {
 	private int copiesId;				// -问卷调查的id
 	private int optionCount;			// -问卷调差总投票数
 	private Map<String,Object> map;		// -问卷调查的问题集合
+	private int questCount;				// -题目的总数
+	
+	public int getQuestCount() {
+		return questCount;
+	}
+	public void setQuestCount(int questCount) {
+		this.questCount = questCount;
+	}
+
 	public Date getCopiesEndTime() {
 		return copiesEndTime;
 	}

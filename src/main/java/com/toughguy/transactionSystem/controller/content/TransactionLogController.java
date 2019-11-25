@@ -49,8 +49,10 @@ public class TransactionLogController {
         required = false, dataType = "int", paramType = "query")
 	}) 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	
 	public String  getList() {
 		PagerModel<TransactionLog> lits = null;
+		
 		try {
 			lits = logService.findPaginated(null);
 		} catch (Exception e) {
