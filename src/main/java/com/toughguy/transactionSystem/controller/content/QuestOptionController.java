@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.QuestOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionQuest;
@@ -21,6 +25,7 @@ import com.toughguy.transactionSystem.service.content.prototype.IQuestOptionInfo
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionOptionService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
 import com.toughguy.transactionSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -87,6 +92,7 @@ public class QuestOptionController {
 				map2.put("questContent", infos.get(i).getQuestContent());
 				map2.put("questId", infos.get(i).getQuestId());
 				map2.put("questContent", infos.get(i).getQuestContent());
+				map2.put("questStatus", infos.get(i).getQuestStatus());
 				lis.add(map2);
 				TransactionOption option = new TransactionOption();
 				option.setQuestId(infos.get(i).getQuestId());
@@ -98,13 +104,14 @@ public class QuestOptionController {
 					map3.put("optionId", ops.get(j).getOptionId());
 					map3.put("optionContent", ops.get(j).getOptionContent());
 					map3.put("optionCount", ops.get(j).getOptionCount());
+					
 					num += ops.get(j).getOptionCount();
 					lists.add(map3);
 				}
 			map2.put("count", num);
 			map2.put("data", lists);
 			}
-			map.put("dates", lis);
+			map.put("datas", lis);
 			map.put("code", 200);
 			map.put("total", infos.size());
 			return JsonUtil.objectToJson(map);
@@ -121,21 +128,21 @@ public class QuestOptionController {
 	 * @param request
 	 */
 	@ApiOperation(value = "投票统计",notes = "查询某个问卷的所有的问题以及选项")
-	@ApiImplicitParams({ 
-		@ApiImplicitParam(name = "questId", value = "问题id",
-            required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "optionId", value = "选项ID",
-        required = true, dataType = "int", paramType = "query")
-	}) 
+	@ApiImplicitParam(name = "json", value = "多个问题id和选项id",
+            required = true, dataType = "json", paramType = "query")
 	@RequestMapping(value = "/updateCount", method = RequestMethod.GET)
-	public String update(HttpServletRequest request) {
+	public String update(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
+		
 		try {
-			int questId = Integer.parseInt(request.getParameter("questId"));
-			int optionId = Integer.parseInt(request.getParameter("optionId"));
+			JSONObject json =  requestJSONUtil.request(request, response);
+			JSONArray array = json.getJSONArray("data");
+			for (int i = 0; i < array.size(); i++) {
+				TransactionOption option = 	(TransactionOption)array.get(i);
+			}
 			TransactionOption option = new TransactionOption();
-			option.setOptionId(optionId);
-			option.setQuestId(questId);
+			/*option.setOptionId(optionId);
+			option.setQuestId(questId);*/
 			optionService.updateCount(option);
 		} catch (NumberFormatException e) {
 			map.put("code", "500");

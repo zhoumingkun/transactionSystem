@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.toughguy.transactionSystem.model.content.po.TransactionLog;
 import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.service.content.impl.TransactionLogServiceImpl;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 
 import io.swagger.annotations.Api;
@@ -67,17 +68,17 @@ public class TransactionLogController {
 	 * @param request
 	 * @return
 	 */
-	public static int insertLog(String logContent,int rootId) {
+	public static String insertLog(String logContent,int rootId) {
 		try {
 			TransactionLog log = new TransactionLog();
 			log.setLogContent(logContent);
 			log.setRootId(rootId);
 			log.setLogTime(new Date());
-			new TransactionLogController().logService.save(log);
+			new TransactionLogServiceImpl().save(log);
 		} catch (Exception e) {
-			return 0;
+			return "0";
 		}
-		return 1;
+		return "1";
 	}
 	
 	

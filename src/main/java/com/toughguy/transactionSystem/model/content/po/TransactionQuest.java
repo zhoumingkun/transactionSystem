@@ -8,7 +8,15 @@ public class TransactionQuest {
 	private int questId;				// -问题id
 	private String questContent;		// -问题的内容
 	private int copiesId;				// -问卷调差的id
-
+	private double questStatus;         // - 单选还是多选
+	
+	
+	public double getQuestStatus() {
+		return questStatus;
+	}
+	public void setQuestStatus(double questStatus) {
+		this.questStatus = questStatus;
+	}
 	public int getQuestId() {
 		return questId;
 	}
