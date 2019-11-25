@@ -1,11 +1,16 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
+import java.util.List;
 import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
-
+/**
+ * 活动和报名联系的dao层
+ * @author liDongSheng
+ *
+ */
 public interface IActivitySignupInfoDao extends IGenericDao<ActivitySignupInfo, Integer>{
 	/**
 	 * 分页查询活动结束参与的人数
@@ -23,4 +28,24 @@ public interface IActivitySignupInfoDao extends IGenericDao<ActivitySignupInfo, 
 	 * @return 所要的分页数据
 	 */
 	public PagerModel<ActivitySignupInfo> findEndActivitySignup(Map<String, Object> params);
+
+	/**
+	 * 查找某一个报名的用户
+	 * @param activitySignupInfo
+	 * @return
+	 */
+	public ActivitySignupInfo findSignup(ActivitySignupInfo activitySignupInfo);
+	
+	/**
+	 * 查找待参加的活动列表
+	 * @param transactionActivity
+	 * @return
+	 */
+	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	/**
+	 * 查找以参加的活动列表
+	 * @param transactionActivity
+	 * @return
+	 */
+	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo);
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo">
-	<!-- 分页查看未开始的活动的报名人数 -->
-	<select id="findPaginated" parameterType="Map" resultType="ActivitySignupInfo">
-		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+	<!-- 报名 ：分页查看未开始的活动的报名人数 -->
+	<select id="findPaginated" parameterType="Map" resultType="map">
+		select act.activity_id as activityId,act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
 		from transaction_activity act
 		left JOIN (select activity_id as bid,count(*) as sum 
 			  from transaction_signup
@@ -16,7 +16,7 @@
 		limit #{offset}, #{limit}
 	</select>
 	
-	<!-- 查看未开始的活动的总条数-->
+	<!-- 报名 ：查看未开始的活动的总条数-->
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &lt; activity_end
@@ -25,9 +25,9 @@
 	     </if>
 	</select>
 	
-	<!-- 分页查看结束活动的报名人数 -->
-	<select id="findEndActivitySignup" parameterType="Map" resultType="ActivitySignupInfo">
-		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+	<!-- 报名 ：分页查看结束活动的报名人数 -->
+	<select id="findEndActivitySignup" parameterType="Map" resultType="map">
+		select act.activity_id as activityId,act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
 		from transaction_activity act
 		left JOIN (select activity_id as bid,count(*) as sum 
 			  from transaction_signup
@@ -40,7 +40,7 @@
 		limit #{offset}, #{limit}
 	</select>
 	
-	<!-- 查看结束的活动的总条数-->
+	<!-- 报名 ：查看结束的活动的总条数-->
 	<select id="getTotalEndActivitySignup" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &gt; activity_end
@@ -50,9 +50,9 @@
 	</select>
 	
 	
-	<!-- 查看结束的活动到场的人数-->
-	<select id="findEndActivity" parameterType="Map" resultType="ActivitySignupInfo">
-		select act.activity_img as activityImg,act.activity_name as activityName,act.activity_signup_start as activitySignupStart,act.activity_signup_end as activitySignupEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
+	<!-- 活动：查看结束的活动到场的人数-->
+	<select id="findEndActivity" parameterType="Map" resultType="map">
+		select act.activity_id as activityId,act.activity_img as activityImg,act.activity_name as activityName,act.activity_start as activityStart,act.activity_end as activityEnd,IFNULL(b.sum,0) as sum,act.activity_person as activityPerson 
 		from transaction_activity act
 		left JOIN (select activity_id as bid,count(*) as sum 
 			  from transaction_signup
@@ -66,7 +66,7 @@
 		limit #{offset}, #{limit}
 	</select>
 	
-	<!-- 查看结束的活动的总条数-->
+	<!-- 活动：查看结束的活动的总条数-->
 	<select id="getTotalEndActivity" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &gt; activity_end
@@ -75,5 +75,31 @@
 	     </if>
 	</select>
 	
+	<!-- 查找某一用户具体的某一活动的报名详情 -->
+	<select id="findSignup" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
+		select activity.*,signup.* 
+		from transaction_signup signup
+		JOIN transaction_activity activity
+		on activity.activity_id=signup.activity_id
+		where signup.activity_id=#{activityId} and signup.member_id=#{memberId}
+	</select>
+	
+	<!-- 会员待参加的活动 -->
+	<select id="findStayAttendActivityList" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
+		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
+		from transaction_activity activity
+		JOIN transaction_signup signup
+		on activity.activity_id=signup.activity_id
+		where now() &lt; activity_start and signup.member_id=#{memberId}
+	</select> 
+	
+	<!-- 会员已参加的活动 -->
+	<select id="findEndAttendActivityList" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
+		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
+		from transaction_activity activity
+		JOIN transaction_signup signup
+		on activity.activity_id=signup.activity_id
+		where now() &gt; activity_start and signup.member_id=#{memberId}
+	</select> 
 	
 </mapper>

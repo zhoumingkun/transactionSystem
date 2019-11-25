@@ -237,7 +237,7 @@ public class ExcelUtil {
                     method = clazz.getMethod(methodName,new Class[] {});
                     value = method.invoke(data,new Object[] {});
                    if(field.getGenericType().toString().equals("class java.util.Date")) {
-                	   value= new SimpleDateFormat("yyyy-MM-dd").format(value);
+                	   value= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(value);
                    }
                 }catch (Exception e){
                     e.printStackTrace();

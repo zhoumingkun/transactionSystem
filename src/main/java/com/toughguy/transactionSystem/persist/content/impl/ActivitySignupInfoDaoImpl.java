@@ -59,5 +59,20 @@ public class ActivitySignupInfoDaoImpl extends GenericDaoImpl<ActivitySignupInfo
 		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalEndActivitySignup", params);
 		return count;
 	}
+
+	@Override
+	public ActivitySignupInfo findSignup(ActivitySignupInfo activitySignupInfo) {
+		return sqlSessionTemplate.selectOne(typeNameSpace+".findSignup",activitySignupInfo );
+	}
+	
+	@Override
+	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo) {
+		return sqlSessionTemplate.selectList(typeNameSpace+".findStayAttendActivityList", activitySignupInfo);
+	}
+
+	@Override
+	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo) {
+		return sqlSessionTemplate.selectList(typeNameSpace+".findEndAttendActivityList", activitySignupInfo);
+	}
 	
 }

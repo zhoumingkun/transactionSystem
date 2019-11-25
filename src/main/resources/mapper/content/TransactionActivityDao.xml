@@ -12,14 +12,12 @@
 		select * from transaction_activity where activity_id =#{activityId}
 	</select>
 	
+	<!-- 删除活动 -->
+	<delete id="delete" parameterType="int"> 
+		delete from transaction_activity where activity_id =#{activityId}
+	</delete>
 	
-	
-	<!-- 编辑活动 -->
-	<update id="update" parameterType="TransactionActivity">
-		update transaction_activity set activity_name=#{activityName},activity_person=#{activityPerson},activity_content=#{activityContent},activity_img=#{activityImg},activity_signup_start=#{activitySignupStart},activity_signup_end=#{activitySignupEnd},activity_start=#{activityStart},activity_end=#{activityEnd},activity_inbusiness=#{activityInbusiness},activity_address=#{activityAddress},activity_tel=#{activityTel} where activity_id=#{activityId}
-	</update>
-	
-	<!-- 查看未结束的活动的数据-->
+	<!-- 活动：查看未结束的活动的数据-->
 	<select id="findPaginated" parameterType="Map" resultType="TransactionActivity">
 		select * from transaction_activity
 		where now() &lt; activity_end
@@ -29,7 +27,7 @@
 		limit #{offset}, #{limit}
 	</select>
 	
-	<!-- 查看未结束的活动的总条数 -->
+	<!-- 活动：查看未结束的活动的总条数 -->
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &lt; activity_end
@@ -38,24 +36,7 @@
 	     </if>
 	</select> 
 	
-	<!-- 查看结束的活动的数据-->
-	<!-- 查看结束的活动的总条数-->
-	<!-- <select id="findEndActivity" parameterType="Map" resultType="TransactionActivity">
-		select * from transaction_activity
-		where now() &gt; activity_end
-	 	<if test="activityName != null and activityName != null">
-		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
-	     </if>
-		limit #{offset}, #{limit}
-	</select>
 	
-	<select id="getTotalEndActivity" parameterType="Map" resultType="int">
-		select count(*) from transaction_activity
-		where now() &gt; activity_end
-		<if test="activityName != null and activityName != null">
-		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
-	     </if>
-	</select> -->
 	
 	
 </mapper>

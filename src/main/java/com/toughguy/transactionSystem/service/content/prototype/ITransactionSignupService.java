@@ -8,5 +8,10 @@ import com.toughguy.transactionSystem.service.prototype.IGenericService;
  *
  */
 public interface ITransactionSignupService extends IGenericService<TransactionSignup, Integer> {
-	
+	/**
+	 * 判断是否报名
+	 * @param transactionSignup
+	 * @return
+	 */
+	public TransactionSignup judgeSignup(TransactionSignup transactionSignup);
 }

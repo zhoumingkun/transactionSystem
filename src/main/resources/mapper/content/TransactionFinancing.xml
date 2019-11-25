@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancing">
+	<!-- 新增融资信息发布 -->
+	<insert id="save" parameterType="TransactionFinancing">
+		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank}) 
+	</insert>
+	
+	<!-- 查看未开始的融资活动 -->
+	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancing">
+		select *
+		from transaction_financing
+		where now() &lt; financing_end
+		<if test="financingName != null and financingName != null">
+		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+	     </if>
+		limit #{offset}, #{limit}
+	</select>
+	<!-- 查看未开始的融资活动的总条数-->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_financing
+		where now() &lt; financing_end
+		<if test="financingName != null and financingName != null">
+		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select>
+	
+	<!-- 查看结束的融资活动 -->
+	<select id="findEndFinancing" parameterType="Map" resultType="TransactionFinancing">
+		select *
+		from transaction_financing
+		where now() &gt; financing_end
+		<if test="financingName != null and financingName != null">
+			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset}, #{limit}
+	</select>
+	<!-- 查看结束的融资活动的总条数-->
+	<select id="getTotalEndFinancing" parameterType="Map" resultType="int">
+		select count(*) from transaction_financing
+		where now() &gt; financing_end
+		<if test="financingName != null and financingName != null">
+		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+	     </if>
+	</select>
+	
+	<!-- 查看某一个融资活动 -->
+	<select id="find" parameterType="int" resultType="TransactionFinancing">
+		select * from transaction_financing where financing_id =#{financingId}
+	</select>
+	
+	<!-- 删除融资活动 -->
+	<delete id="delete" parameterType="int"> 
+		delete from transaction_financing where financing_id =#{financingId}
+	</delete>
+</mapper>

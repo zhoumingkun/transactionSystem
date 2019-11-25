@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.ReghostServiceInfo">
+	<!-- 查看登记的所有数据 -->
+	<select id="findPaginated" parameterType="Map" resultType="ReghostServiceInfo">
+		select reghost.* ,service.*
+		from transaction_reghost reghost
+		join transaction_service service
+		on reghost.service_id=service.service_id
+		<where>
+			<if test="reghostName != null and reghostName != null">
+			 	reghost_name like concat(concat('%', #{reghostName, jdbcType=VARCHAR}),'%')
+		     </if>
+	     </where>
+		limit #{offset}, #{limit}
+	</select>
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_reghost
+		<where>
+			<if test="reghostName != null and reghostName != null">
+			 	reghost_name like concat(concat('%', #{reghostName, jdbcType=VARCHAR}),'%')
+		     </if>
+	     </where>
+	</select>
+	
+	<!-- 查看登记的所有数据 -->
+	<select id="find" parameterType="int" resultType="ReghostServiceInfo">
+		select reghost.* ,service.*
+		from transaction_reghost reghost
+		join transaction_service service
+		on reghost.service_id=service.service_id
+		where reghost.reghost_id=#{reghostId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.EnterpriseSignupInfo">
+	<!-- 查找报名活动的企业 -->
+	<select id="findPaginated" parameterType="Map" resultType="com.toughguy.transactionSystem.model.content.vo.EnterpriseSignupTwoInfo">
+		select enterprise.enterprise_name,signup.signup_date
+		from transaction_signup signup
+		JOIN transaction_enterprise enterprise
+		on enterprise.member_id=signup.member_id
+		where signup.activity_id=#{activityId}
+		limit #{offset}, #{limit}
+	</select>
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_signup where activity_id=#{activityId}
+	</select>
+	
+</mapper>

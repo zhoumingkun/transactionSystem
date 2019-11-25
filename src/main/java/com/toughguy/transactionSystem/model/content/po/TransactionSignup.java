@@ -13,9 +13,9 @@ public class TransactionSignup {
 	private int memberId;				//会员编号（报名人）
 	private Date signupDate;			//报名时间
 	private String signupCode;			//报名二维码
-	private boolean signupStatus;		//是否到场		
+	private Boolean signupStatus;		//是否到场		
 	public TransactionSignup(int signupId, int activityId, int memberId, Date signupDate, String signupCode,
-			boolean signupStatus) {
+			Boolean signupStatus) {
 		super();
 		this.signupId = signupId;
 		this.activityId = activityId;
@@ -25,6 +25,12 @@ public class TransactionSignup {
 		this.signupStatus = signupStatus;
 	}
 	
+	public TransactionSignup(int activityId, int memberId) {
+		super();
+		this.activityId = activityId;
+		this.memberId = memberId;
+	}
+
 	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode) {
 		super();
 		this.activityId = activityId;
@@ -33,7 +39,7 @@ public class TransactionSignup {
 		this.signupCode = signupCode;
 	}
 
-	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode, boolean signupStatus) {
+	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode, Boolean signupStatus) {
 		super();
 		this.activityId = activityId;
 		this.memberId = memberId;
@@ -75,12 +81,15 @@ public class TransactionSignup {
 	public void setSignupCode(String signupCode) {
 		this.signupCode = signupCode;
 	}
-	public boolean isSignupStatus() {
+	
+	public Boolean getSignupStatus() {
 		return signupStatus;
 	}
-	public void setSignupStatus(boolean signupStatus) {
+
+	public void setSignupStatus(Boolean signupStatus) {
 		this.signupStatus = signupStatus;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,9 +99,10 @@ public class TransactionSignup {
 		result = prime * result + ((signupCode == null) ? 0 : signupCode.hashCode());
 		result = prime * result + ((signupDate == null) ? 0 : signupDate.hashCode());
 		result = prime * result + signupId;
-		result = prime * result + (signupStatus ? 1231 : 1237);
+		result = prime * result + ((signupStatus == null) ? 0 : signupStatus.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -118,17 +128,20 @@ public class TransactionSignup {
 			return false;
 		if (signupId != other.signupId)
 			return false;
-		if (signupStatus != other.signupStatus)
+		if (signupStatus == null) {
+			if (other.signupStatus != null)
+				return false;
+		} else if (!signupStatus.equals(other.signupStatus))
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "TransactionSignup [signupId=" + signupId + ", activityId=" + activityId + ", memberId=" + memberId
 				+ ", signupDate=" + signupDate + ", signupCode=" + signupCode + ", signupStatus=" + signupStatus + "]";
 	}
-	
-	
+
 	
 	
 }

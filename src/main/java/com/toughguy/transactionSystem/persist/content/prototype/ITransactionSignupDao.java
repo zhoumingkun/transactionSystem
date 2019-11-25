@@ -9,6 +9,10 @@ import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
  */
 
 public interface ITransactionSignupDao extends IGenericDao<TransactionSignup, Integer>{
-	
+	/**
+	 * 查找用户
+	 * @return
+	 */
+	public TransactionSignup findSignup(TransactionSignup transactionSignup);
 	
 }

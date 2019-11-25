@@ -38,5 +38,7 @@ public class TransactionActivityDaoImpl extends GenericDaoImpl<TransactionActivi
 		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalEndActivity", params);
 		return count;
 	}
+
+	
 	
 }

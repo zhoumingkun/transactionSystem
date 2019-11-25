@@ -1,5 +1,6 @@
 package com.toughguy.transactionSystem.service.content.prototype;
 
+import java.util.List;
 import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
@@ -14,5 +15,29 @@ public interface IActivitySignupInfoService extends IGenericService<ActivitySign
 	 * @return 所要的分页数据
 	 */
 	public PagerModel<ActivitySignupInfo> findEndActivityPage(Map<String, Object> params);
+	/**
+	 * 查询活动结束的报名
+	 * @param params
+	 * @return
+	 */
 	public PagerModel<ActivitySignupInfo> findEndActivityPageSignup(Map<String, Object> params);
+	/**
+	 * 查找用户具体的某一个活动详情
+	 * @param activitySignupInfo
+	 * @return
+	 */
+	public ActivitySignupInfo findDefiniteSignupDetails(ActivitySignupInfo activitySignupInfo);
+	
+	/**
+	 * 查找待参加的活动列表
+	 * @param transactionActivity
+	 * @return
+	 */
+	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	/**
+	 * 查找以参加的活动列表
+	 * @param transactionActivity
+	 * @return
+	 */
+	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo);
 }

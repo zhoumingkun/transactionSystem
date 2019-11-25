@@ -14,6 +14,11 @@ import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 @Repository
 public class TransactionSignupDaoImpl extends GenericDaoImpl<TransactionSignup, Integer>implements ITransactionSignupDao{
 
+	@Override
+	public TransactionSignup findSignup(TransactionSignup transactionSignup) {
+		return sqlSessionTemplate.selectOne(typeNameSpace+".findSignup",transactionSignup );
+	}
+
 
 
 }

@@ -4,35 +4,29 @@
 	
 	<!-- 新增公司报名 -->
 	<insert id="save" parameterType="TransactionSignup">
-		insert into transaction_signup(activity_id,member_id,signup_date,signup_code) values(#{activityId},#{memberId},#{signupDate},#{signupCode}) 
+		insert into transaction_signup(activity_id,member_id,signup_date,signup_code) values(#{activityId},#{memberId},now(),#{signupCode}) 
 	</insert>
 	
 	<!-- 修改到场状态 -->
 	<update  id="update" parameterType="TransactionSignup">
-		update transaction_signup set signup_status=#{signupStatus} where signup_id = #{signupId}
+		update transaction_signup set signup_status=#{signupStatus}  where signup_id=#{signupId} and member_id=#{memberId}
 	</update>
 	
-	<!-- 分页查看用户 -->
-	<!-- <select id="findPaginated" parameterType="Map" resultType="TransactionSignup">
-		select * from transaction_signup 
-		<include refid="paramsSQL"/>
-		limit #{offset}, #{limit}
-	</select> -->
+	<!-- 删除因活动发布错误的报名 -->
+	<delete id="delete" parameterType="int"> 
+		delete from transaction_signup where activity_id =#{activityId}
+	</delete>
 	
-	<!-- <select id="getTotalOfItems" parameterType="Map" resultType="int">
-		select count(*) from transaction_signup
-		<include refid="paramsSQL"/>
-	</select> -->
+	<!-- 查看是否重复报名 -->
+	<select id="findSignup" parameterType="TransactionSignup" resultType="TransactionSignup">
+		select * from transaction_signup where activity_id=#{activityId} and member_id=#{memberId}
+	</select>
 	
 	
-	<!-- 通用的设置条件的查询SQL语句 -->
-	<!-- <sql id="paramsSQL">
-		<where>
-			<if test=" signupStatus != null and signupStatus  != '' ">
-				signup_status  = #{signupStatus}
-			</if>
-		</where>
-	</sql> -->
+	
+
+	
+	
 	
 	
 	
