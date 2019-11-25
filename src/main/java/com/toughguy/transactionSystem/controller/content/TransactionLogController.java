@@ -62,25 +62,7 @@ public class TransactionLogController {
 		return "{'code':200,'msg':'success','date':"+JSON.toJSONString(lits).toString()+"}";
 	}
 	
-	
-	/**
-	 * 	生成日志的方法
-	 * @param request
-	 * @return
-	 */
-	public static String insertLog(String logContent,int rootId) {
-		try {
-			TransactionLog log = new TransactionLog();
-			log.setLogContent(logContent);
-			log.setRootId(rootId);
-			log.setLogTime(new Date());
-			new TransactionLogServiceImpl().save(log);
-		} catch (Exception e) {
-			return "0";
-		}
-		return "1";
-	}
-	
+
 	
 	/***
 	 * 删除某个日志

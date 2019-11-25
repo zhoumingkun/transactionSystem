@@ -138,12 +138,14 @@ public class QuestOptionController {
 			JSONObject json =  requestJSONUtil.request(request, response);
 			JSONArray array = json.getJSONArray("data");
 			for (int i = 0; i < array.size(); i++) {
-				TransactionOption option = 	(TransactionOption)array.get(i);
+				TransactionOption options = 	(TransactionOption)array.get(i);
+				TransactionOption option = new TransactionOption();
+				option.setOptionId(options.getOptionId());
+				option.setQuestId(options.getQuestId());
+				optionService.updateCount(option);
 			}
-			TransactionOption option = new TransactionOption();
-			/*option.setOptionId(optionId);
-			option.setQuestId(questId);*/
-			optionService.updateCount(option);
+		
+			
 		} catch (NumberFormatException e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
