@@ -21,6 +21,11 @@ public interface ITransactionPolicyService extends IGenericService<TransactionPo
 	 * @return
 	 */
 	PagerModel<TransactionPolicy> selectOrId(Map<String, Object> params);
-	
-	
+	/**
+	 * 
+	 * 	模糊查询
+	 * @param params
+	 * @return
+	 */
+	PagerModel<TransactionPolicy> selectLike(Map<String, Object> params);
 }

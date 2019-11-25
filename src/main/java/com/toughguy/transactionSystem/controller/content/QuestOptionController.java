@@ -188,6 +188,8 @@ public class QuestOptionController {
 	 */
 	@ApiOperation(value = "获取全部的未结束的问卷调差",notes = "获取全部的未结束的问卷调差")
 	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "copiesTitle", value = "问卷调查名字",
+	            required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "page", value = "页码",
             required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "rows", value = "行数",
@@ -249,6 +251,8 @@ public class QuestOptionController {
      */
 	@ApiOperation(value = "获取全部的已结束的问卷调差",notes = "获取全部的已结束的问卷调差")
 	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "copiesTitle", value = "问卷调查名字",
+	            required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "page", value = "页码",
             required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "rows", value = "行数",

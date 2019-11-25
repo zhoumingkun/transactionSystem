@@ -39,6 +39,14 @@ public interface IQuestOptionInfoDao  extends IGenericDao<QuestOptionInfo, Integ
 	 * @return
 	 */
 	public PagerModel<QuestOptionInfo> selectNoEnd(Map<String, Object> params);
+	/**
+	 * 
+	 * 	模糊查询
+	 * @param params
+	 * @return
+	 */
+	
+	public PagerModel<QuestOptionInfo> selectLike(Map<String, Object> params);
 	
 }
 

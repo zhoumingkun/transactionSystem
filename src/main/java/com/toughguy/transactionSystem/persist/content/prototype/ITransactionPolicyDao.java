@@ -18,5 +18,10 @@ public interface ITransactionPolicyDao extends IGenericDao<TransactionPolicy, In
 	 */
 	PagerModel<TransactionPolicy> selectOrId(Map<String, Object> params);
 	
-	
+	/**
+	 * 	模糊查找
+	 * @param params
+	 * @return
+	 */
+	PagerModel<TransactionPolicy> selectLike(Map<String, Object> params);
 }

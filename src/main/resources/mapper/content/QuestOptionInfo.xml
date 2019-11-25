@@ -51,6 +51,23 @@
 	</insert>
 
 
+	<!-- 模糊查询 -->
+	<select id="selectLike" parameterType="Map" resultType="QuestOptionInfo">
+		select * from transaction_copies where copies_end_time &lt; now()
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset} , #{limit}
+	</select>
+		
+		
+	<select id="getSelectLike" parameterType="Map" resultType="int">
+		select count(*) from transaction_copies where copies_end_time &gt; now() 
+		<if test="copiesTitle != null and copiesTitle != '' ">
+			and copies_title like concat(concat('%', #{copiesTitle, jdbcType=VARCHAR}),'%')
+		</if>
+		
+	</select>
 
 
 </mapper>

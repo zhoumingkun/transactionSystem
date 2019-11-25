@@ -26,5 +26,10 @@ public class TransactionPolicyServiceImpl
 	public PagerModel<TransactionPolicy> selectOrId(Map<String, Object> params) {
 		return policyDao.selectOrId(params);
 	}
+	@Override
+	public PagerModel<TransactionPolicy> selectLike(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return policyDao.selectLike(params);
+	}
 
 }

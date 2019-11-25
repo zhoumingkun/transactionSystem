@@ -232,4 +232,24 @@ public class TransactionPolicyController {
 			return "{msg:服务器错误,code:500}";
 		}
 	}
+	
+	
+	@ApiOperation(value = "模糊查询",notes = "政策的模糊查询")
+
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "policyName", value = "模糊查询的条件",
+				required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "page", value = "页数",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "条数",
+		required = true, dataType = "int", paramType = "query")
+	})
+	@RequestMapping(value  ="/like",method=RequestMethod.GET)
+	public String getSelectLike(HttpServletRequest request) {
+		Map<String ,Object> map = new HashMap<>();
+		String policyName = request.getParameter("policyName");
+		map.put("policyName", policyName);
+		PagerModel<TransactionPolicy> list = policyService.selectLike(map);
+		return JSON.toJSONString(list).toString();
+	}
 }

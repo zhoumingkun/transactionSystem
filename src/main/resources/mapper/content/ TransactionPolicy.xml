@@ -133,9 +133,57 @@
 		</if>
 		<if test=" enterpriseTypeId != null and enterpriseTypeId != '' ">
 			and  a.enterprise_type_id  =  #{enterpriseTypeId} 
-		</if>
+		</if>	
+	</select>	
+	
+	
+	
+	<!-- 模糊查询的总条数  -->
+	<select id="getselectLike" parameterType="Map" resultType="int">
+		select count(*) from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+		and a.policy_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.policy_unit like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.policy_content like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or c.enterprise_area like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or d.address_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or e.enterprise_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or b.trade_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.polic_money like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
 		
 	</select>	
 	
+	
+		<!-- 模糊查询 -->
+	<select id="selectLike" parameterType="Map" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+		and a.policy_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.policy_unit like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.policy_content like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or c.enterprise_area like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or d.address_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or e.enterprise_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or b.trade_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		or a.polic_money like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+	
+	</select>	
 	
 </mapper>

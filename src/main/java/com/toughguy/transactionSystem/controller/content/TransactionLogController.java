@@ -60,43 +60,22 @@ public class TransactionLogController {
 	}
 	
 	
-	
-	/***
-	 * 新建日志
-	 * 
+	/**
+	 * 	生成日志的方法
 	 * @param request
 	 * @return
 	 */
-	@ApiOperation(value = "新建日志",notes = "新建日志")
-	@ApiImplicitParams({ 
-		@ApiImplicitParam(name = "logContent", value = "日志内容",
-            required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "rootId", value = "管理id",
-        required = true, dataType = "int", paramType = "query")
-	}) 	
-	@RequestMapping(value="insert" , method=RequestMethod.GET)
-	public String getInsert(HttpServletRequest request) {
-		TransactionLog log = new TransactionLog();
-		Map<String,String> map = new HashMap<>();
+	public static int insertLog(String logContent,int rootId) {
 		try {
-			log.setLogContent(request.getParameter("logContent"));
-			log.setRootId(Integer.parseInt(request.getParameter("rootId")));
-		} catch (NumberFormatException e) {
-			map.put("code", "500");
-			map.put("msg", "请正确传入参数");
-			return JSON.toJSONString(map).toString();
-		}
-		try {
+			TransactionLog log = new TransactionLog();
+			log.setLogContent(logContent);
+			log.setRootId(rootId);
 			log.setLogTime(new Date());
-			logService.save(log);
+			new TransactionLogController().logService.save(log);
 		} catch (Exception e) {
-			map.put("code", "500");
-			map.put("msg", "服务器错误");
-			return JSON.toJSONString(map).toString();
+			return 0;
 		}
-		map.put("code", "200");
-		map.put("msg", "seccess");
-		return JSON.toJSONString(map).toString();
+		return 1;
 	}
 	
 	

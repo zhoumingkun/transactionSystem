@@ -57,4 +57,24 @@ public class QuestOptionInfoDaoImpl
 		return count;
 	}
 
+	@Override
+	public PagerModel<QuestOptionInfo> selectLike(Map<String, Object> params) {
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<QuestOptionInfo> pm = new PagerModel<QuestOptionInfo>();
+		int total = getTotalNumOfItemss(params);
+		List<QuestOptionInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".selectLike", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+	// -- 获取总的条目数 (分页查询中使用)
+		private int getTotalNumOfItemss(Map<String, Object> params) {
+			int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getSelectLike", params);
+			return count;
+		}
+
 }
