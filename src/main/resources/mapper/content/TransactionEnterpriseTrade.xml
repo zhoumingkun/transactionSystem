@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseTrade">
+	<select id="findStatusAll" resultType="TransactionEnterpriseTrade">
+		select * from transaction_enterprise_trade
+		where status=1;
+	</select>
+	
 	<select id="findAll" resultType="TransactionEnterpriseTrade">
 		select * from transaction_enterprise_trade;
 	</select>
 	
 	<update id="update" parameterType="TransactionEnterpriseTrade">
 		update transaction_enterprise_trade
-		set trade_type=#{tradeType}
+		set status=#{status}
 		where trade_id=#{tradeId};
 	</update>
 	

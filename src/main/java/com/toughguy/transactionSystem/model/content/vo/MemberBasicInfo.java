@@ -48,6 +48,30 @@ public class MemberBasicInfo {
 		this.enterpriseCardType = enterpriseCardType;
 		this.enterpriseCardId = enterpriseCardId;
 	}
+	
+	
+	/**
+	 * 签到接口
+	 * @param memberId
+	 * @param memberOnlineTimes
+	 */
+	public MemberBasicInfo(int memberId, int memberOnlineTimes) {
+		super();
+		this.memberId = memberId;
+		this.memberOnlineTimes = memberOnlineTimes;
+	}
+	
+	
+	/**
+	 * 手机查询接口
+	 * @param memberTel
+	 */
+	public MemberBasicInfo(String memberTel) {
+		super();
+		this.memberTel = memberTel;
+	}
+	
+
 
 	public MemberBasicInfo(int memberId, String openId, String memberTel, String memberPwd, Date memberDate,
 			String memberName, String memberCard, int memberIntegral, int memberRank, int memberOnlineTimes,
@@ -67,6 +91,13 @@ public class MemberBasicInfo {
 		this.enterpriseCardType = enterpriseCardType;
 		this.enterpriseCardId = enterpriseCardId;
 	}
+	
+	
+	public MemberBasicInfo(int memberId) {
+		super();
+		this.memberId = memberId;
+	}
+
 
 	public MemberBasicInfo() {
 		super();

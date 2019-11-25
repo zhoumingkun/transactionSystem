@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionMember">
+	
+	<!-- 检查openId是否注册 -->
+	<select id="checkOpenId" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member 
+		where open_id=#{openId}
+	</select>
+	
+	<!-- 检查会员是否存在 -->
+	<select id="loginCheck" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member 
+		where 
+		open_id = #{openId} and 
+		member_tel=#{memberTel} and 
+		member_pwd=#{memberPwd};
+	</select>
+	
+	<!-- 更改密码 -->
+	<update id="updatePassword">
+		update transaction_member set member_pwd=#{memberTel} 
+		where open_id= #{openId};
+	</update>
+	
+	<!-- 解除绑定 -->
+	<update id="updateUser">
+		update transaction_member 
+		set member_tel=#{memberTel},open_id='0'
+		where member_id= #{memberId};
+	</update>
+	
+	
+	<!-- 存储基本资料 -->
+	<insert id="saveBasicInfo1" parameterType="MemberBasicInfo" useGeneratedKeys="true" keyProperty="memberId">
+		insert into 
+		transaction_member(open_id,member_tel,member_pwd,member_date,member_name,member_card,member_integral,member_rank,member_online_times)
+		values(#{openId},#{memberTel},#{memberPwd},#{memberDate},#{memberName},#{memberCard},#{memberIntegral},1,#{memberOnlineTimes});
+	</insert>
+	<!-- 根据openId查个人信息 -->
+	<select id="openIdFindUser" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member where open_id=#{openId};
+	</select>
+	<!-- 根据memberId查个人信息 -->
+	<select id="find" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member where member_id=#{id};
+	</select>
+
+	<!-- 查询所有个人用户的基本信息 -->
+	<select id="memberInfo" resultType="TransactionMember">
+		select 
+			m.member_id, 
+			m.member_name,
+			m.member_card,
+			m.member_tel,
+			m.member_rank,
+			m.member_online_times,
+			m.member_date
+		from transaction_member m,transaction_enterprise e
+		where e.enterprise_audit_status_id != 1 and e.member_id=m.member_id; 
+		
+		<!-- where 资料不完善 和审核不通过-->
+		<!-- limit #{offset} , #{limit} -->
+
+	</select>
+	
+	<!-- 签到接口 -->
+	<select id="findOnlineTimes" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member
+		where member_id = #{memberId};
+	</select>
+	<update id="updateOnlineTimes" parameterType="TransactionMember" >
+		update transaction_member set member_online_times=#{memberOnlineTimes} 
+		where member_id= #{memberId};
+	</update>
+	
+	<!-- 积分接口 -->
+	<select id="findIntegral" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member
+		where member_id = #{memberId};
+	</select>
+	<update id="updateIntegral" parameterType="TransactionMember" >
+		update transaction_member 
+		set member_integral = #{memberIntegral} 
+		where member_id = #{memberId};
+	</update>
+	
+	<!-- 查询手机号是否存在 -->
+	<select id="findTel" parameterType="SqlGeneralInfo" resultType="TransactionMember">
+		select * from transaction_member
+		where member_tel=#{info} 
+	</select>
+	
+	
+</mapper>

@@ -16,13 +16,13 @@
 	
 	<!-- 检查会员是否存在 -->
 	<select id="loginCheck" parameterType="TransactionMember" resultType="TransactionMember">
-		select * from transaction_member 
+		select member_id from transaction_member 
 		where member_tel=#{memberTel} and member_pwd=#{memberPwd};
 	</select>
 	
 	<!-- 检查openId是否注册 -->
 	<select id="checkOpenId" parameterType="TransactionMember" resultType="TransactionMember">
-		select * from transaction_member 
+		select member_id from transaction_member 
 		where open_id=#{openId}
 	</select>
 	
@@ -39,6 +39,7 @@
 		where member_id= #{memberId};
 	</update>
 	
+	<!-- 查询所有个人用户的基本信息 -->
 	<select id="memberInfo" resultType="TransactionMember">
 		select 
 			member_id, 
@@ -49,10 +50,11 @@
 			member_online_times,
 			member_date
 		from transaction_member
+		<!-- where 资料不完善 和审核不通过-->
 		<!-- limit #{offset} , #{limit} -->
 
 	</select>
-	
+	<!-- 查询所有企业用户的基本信息 -->
 	<select id="enterpriseInfo" resultType="MemberBasicInfo">
 		select 
 		member.member_id,
@@ -64,6 +66,39 @@
 		from transaction_member member
 		join transaction_enterprise enterprise
 		on member.member_id = enterprise.member_id
-	<!-- 	limit #{offset} , #{limit}  -->
 	</select>
+	
+	<!-- 签到接口 -->
+	<select id="findOnlineTimes" parameterType="MemberBasicInfo" resultType="MemberBasicInfo">
+		select member_id,member_online_times from transaction_member
+		where member_id = #{memberId};
+	</select>
+	<update id="updateOnlineTimes">
+		update transaction_member set member_online_times=#{memberOnlineTimes} 
+		where member_id= #{memberId};
+	</update>
+	
+	<!-- 积分接口 -->
+	<select id="findIntegral" parameterType="MemberBasicInfo" resultType="MemberBasicInfo">
+		select member_id,member_integral from transaction_member
+		where member_id = #{memberId};
+	</select>
+	<update id="updateIntegral" parameterType="TransactionMember" >
+		update transaction_member set member_integral = #{memberIntegral} 
+		where member_id = #{memberId};
+	</update>
+	
+	<!-- 查询手机号是否存在 -->
+	<select id="findTel" parameterType="MemberBasicInfo" resultType="MemberBasicInfo">
+		select member_tel from transaction_member
+		where member_tel=#{memberTel} 
+	</select>
+	
+	<!-- 公司名是否存在 -->
+	<select id="findEnterpriseName" parameterType="SqlGeneralInfo" resultType="SqlGeneralInfo">
+		select enterprise_name as info from transaction_enterprise
+		where enterprise_name=#{info} 
+	</select>
+
+	
 </mapper>

@@ -1,11 +1,9 @@
 package com.toughguy.transactionSystem.model.content.vo;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
-public class MemberCompleteInfo implements Serializable {
+public class MemberCompleteInfo {
 
-	private static final long serialVersionUID = 2214948310859590902L;
 	// 会员基本信息
 	private int memberId;  				//会员的id
 	private String openId;				//openid
@@ -64,6 +62,14 @@ public class MemberCompleteInfo implements Serializable {
 		super();
 		this.memberId = memberId;
 	}
+	 
+
+	public MemberCompleteInfo(int memberId, String enterpriseName) {
+		super();
+		this.memberId = memberId;
+		this.enterpriseName = enterpriseName;
+	}
+	
 
 	/**
 	  * 完善资料
@@ -86,28 +92,66 @@ public class MemberCompleteInfo implements Serializable {
 	  * @param enterpriseAuditStatus
 	  * @param enterpriseTypeId
 	  */
-	public MemberCompleteInfo(int memberId, String openId, int enterpriseAddressId, int enterpriseTradeId, int enterpriseAreaId, String enterpriseTaxpayer,
-			Date enterpriseValidityDateStart, Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
-			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-			String enterpriseLegalPersonCard, int enterpriseAuditStatus, int enterpriseTypeId) {
+//	public MemberCompleteInfo(int memberId, String openId, int enterpriseAddressId, int enterpriseTradeId, int enterpriseAreaId, String enterpriseTaxpayer,
+//			Date enterpriseValidityDateStart, Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
+//			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
+//			String enterpriseLegalPersonCard, int enterpriseAuditStatus, int enterpriseTypeId) {
+//		super();
+//		this.memberId = memberId;
+//		this.openId = openId;
+//		this.enterpriseAddressId = enterpriseAddressId;
+//		this.enterpriseTradeId = enterpriseTradeId;
+//		this.enterpriseAreaId = enterpriseAreaId;
+//		this.enterpriseTaxpayer = enterpriseTaxpayer;
+//		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
+//		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
+//		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
+//		this.enterpriseRegAddress = enterpriseRegAddress;
+//		this.enterpriseStatusId = enterpriseStatusId;
+//		this.enterpriseRegDate = enterpriseRegDate;
+//		this.enterpriseRegMoney = enterpriseRegMoney;
+//		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
+//		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
+//		this.enterpriseAuditStatusId = enterpriseAuditStatus;
+//		this.enterpriseTypeId = enterpriseTypeId;
+//	}
+	
+	
+	
+	public MemberCompleteInfo(int memberId, String memberName, String memberTel, String memberCard, int memberIntegral,
+			int memberRank, int memberOnlineTimes, Date memberDate, String enterpriseName, String enterpriseCardType,
+			String enterpriseCardId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,
+			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
+			Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
+			String enterpriseLegalPersonCard, String auditStatusType, String tradeType, String enterpriseType,
+			String enterpriseStatus, String enterpriseArea, String addressName) {
 		super();
 		this.memberId = memberId;
-		this.openId = openId;
-		this.enterpriseAddressId = enterpriseAddressId;
-		this.enterpriseTradeId = enterpriseTradeId;
-		this.enterpriseAreaId = enterpriseAreaId;
+		this.memberName = memberName;
+		this.memberTel = memberTel;
+		this.memberCard = memberCard;
+		this.memberIntegral = memberIntegral;
+		this.memberRank = memberRank;
+		this.memberOnlineTimes = memberOnlineTimes;
+		this.memberDate = memberDate;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+		this.enterpriseCardId = enterpriseCardId;
 		this.enterpriseTaxpayer = enterpriseTaxpayer;
 		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
 		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
 		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
 		this.enterpriseRegAddress = enterpriseRegAddress;
-		this.enterpriseStatusId = enterpriseStatusId;
 		this.enterpriseRegDate = enterpriseRegDate;
 		this.enterpriseRegMoney = enterpriseRegMoney;
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
-		this.enterpriseAuditStatusId = enterpriseAuditStatus;
-		this.enterpriseTypeId = enterpriseTypeId;
+		this.auditStatusType = auditStatusType;
+		this.tradeType = tradeType;
+		this.enterpriseType = enterpriseType;
+		this.enterpriseStatus = enterpriseStatus;
+		this.enterpriseArea = enterpriseArea;
+		this.addressName = addressName;
 	}
 
 	public MemberCompleteInfo(int memberId, String openId, String memberName, String memberTel, String memberCard,
@@ -155,6 +199,15 @@ public class MemberCompleteInfo implements Serializable {
 		this.enterpriseArea = enterpriseArea;
 		this.addressName = addressName;
 	}
+
+	public MemberCompleteInfo(int memberId2, String openId2, int enterpriseAddressId2, int enterpriseTradeId2,
+			int enterpriseAreaId2, String enterpriseTaxpayer2, java.util.Date date, java.util.Date date2,
+			String enterpriseCertificationUnit2, String enterpriseRegAddress2, int enterpriseStatusId2,
+			java.util.Date date3, Double enterpriseRegMoney2, String enterpriseLegalPersonName2,
+			String enterpriseLegalPersonCard2, int enterpriseAuditStatus, int enterpriseTypeId2) {
+		// TODO Auto-generated constructor stub
+	}
+
 
 	@Override
 	public int hashCode() {

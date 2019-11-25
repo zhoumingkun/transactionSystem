@@ -26,6 +26,61 @@ public class TransactionEnterprise {
 	private String enterpriseLegalPersonName;   // 法定代表人名称
 	private String enterpriseLegalPersonCard;	// 法定代表人身份证
 	private int enterpriseAuditStatusId;			// 企业审核状态
+	
+	
+	// 注册基本信息1
+	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
+			String enterpriseCardId) {
+		super();
+		this.memberId = memberId;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+		this.enterpriseCardId = enterpriseCardId;
+	}
+	// 注册基本信息2 没有企业证件号
+	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType) {
+		super();
+		this.memberId = memberId;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+	}
+
+	// 判断公司名是否存在
+	public TransactionEnterprise(String enterpriseName) {
+		super();
+		this.enterpriseName = enterpriseName;
+	}
+	//完善资料
+	
+	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
+			String enterpriseCardId, int enterpriseTypeId, int enterpriseTradeId, int enterpriseAreaId,
+			int enterpriseAddressId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,
+			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
+			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
+			String enterpriseLegalPersonCard) {
+		super();
+		this.memberId = memberId;
+		this.enterpriseName = enterpriseName;
+		this.enterpriseCardType = enterpriseCardType;
+		this.enterpriseCardId = enterpriseCardId;
+		this.enterpriseTypeId = enterpriseTypeId;
+		this.enterpriseTradeId = enterpriseTradeId;
+		this.enterpriseAreaId = enterpriseAreaId;
+		this.enterpriseAddressId = enterpriseAddressId;
+		this.enterpriseTaxpayer = enterpriseTaxpayer;
+		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
+		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
+		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
+		this.enterpriseRegAddress = enterpriseRegAddress;
+		this.enterpriseStatusId = enterpriseStatusId;
+		this.enterpriseRegDate = enterpriseRegDate;
+		this.enterpriseRegMoney = enterpriseRegMoney;
+		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
+		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
+	}
+	
+	
+
 
 	public TransactionEnterprise(int enterpriseId, int memberId, String enterpriseName, String enterpriseCardType,
 			String enterpriseCardId, int enterpriseTypeId, int enterpriseTradeId, int enterpriseAreaId,
@@ -55,7 +110,6 @@ public class TransactionEnterprise {
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
 		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
 	}
-
 
 	
 	public TransactionEnterprise() {

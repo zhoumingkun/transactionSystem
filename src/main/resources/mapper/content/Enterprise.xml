@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterprise">
+	<!-- 根据member_id获取信息 -->
+	<select id="find" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
+		select * from transaction_enterprise
+		where member_id=#{id}
+	</select>
+	
+	<!-- 注册基本信息 -->
+	<insert id="insertMsg" parameterType="TransactionEnterprise">
+		insert into 
+		transaction_enterprise(member_id,enterprise_name,enterprise_card_type,enterprise_card_id)
+		values(#{memberId},#{enterpriseName},#{enterpriseCardType},#{enterpriseCardId});
+	</insert>
+	<insert id="insertMsgNoCard" parameterType="TransactionEnterprise">
+		insert into 
+		transaction_enterprise(member_id,enterprise_name,enterprise_card_type)
+		values(#{memberId},#{enterpriseName},#{enterpriseCardType});
+	</insert>
+	
+	<!-- 公司名是否存在 -->
+	<select id="findEnterpriseName" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
+		select enterprise_name from transaction_enterprise
+		where enterprise_name=#{enterpriseName} 
+	</select>
+	
+	<!-- 完善基本资料 -->
+	<update id="saveCompleteInfo" parameterType="TransactionEnterprise">
+		update transaction_enterprise set 
+		enterprise_name = #{enterpriseName},
+		enterprise_card_type = #{enterpriseCardType},
+		enterprise_card_id = #{enterpriseCardId},
+		enterprise_type_id=#{enterpriseTypeId},
+		enterprise_trade_id=#{enterpriseTradeId},
+		enterprise_area_id=#{enterpriseAreaId},
+		enterprise_address_id=#{enterpriseAddressId},
+		enterprise_taxpayer=#{enterpriseTaxpayer},
+		enterprise_validity_date_start=#{enterpriseValidityDateStart},
+		enterprise_validity_date_end=#{enterpriseValidityDateEnd},
+		enterprise_certification_unit=#{enterpriseCertificationUnit},
+		enterprise_reg_address=#{enterpriseRegAddress},
+		enterprise_status_id=#{enterpriseStatusId},
+		enterprise_reg_date=#{enterpriseRegDate},
+		enterprise_reg_money=#{enterpriseRegMoney},
+		enterprise_legal_person_name=#{enterpriseLegalPersonName},
+		enterprise_legal_person_card=#{enterpriseLegalPersonCard}
+		where member_id=#{memberId};
+	</update>
+	
+</mapper>

@@ -7,11 +7,20 @@ package com.toughguy.transactionSystem.model.content.po;
 public class TransactionEnterpriseAuditStatus {
 	private int auditStatusId;			// 审批ID
 	private String auditStatusType;		// 状态类型
+	private boolean status;			// 状态
 	
-	public TransactionEnterpriseAuditStatus(int auditStatusId, String auditStatusType) {
+	
+	public TransactionEnterpriseAuditStatus(int auditStatusId, boolean status) {
+		super();
+		this.auditStatusId = auditStatusId;
+		this.status = status;
+	}
+
+	public TransactionEnterpriseAuditStatus(int auditStatusId, String auditStatusType, boolean status) {
 		super();
 		this.auditStatusId = auditStatusId;
 		this.auditStatusType = auditStatusType;
+		this.status = status;
 	}
 
 	public TransactionEnterpriseAuditStatus(String auditStatusType) {
@@ -38,6 +47,14 @@ public class TransactionEnterpriseAuditStatus {
 	public void setAuditStatusType(String auditStatusType) {
 		this.auditStatusType = auditStatusType;
 	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	@Override
 	public int hashCode() {
@@ -45,6 +62,7 @@ public class TransactionEnterpriseAuditStatus {
 		int result = 1;
 		result = prime * result + auditStatusId;
 		result = prime * result + ((auditStatusType == null) ? 0 : auditStatusType.hashCode());
+		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 
@@ -64,12 +82,15 @@ public class TransactionEnterpriseAuditStatus {
 				return false;
 		} else if (!auditStatusType.equals(other.auditStatusType))
 			return false;
+		if (status != other.status)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "TransactionEnterpriseAuditStatus [auditStatusId=" + auditStatusId + ", auditStatusType=" + auditStatusType + "]";
+		return "TransactionEnterpriseAuditStatus [auditStatusId=" + auditStatusId + ", auditStatusType="
+				+ auditStatusType + ", status=" + status + "]";
 	}
 	
 	

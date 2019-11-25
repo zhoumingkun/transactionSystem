@@ -8,11 +8,23 @@ package com.toughguy.transactionSystem.model.content.po;
 public class TransactionEnterpriseStatus {
 	private int enterpriseStatusId;	// ID
 	private String enterpriseStatus;	// 企业状态
-	public TransactionEnterpriseStatus(int enterpriseStatusId, String enterpriseStatus) {
+	private boolean status;			// 状态
+	
+	
+	
+	public TransactionEnterpriseStatus(int enterpriseStatusId, boolean status) {
+		super();
+		this.enterpriseStatusId = enterpriseStatusId;
+		this.status = status;
+	}
+
+	public TransactionEnterpriseStatus(int enterpriseStatusId, String enterpriseStatus, boolean status) {
 		super();
 		this.enterpriseStatusId = enterpriseStatusId;
 		this.enterpriseStatus = enterpriseStatus;
+		this.status = status;
 	}
+
 	public TransactionEnterpriseStatus(String enterpriseStatus) {
 		super();
 		this.enterpriseStatus = enterpriseStatus;
@@ -32,12 +44,22 @@ public class TransactionEnterpriseStatus {
 	public void setEnterpriseStatus(String enterpriseStatus) {
 		this.enterpriseStatus = enterpriseStatus;
 	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((enterpriseStatus == null) ? 0 : enterpriseStatus.hashCode());
 		result = prime * result + enterpriseStatusId;
+		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 	@Override
@@ -56,12 +78,14 @@ public class TransactionEnterpriseStatus {
 			return false;
 		if (enterpriseStatusId != other.enterpriseStatusId)
 			return false;
+		if (status != other.status)
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return "TransactionEnterpriseStatus [enterpriseStatusId=" + enterpriseStatusId + ", enterpriseStatus="
-				+ enterpriseStatus + "]";
+				+ enterpriseStatus + ", status=" + status + "]";
 	}
 	
 

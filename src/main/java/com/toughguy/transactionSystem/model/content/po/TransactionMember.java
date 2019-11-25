@@ -22,11 +22,44 @@ public class TransactionMember {
 		super();
 	}	
 	
+	public TransactionMember(int memberId) {
+		super();
+		this.memberId = memberId;
+	}
+
 	public TransactionMember(String openId) {
 		super();
 		this.openId = openId;
 	}
+	
+	/**
+	 * 更新手机号
+	 * @param memberId
+	 * @param memberTel
+	 */
+	public TransactionMember(int memberId, String memberTel) {
+		super();
+		this.memberId = memberId;
+		this.memberTel = memberTel;
+	}
 
+	public TransactionMember(String openId, String memberTel) {
+		super();
+		this.openId = openId;
+		this.memberTel = memberTel;
+	}
+
+	public TransactionMember(int memberId, int memberIntegral) {
+		super();
+		this.memberId = memberId;
+		this.memberIntegral = memberIntegral;
+	}
+	/**
+	 * 忘记密码/登录
+	 * @param openId
+	 * @param memberTel
+	 * @param memberPwd
+	 */
 	public TransactionMember(String openId, String memberTel, String memberPwd) {
 		super();
 		this.openId = openId;
@@ -41,7 +74,41 @@ public class TransactionMember {
 		this.memberTel = memberTel;
 		this.memberPwd = memberPwd;
 	}
-
+	
+	public TransactionMember(int memberId, int memberIntegral, int memberRank, int memberOnlineTimes) {
+		super();
+		this.memberId = memberId;
+		this.memberIntegral = memberIntegral;
+		this.memberRank = memberRank;
+		this.memberOnlineTimes = memberOnlineTimes;
+	}
+	
+	//注册
+	public TransactionMember(String openId, String memberTel, String memberPwd, Date memberDate, String memberName,
+			String memberCard) {
+		super();
+		this.openId = openId;
+		this.memberTel = memberTel;
+		this.memberPwd = memberPwd;
+		this.memberDate = memberDate;
+		this.memberName = memberName;
+		this.memberCard = memberCard;
+	}
+	
+	//展示
+	public TransactionMember(int memberId, String memberTel, Date memberDate, String memberName, String memberCard,
+			int memberIntegral, int memberRank) {
+		super();
+		this.memberId = memberId;
+		this.memberTel = memberTel;
+		this.memberDate = memberDate;
+		this.memberName = memberName;
+		this.memberCard = memberCard;
+		this.memberIntegral = memberIntegral;
+		this.memberRank = memberRank;
+	}
+	
+	
 	public TransactionMember(int memberId, String openId, String memberTel, String memberPwd, Date memberDate,
 			String memberName, String memberCard, int memberIntegral, int memberRank, int memberOnlineTimes) {
 		super();
@@ -56,6 +123,8 @@ public class TransactionMember {
 		this.memberRank = memberRank;
 		this.memberOnlineTimes = memberOnlineTimes;
 	}
+
+
 
 	public int getMemberId() {
 		return memberId;
