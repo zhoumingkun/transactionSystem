@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionPolicy">
+	<!--  查找全部的政策 -->
+	<select id="findAll" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+	</select>
+	
+	<!-- 根据id查找政策 -->
+	<select id="find" parameterType="Integer" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1 and  policy_id = #{Id};
+	</select>
+	
+	
+	<!-- 获取全部的条目数 -->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+		
+	</select>	
+	
+	<!--  分页查找全部的政策 -->
+ 	<select id="findPaginated" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+		limit #{offset},#{limit}
+	</select> 
+	
+	<!-- 更新某个政策 -->
+	<update id="update" parameterType="TransactionPolicy">
+		update Transaction_policy
+		set enterprise_area_id = #{enterpriseAreaId},
+			enterprise_trade_id = #{enterpriseTradeId},
+			policy_name = #{policyName},
+			policy_unit = #{policyUnit},
+			policy_content = #{policyContent},
+			policy_time = #{policyTime},
+			enterprise_address_id = #{enterpriseAddressId},
+			enterprise_type_id = #{enterpriseTypeId},
+			polic_money = #{policMoney}
+			where policy_id=#{policyId};
+	</update>
+	
+	<!--  删除某个政策 -->
+	<delete id="delete" parameterType="TransactionPolicy">
+		delete from Transaction_policy
+		where policy_id = #{policyId};
+	</delete>
+	
+	<!--  插入新的政策 -->
+	<insert id="save" parameterType="TransactionPolicy">
+		insert into Transaction_policy
+		(enterprise_area_id,enterprise_trade_id,policy_name,policy_unit,
+		policy_content,policy_time,enterprise_address_id,enterprise_type_id,polic_money)
+		values(#{enterpriseAreaId},#{enterpriseTradeId},#{policyName},
+		#{policyUnit},#{policyContent},#{policyTime},
+		#{enterpriseAddressId},#{enterpriseTypeId},#{policMoney});	
+	</insert>
+	
+	<!-- 根据行业id或者区域id进行筛选 -->
+	<select id="selectOrId" parameterType="Map" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1 
+		<if test="enterpriseAddressId != null and enterpriseAddressId !='' ">
+			and   a.enterprise_address_id  =  #{enterpriseAddressId}
+		</if>
+		<if test="enterpriseTypeId != null and enterpriseTypeId != '' ">
+			and   a.enterprise_type_id  = #{enterpriseTypeId} 
+		</if>
+		limit #{offset},#{limit}
+	</select>
+	
+	<!-- 根据行业id或者区域id进行筛选的全部的条数 -->
+	<select id="getselectOrId" parameterType="Map" resultType="int">
+		select count(*) from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1
+		<if test=" enterpriseAddressId != null and enterpriseAddressId != '' ">
+			and  a.enterprise_address_id  =  #{enterpriseAddressId}
+		</if>
+		<if test=" enterpriseTypeId != null and enterpriseTypeId != '' ">
+			and  a.enterprise_type_id  =  #{enterpriseTypeId} 
+		</if>
+		
+	</select>	
+	
+	
+</mapper>

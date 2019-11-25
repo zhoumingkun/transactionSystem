@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.QuestOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionQuest;
@@ -25,7 +22,9 @@ import com.toughguy.transactionSystem.service.content.prototype.ITransactionOpti
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/quest")
 @Slf4j
+@Api(value="问卷调查")
 public class QuestOptionController {
 
 	@Autowired
@@ -120,6 +120,13 @@ public class QuestOptionController {
 	 * 
 	 * @param request
 	 */
+	@ApiOperation(value = "投票统计",notes = "查询某个问卷的所有的问题以及选项")
+	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "questId", value = "问题id",
+            required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "optionId", value = "选项ID",
+        required = true, dataType = "int", paramType = "query")
+	}) 
 	@RequestMapping(value = "/updateCount", method = RequestMethod.GET)
 	public String update(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
@@ -179,6 +186,13 @@ public class QuestOptionController {
 	 * 
 	 * @return
 	 */
+	@ApiOperation(value = "获取全部的未结束的问卷调差",notes = "获取全部的未结束的问卷调差")
+	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "page", value = "页码",
+            required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "行数",
+        required = false, dataType = "int", paramType = "query")
+	}) 
 	@RequestMapping(value = "/noEnd", method = RequestMethod.GET)
 	public String getEnd(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
@@ -218,6 +232,7 @@ public class QuestOptionController {
 				qos.add(qo);
 			}
 			map.put("date", qos);
+			map.put("total",qos.size());
 			map.put("code", "200");
 		} catch (Exception e) {
 			map.put("code", 500);
@@ -232,6 +247,13 @@ public class QuestOptionController {
      * 	获取全部的已结束的问卷调差
      * @return
      */
+	@ApiOperation(value = "获取全部的已结束的问卷调差",notes = "获取全部的已结束的问卷调差")
+	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "page", value = "页码",
+            required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "行数",
+        required = false, dataType = "int", paramType = "query")
+	}) 
     @RequestMapping(value ="/end",method=RequestMethod.GET)
     public String getNoEnd(HttpServletRequest request) {
     	
@@ -272,7 +294,7 @@ public class QuestOptionController {
 				qos.add( qo);			
 			}  
 	    	map.put("date", qos);
-			map.put("date", qos);
+	    	map.put("total",qos.size());
 			map.put("code", "200");
 		} catch (Exception e) {
 			map.put("code", 500);

@@ -1,0 +1,12 @@
+package com.toughguy.transactionSystem.service.content.prototype;
+
+import com.toughguy.transactionSystem.model.content.po.TransactionLog;
+import com.toughguy.transactionSystem.service.prototype.IGenericService;
+/**
+ * 	日志管理service层
+ * @author Guozhenze
+ *
+ */
+public interface ITransactionLogService extends  IGenericService<TransactionLog, Integer>{
+
+}
