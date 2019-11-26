@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.po.TransactionPolicy;
-import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
-import com.toughguy.transactionSystem.service.content.prototype.IMemberCompleteInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionPolicyService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -84,7 +82,6 @@ public class TransactionPolicyController {
         required = true, dataType = "int", paramType = "query")
 	@RequestMapping("/aaaaa")
 	public String getIntelligence(HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<>();
 		int policyId = Integer.parseInt(request.getParameter("policyId"));		
 		// - 查询用户信息
 		TransactionEnterprise m = enterpriseService.find(policyId);
