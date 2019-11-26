@@ -16,8 +16,11 @@ public class TransactionFinancing {
 	private Date financingStart;				//活动开始时间
 	private Date financingEnd;					//活动结束时间
 	private int financingRank;					//可报名等级
+	private int financingPv;					//访问量
+	private Date financingReleaseDate;			//发布时间
 	public TransactionFinancing(int financingId, String financingName, String financingPeople, String financingContent,
-			String financingImg, Date financingStart, Date financingEnd, int financingRank) {
+			String financingImg, Date financingStart, Date financingEnd, int financingRank, int financingPv,
+			Date financingReleaseDate) {
 		super();
 		this.financingId = financingId;
 		this.financingName = financingName;
@@ -27,9 +30,12 @@ public class TransactionFinancing {
 		this.financingStart = financingStart;
 		this.financingEnd = financingEnd;
 		this.financingRank = financingRank;
+		this.financingPv = financingPv;
+		this.financingReleaseDate = financingReleaseDate;
 	}
 	public TransactionFinancing(String financingName, String financingPeople, String financingContent,
-			String financingImg, Date financingStart, Date financingEnd, int financingRank) {
+			String financingImg, Date financingStart, Date financingEnd, int financingRank, int financingPv,
+			Date financingReleaseDate) {
 		super();
 		this.financingName = financingName;
 		this.financingPeople = financingPeople;
@@ -38,6 +44,8 @@ public class TransactionFinancing {
 		this.financingStart = financingStart;
 		this.financingEnd = financingEnd;
 		this.financingRank = financingRank;
+		this.financingPv = financingPv;
+		this.financingReleaseDate = financingReleaseDate;
 	}
 	public TransactionFinancing() {
 		super();
@@ -90,6 +98,18 @@ public class TransactionFinancing {
 	public void setFinancingRank(int financingRank) {
 		this.financingRank = financingRank;
 	}
+	public int getFinancingPv() {
+		return financingPv;
+	}
+	public void setFinancingPv(int financingPv) {
+		this.financingPv = financingPv;
+	}
+	public Date getFinancingReleaseDate() {
+		return financingReleaseDate;
+	}
+	public void setFinancingReleaseDate(Date financingReleaseDate) {
+		this.financingReleaseDate = financingReleaseDate;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,7 +120,9 @@ public class TransactionFinancing {
 		result = prime * result + ((financingImg == null) ? 0 : financingImg.hashCode());
 		result = prime * result + ((financingName == null) ? 0 : financingName.hashCode());
 		result = prime * result + ((financingPeople == null) ? 0 : financingPeople.hashCode());
+		result = prime * result + financingPv;
 		result = prime * result + financingRank;
+		result = prime * result + ((financingReleaseDate == null) ? 0 : financingReleaseDate.hashCode());
 		result = prime * result + ((financingStart == null) ? 0 : financingStart.hashCode());
 		return result;
 	}
@@ -140,7 +162,14 @@ public class TransactionFinancing {
 				return false;
 		} else if (!financingPeople.equals(other.financingPeople))
 			return false;
+		if (financingPv != other.financingPv)
+			return false;
 		if (financingRank != other.financingRank)
+			return false;
+		if (financingReleaseDate == null) {
+			if (other.financingReleaseDate != null)
+				return false;
+		} else if (!financingReleaseDate.equals(other.financingReleaseDate))
 			return false;
 		if (financingStart == null) {
 			if (other.financingStart != null)
@@ -154,7 +183,9 @@ public class TransactionFinancing {
 		return "TransactionFinancing [financingId=" + financingId + ", financingName=" + financingName
 				+ ", financingPeople=" + financingPeople + ", financingContent=" + financingContent + ", financingImg="
 				+ financingImg + ", financingStart=" + financingStart + ", financingEnd=" + financingEnd
-				+ ", financingRank=" + financingRank + "]";
+				+ ", financingRank=" + financingRank + ", financingPv=" + financingPv + ", financingReleaseDate="
+				+ financingReleaseDate + "]";
 	}
+	
 	
 }	

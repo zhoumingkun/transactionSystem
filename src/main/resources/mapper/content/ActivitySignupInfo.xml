@@ -85,21 +85,38 @@
 	</select>
 	
 	<!-- 会员待参加的活动 -->
-	<select id="findStayAttendActivityList" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
+	<select id="findStayAttendActivityList" parameterType="Map" resultType="ActivitySignupInfo">
 		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &lt; activity_start and signup.member_id=#{memberId}
+		limit #{offset}, #{limit}
 	</select> 
+	<!-- 会员待参加的活动的总条数-->
+	<select id="getTotalStayAttendActivity" parameterType="Map" resultType="int">
+		SELECT count(*)
+		from transaction_activity activity
+		JOIN transaction_signup signup
+		on activity.activity_id=signup.activity_id
+		where now() &lt; activity_start and signup.member_id=#{memberId}
+	</select>
 	
 	<!-- 会员已参加的活动 -->
-	<select id="findEndAttendActivityList" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
+	<select id="findEndAttendActivityList" parameterType="Map" resultType="ActivitySignupInfo">
 		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &gt; activity_start and signup.member_id=#{memberId}
+		limit #{offset}, #{limit}
 	</select> 
-	
+	<!-- 会员已参加的活动的总条数-->
+	<select id="getTotalEndAttendActivity" parameterType="Map" resultType="int">
+		SELECT count(*)
+		from transaction_activity activity
+		JOIN transaction_signup signup
+		on activity.activity_id=signup.activity_id
+		where now() &gt; activity_start and signup.member_id=#{memberId}
+	</select>
 </mapper>

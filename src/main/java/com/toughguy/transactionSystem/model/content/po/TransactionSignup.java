@@ -24,21 +24,6 @@ public class TransactionSignup {
 		this.signupCode = signupCode;
 		this.signupStatus = signupStatus;
 	}
-	
-	public TransactionSignup(int activityId, int memberId) {
-		super();
-		this.activityId = activityId;
-		this.memberId = memberId;
-	}
-
-	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode) {
-		super();
-		this.activityId = activityId;
-		this.memberId = memberId;
-		this.signupDate = signupDate;
-		this.signupCode = signupCode;
-	}
-
 	public TransactionSignup(int activityId, int memberId, Date signupDate, String signupCode, Boolean signupStatus) {
 		super();
 		this.activityId = activityId;
@@ -81,15 +66,12 @@ public class TransactionSignup {
 	public void setSignupCode(String signupCode) {
 		this.signupCode = signupCode;
 	}
-	
 	public Boolean getSignupStatus() {
 		return signupStatus;
 	}
-
 	public void setSignupStatus(Boolean signupStatus) {
 		this.signupStatus = signupStatus;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -102,7 +84,6 @@ public class TransactionSignup {
 		result = prime * result + ((signupStatus == null) ? 0 : signupStatus.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -135,13 +116,12 @@ public class TransactionSignup {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "TransactionSignup [signupId=" + signupId + ", activityId=" + activityId + ", memberId=" + memberId
 				+ ", signupDate=" + signupDate + ", signupCode=" + signupCode + ", signupStatus=" + signupStatus + "]";
 	}
-
+	
 	
 	
 }

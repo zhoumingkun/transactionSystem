@@ -3,7 +3,7 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancing">
 	<!-- 新增融资信息发布 -->
 	<insert id="save" parameterType="TransactionFinancing">
-		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank}) 
+		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank,financing_release_date) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank},now()) 
 	</insert>
 	
 	<!-- 查看未开始的融资活动 -->
@@ -53,4 +53,10 @@
 	<delete id="delete" parameterType="int"> 
 		delete from transaction_financing where financing_id =#{financingId}
 	</delete>
+	
+	<!-- 更新融资查看的浏览量 -->
+	<update id="update" parameterType="int"> 
+		update  transaction_financing set financing_pv=financing_pv+1  where financing_id =#{financingId}
+	</update>
+	
 </mapper>

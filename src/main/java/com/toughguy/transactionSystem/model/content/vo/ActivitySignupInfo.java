@@ -25,10 +25,10 @@ public class ActivitySignupInfo {
 	private int memberId;					//会员编号（报名人）
 	private Date signupDate;				//报名时间
 	private String signupCode;				//报名二维码
-	private boolean signupStatus;			//是否到场	
+	private Boolean signupStatus;			//是否到场	
 	
 	public ActivitySignupInfo(int activityId, String activityContent, String activityInbusiness, String activityAddress,
-			String activityTel, int signupId, int memberId, Date signupDate, String signupCode, boolean signupStatus) {
+			String activityTel, int signupId, int memberId, Date signupDate, String signupCode, Boolean signupStatus) {
 		super();
 		this.activityId = activityId;
 		this.activityContent = activityContent;
@@ -45,7 +45,7 @@ public class ActivitySignupInfo {
 	public ActivitySignupInfo(String activityImg, String activityName, Date activitySignupStart, Date activitySignupEnd,
 			int sum, String activityPerson, Date activityStart, Date activityEnd, int activityId,
 			String activityContent, String activityInbusiness, String activityAddress, String activityTel, int signupId,
-			int memberId, Date signupDate, String signupCode, boolean signupStatus) {
+			int memberId, Date signupDate, String signupCode, Boolean signupStatus) {
 		super();
 		this.activityImg = activityImg;
 		this.activityName = activityName;
@@ -80,115 +80,151 @@ public class ActivitySignupInfo {
 	public ActivitySignupInfo() {
 		super();
 	}
+
 	public String getActivityImg() {
 		return activityImg;
 	}
+
 	public void setActivityImg(String activityImg) {
 		this.activityImg = activityImg;
 	}
+
 	public String getActivityName() {
 		return activityName;
 	}
+
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
 	}
+
 	public Date getActivitySignupStart() {
 		return activitySignupStart;
 	}
+
 	public void setActivitySignupStart(Date activitySignupStart) {
 		this.activitySignupStart = activitySignupStart;
 	}
+
 	public Date getActivitySignupEnd() {
 		return activitySignupEnd;
 	}
+
 	public void setActivitySignupEnd(Date activitySignupEnd) {
 		this.activitySignupEnd = activitySignupEnd;
 	}
+
 	public int getSum() {
 		return sum;
 	}
+
 	public void setSum(int sum) {
 		this.sum = sum;
 	}
+
 	public String getActivityPerson() {
 		return activityPerson;
 	}
+
 	public void setActivityPerson(String activityPerson) {
 		this.activityPerson = activityPerson;
 	}
-	
+
 	public Date getActivityStart() {
 		return activityStart;
 	}
+
 	public void setActivityStart(Date activityStart) {
 		this.activityStart = activityStart;
 	}
+
 	public Date getActivityEnd() {
 		return activityEnd;
 	}
+
 	public void setActivityEnd(Date activityEnd) {
 		this.activityEnd = activityEnd;
 	}
+
 	public int getActivityId() {
 		return activityId;
 	}
+
 	public void setActivityId(int activityId) {
 		this.activityId = activityId;
 	}
+
 	public String getActivityContent() {
 		return activityContent;
 	}
+
 	public void setActivityContent(String activityContent) {
 		this.activityContent = activityContent;
 	}
+
 	public String getActivityInbusiness() {
 		return activityInbusiness;
 	}
+
 	public void setActivityInbusiness(String activityInbusiness) {
 		this.activityInbusiness = activityInbusiness;
 	}
+
 	public String getActivityAddress() {
 		return activityAddress;
 	}
+
 	public void setActivityAddress(String activityAddress) {
 		this.activityAddress = activityAddress;
 	}
+
 	public String getActivityTel() {
 		return activityTel;
 	}
+
 	public void setActivityTel(String activityTel) {
 		this.activityTel = activityTel;
 	}
+
 	public int getSignupId() {
 		return signupId;
 	}
+
 	public void setSignupId(int signupId) {
 		this.signupId = signupId;
 	}
+
 	public int getMemberId() {
 		return memberId;
 	}
+
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
+
 	public Date getSignupDate() {
 		return signupDate;
 	}
+
 	public void setSignupDate(Date signupDate) {
 		this.signupDate = signupDate;
 	}
+
 	public String getSignupCode() {
 		return signupCode;
 	}
+
 	public void setSignupCode(String signupCode) {
 		this.signupCode = signupCode;
 	}
-	public boolean isSignupStatus() {
+
+	public Boolean getSignupStatus() {
 		return signupStatus;
 	}
-	public void setSignupStatus(boolean signupStatus) {
+
+	public void setSignupStatus(Boolean signupStatus) {
 		this.signupStatus = signupStatus;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -209,10 +245,11 @@ public class ActivitySignupInfo {
 		result = prime * result + ((signupCode == null) ? 0 : signupCode.hashCode());
 		result = prime * result + ((signupDate == null) ? 0 : signupDate.hashCode());
 		result = prime * result + signupId;
-		result = prime * result + (signupStatus ? 1231 : 1237);
+		result = prime * result + ((signupStatus == null) ? 0 : signupStatus.hashCode());
 		result = prime * result + sum;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -293,12 +330,16 @@ public class ActivitySignupInfo {
 			return false;
 		if (signupId != other.signupId)
 			return false;
-		if (signupStatus != other.signupStatus)
+		if (signupStatus == null) {
+			if (other.signupStatus != null)
+				return false;
+		} else if (!signupStatus.equals(other.signupStatus))
 			return false;
 		if (sum != other.sum)
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "ActivitySignupInfo [activityImg=" + activityImg + ", activityName=" + activityName
@@ -309,5 +350,8 @@ public class ActivitySignupInfo {
 				+ ", activityTel=" + activityTel + ", signupId=" + signupId + ", memberId=" + memberId + ", signupDate="
 				+ signupDate + ", signupCode=" + signupCode + ", signupStatus=" + signupStatus + "]";
 	}
+	
+	
+	
 	
 }

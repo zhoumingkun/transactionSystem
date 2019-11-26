@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.FinancingapplyFinancingInfo">
+	<!-- 查看我的融资活动 -->
+	<select id="findPaginated" parameterType="Map" resultType="FinancingapplyFinancingInfo">
+		select financing.*,apply.*
+		FROM transaction_financing financing
+		join transaction_financing_apply apply
+		on apply.financing_id=financing.financing_id
+		where apply.member_id=#{memberId}
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 查看我的融资活动总条数-->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*)
+		FROM transaction_financing_apply
+		where member_id=#{memberId}
+	</select>
+	
+</mapper>

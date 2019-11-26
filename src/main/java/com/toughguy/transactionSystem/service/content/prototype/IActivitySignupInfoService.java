@@ -1,12 +1,15 @@
 package com.toughguy.transactionSystem.service.content.prototype;
 
-import java.util.List;
 import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.prototype.IGenericService;
-
+/**
+ * 报名和活动联系service
+ * @author liDongSheng
+ *
+ */
 public interface IActivitySignupInfoService extends IGenericService<ActivitySignupInfo, Integer> {
 	/**
 	 * 分页查询结束的活动
@@ -33,11 +36,11 @@ public interface IActivitySignupInfoService extends IGenericService<ActivitySign
 	 * @param transactionActivity
 	 * @return
 	 */
-	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findStayAttendActivityList(Map<String, Object> params);
 	/**
 	 * 查找以参加的活动列表
 	 * @param transactionActivity
 	 * @return
 	 */
-	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findEndAttendActivityList(Map<String, Object> params);
 }

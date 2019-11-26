@@ -1,6 +1,5 @@
 package com.toughguy.transactionSystem.service.content.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,12 @@ public class ActivitySignupInfoServiceImpl extends GenericServiceImpl<ActivitySi
 	}
 
 	@Override
-	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo) {
-		return ActivitySignupInfoDao.findStayAttendActivityList(activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findStayAttendActivityList(Map<String, Object> params) {
+		return ActivitySignupInfoDao.findStayAttendActivityList(params);
 	}
 
 	@Override
-	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo) {
-		return ActivitySignupInfoDao.findEndAttendActivityList(activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findEndAttendActivityList(Map<String, Object> params) {
+		return ActivitySignupInfoDao.findEndAttendActivityList(params);
 	}
 }

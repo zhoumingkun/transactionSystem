@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionSignup;
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.model.content.vo.EnterpriseSignupInfo;
@@ -22,6 +23,7 @@ import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseSignu
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionSignupService;
 import com.toughguy.transactionSystem.util.ExcelUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,8 +57,10 @@ public class TransactionSignupController {
 		@ApiImplicitParam(name = "activityId", value = "活动的id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "memberId", value = "会员的id",required = true, dataType = "int", paramType = "query"),
 	})
-	@RequestMapping(value="/definiteSignupDetails",method=RequestMethod.POST)
-	public String definiteSignupDetails(int activityId,int memberId) {
+	@RequestMapping(value="/definiteSignupDetails",method=RequestMethod.GET)
+	public String definiteSignupDetails(HttpServletRequest request,HttpServletResponse response) {
+		int activityId = Integer.parseInt(request.getParameter("activityId"));
+		int memberId = Integer.parseInt(request.getParameter("memberId"));
 		ActivitySignupInfo activitySignupInfo = new ActivitySignupInfo();
 		activitySignupInfo.setActivityId(activityId);
 		activitySignupInfo.setMemberId(memberId);
@@ -64,7 +68,7 @@ public class TransactionSignupController {
 		ActivitySignupInfo findDefiniteSignupDetails = acttivitySignupInfoService.findDefiniteSignupDetails(activitySignupInfo);
 		map.put("code", "200");
 	    map.put("msg", "查找成功");
-	    map.put("date", findDefiniteSignupDetails);
+	    map.put("data", findDefiniteSignupDetails);
 	    return JsonUtil.objectToJson(map);
 	}
 	
@@ -77,30 +81,31 @@ public class TransactionSignupController {
 		@ApiImplicitParam(name = "signupCode", value = "二维码",required = true, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addSignup(HttpServletRequest request) {
-		String activityId = request.getParameter("activityId");
-		String memberId = request.getParameter("memberId");
-		TransactionSignup signup = new TransactionSignup(Integer.parseInt(activityId),Integer.parseInt(memberId));
+	public String addSignup(HttpServletRequest request,HttpServletResponse response) {
+		JSONObject json = requestJSONUtil.request(request, response);
+		int activityId = json.getInteger("activityId");
+		int memberId = json.getInteger("memberId");
+		TransactionSignup signup = new TransactionSignup();
+		signup.setActivityId(activityId);
+		signup.setMemberId(memberId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
 		if(judgeSignup!=null) {
 			map.put("code", "500");
 	        map.put("msg", "已报名");
-			return JsonUtil.objectToJson(map);
 		}else {
-			String signupCode = request.getParameter("signupCode");
+			String signupCode = json.getString("signupCode");
 			signup.setSignupCode(signupCode);
 			try {
 				transactionSignupService.save(signup);
 				map.put("code", "200");
 		        map.put("msg", "报名成功");
-		        return JsonUtil.objectToJson(map);
 			}catch (Exception e) {
 				map.put("code", "500");
 		        map.put("msg", "服务器错误");
-				return JsonUtil.objectToJson(map);
 			}
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	//查看未结束的活动报名情况
@@ -111,9 +116,10 @@ public class TransactionSignupController {
 		@ApiImplicitParam(name = "activityName", value = "活动名称",required = false, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
-	public String lookNoEnd(HttpServletRequest request) {
+	public String lookNoEnd(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("activityName", request.getParameter("activityName"));
+		String activityName = request.getParameter("activityName");
+		params1.put("activityName", activityName);
 		PagerModel<ActivitySignupInfo> findPaginated = acttivitySignupInfoService.findPaginated(params1);
 		List<ActivitySignupInfo> data = findPaginated.getData();
 		int total = findPaginated.getTotal();
@@ -130,9 +136,10 @@ public class TransactionSignupController {
 		@ApiImplicitParam(name = "activityName", value = "活动名称",required = false, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value = "/lookEnd", method = RequestMethod.GET)
-	public String lookEnd(HttpServletRequest request) {
+	public String lookEnd(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("activityName", request.getParameter("activityName"));
+		String activityName = request.getParameter("activityName");
+		params1.put("activityName", activityName);
 		PagerModel<ActivitySignupInfo> findEndActivityPage = acttivitySignupInfoService.findEndActivityPageSignup(params1);
 		List<ActivitySignupInfo> data = findEndActivityPage.getData();
 		int total = findEndActivityPage.getTotal();
@@ -145,57 +152,66 @@ public class TransactionSignupController {
 	//修改入场人的状态
 	@ApiOperation(value = "修改参加会议人的状态",notes = "默认没来为0或者false，来了是1或者true")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "signupId", value = "报名的id",required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "activityId", value = "活动的id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "memberId", value = "会员的id",required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "signupStatus", value = "是否来参加",required = true, dataType = "Boolean", paramType = "query"),
 	})
-	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String modifySignup(int signupId,int memberId,Boolean signupStatus) {
+	@RequestMapping(value="/modify",method=RequestMethod.GET)
+	public String modifySignup(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int activityId = Integer.parseInt(request.getParameter("activityId"));
+		int memberId = Integer.parseInt(request.getParameter("memberId"));
 		try {
 			TransactionSignup signup = new TransactionSignup();
-			signup.setSignupId(signupId);
+			signup.setActivityId(activityId);
 			signup.setMemberId(memberId);
-			signup.setSignupStatus(signupStatus);
 			transactionSignupService.update(signup);
 			map.put("code", "200");
 	        map.put("msg", "欢迎入场");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			map.put("code", "500");
 	        map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 用户查看待参加的活动
-	@ApiOperation(value = "会员查看待参加的活动", notes = "需要会员id")
-	@ApiImplicitParams({@ApiImplicitParam(name = "memberId", value = "会员的id", required = true, dataType = "int", paramType = "query") })
+	@ApiOperation(value = "会员查看待参加的活动", notes = "默认查全部待参加的活动，可以传参page和rows进行分页查找,需要会员id")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数",required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "页大小",required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "memberId", value = "会员的id", required = true, dataType = "int", paramType = "query")
+		})
 	@RequestMapping(value = "/lookStayJoinActivity", method = RequestMethod.GET)
-	public String lookStayJoinActivity(int memberId) {
+	public String lookStayJoinActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		ActivitySignupInfo activitySignupInfo = new ActivitySignupInfo();
-		activitySignupInfo.setMemberId(memberId);
-		List<ActivitySignupInfo> findStayAttendActivityList = acttivitySignupInfoService.findStayAttendActivityList(activitySignupInfo);
+		Map<String, Object> param = new HashMap<String, Object>();
+		String memberId = request.getParameter("memberId");
+		param.put("memberId",memberId);
+		PagerModel<ActivitySignupInfo> findStayAttendActivityList = acttivitySignupInfoService.findStayAttendActivityList(param);
 		map.put("code", "200");
 		map.put("msg", "查找成功");
-		map.put("date", findStayAttendActivityList);
+		map.put("data", findStayAttendActivityList.getData());
+		map.put("total", findStayAttendActivityList.getTotal());
 		return JsonUtil.objectToJson(map);
 	}
 	
 	// 用户查看已参加的活动
-	@ApiOperation(value = "会员查看已参加的活动", notes = "需要会员id")
+	@ApiOperation(value = "会员查看已参加的活动", notes = "默认查全部已参加的活动，可以传参page和rows进行分页查找,需要会员id")
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数",required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "页大小",required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "memberId", value = "会员的id", required = true, dataType = "int", paramType = "query") })
 	@RequestMapping(value = "/lookEndJoinActivity", method = RequestMethod.GET)
-	public String lookEndJoinActivity(int memberId) {
+	public String lookEndJoinActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		ActivitySignupInfo activitySignupInfo = new ActivitySignupInfo();
-		activitySignupInfo.setMemberId(memberId);
-		List<ActivitySignupInfo> findStayAttendActivityList = acttivitySignupInfoService.findEndAttendActivityList(activitySignupInfo);
+		Map<String, Object> param = new HashMap<String, Object>();
+		String memberId = request.getParameter("memberId");
+		param.put("memberId", memberId);
+		PagerModel<ActivitySignupInfo> findEndAttendActivityList = acttivitySignupInfoService.findEndAttendActivityList(param);
 		map.put("code", "200");
 		map.put("msg", "查找成功");
-		map.put("date", findStayAttendActivityList);
+		map.put("data", findEndAttendActivityList.getData());
+		map.put("total", findEndAttendActivityList.getTotal());
 		return JsonUtil.objectToJson(map);
 	}
 	
@@ -205,15 +221,16 @@ public class TransactionSignupController {
 		@ApiImplicitParam(name = "page", value = "页数",required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "rows", value = "页大小",required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "activityId", value = "活动的id", required = true, dataType = "int", paramType = "query") })
-	@RequestMapping(value = "/lookSpecificSignupEnterprise", method = RequestMethod.POST)
-	public String lookSpecificSignupEnterprise(int activityId) {
+	@RequestMapping(value = "/lookSpecificSignupEnterprise", method = RequestMethod.GET)
+	public String lookSpecificSignupEnterprise(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("activityId", activityId);
+		String activityId = request.getParameter("activityId");
+		param.put("activityId",activityId );
 		PagerModel<EnterpriseSignupInfo> findPaginated = enterpriseSignupInfoService.findPaginated(param);
 		map.put("code", "200");
 		map.put("msg", "查找成功");
-		map.put("date", findPaginated.getData());
+		map.put("data", findPaginated.getData());
 		map.put("total", findPaginated.getTotal());
 		return JsonUtil.objectToJson(map);
 	}
@@ -224,10 +241,11 @@ public class TransactionSignupController {
 			@ApiImplicitParam(name = "primaryTitle", value = "标题也是文件名", required = true, dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "activityId", value = "活动id", required = true, dataType = "int", paramType = "query"),
 	})
-	@RequestMapping(value = "/exportSignupEnterprise", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportSignupEnterprise", method = RequestMethod.POST)
 	public String exportSignupEnterprise(HttpServletResponse resp,HttpServletRequest request) {
-		String primaryTitle = request.getParameter("primaryTitle");
-		String activityId = request.getParameter("activityId");
+		JSONObject json = requestJSONUtil.request(request, resp);
+		String primaryTitle = json.getString("primaryTitle");
+		int activityId = json.getInteger("activityId");
 		List<String> titles=new ArrayList<String>();
 		titles.add("企业名称");
 		titles.add("报名时间");
@@ -239,17 +257,12 @@ public class TransactionSignupController {
 			ExcelUtil.exportExcel(resp, primaryTitle, findPaginated.getData(), titles, primaryTitle);
 			map.put("code", "200");
 			map.put("msg", "导出成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			// TODO: handle exception
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
-		
-		
-		
-		
-		
+		return JsonUtil.objectToJson(map);
 	}
+	
 }

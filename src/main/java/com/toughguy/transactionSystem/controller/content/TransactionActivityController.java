@@ -1,10 +1,12 @@
 package com.toughguy.transactionSystem.controller.content;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionActivity;
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IActivitySignupInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionActivityService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionSignupService;
-import com.toughguy.transactionSystem.util.DateUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.UploadUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,10 +43,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api(tags="ActivityController")
 public class TransactionActivityController {
+	//活动
 	@Autowired
 	private ITransactionActivityService transactionActivityService;
+	//活动报名
 	@Autowired
 	private IActivitySignupInfoService activitySignupInfoService;
+	//报名
 	@Autowired
 	private ITransactionSignupService transactionSignupService;
 	
@@ -59,12 +65,11 @@ public class TransactionActivityController {
 			map.put("code", "200");
 			map.put("msg", "上传成功");
 			map.put("filename", filename);
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "上传失败");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 发布活动
@@ -83,35 +88,31 @@ public class TransactionActivityController {
 		@ApiImplicitParam(name = "activityTel", value = "活动电话",required = true, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addActivity(HttpServletRequest request) {
+	public String addActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			String activityName = request.getParameter("activityName");
-			String activityPerson = request.getParameter("activityPerson");
-			String activityContent = request.getParameter("activityContent");
-			String activityImg = request.getParameter("activityImg");
-			String activitySignupStart = request.getParameter("activitySignupStart");
-			String activitySignupEnd = request.getParameter("activitySignupEnd");
-			String activityStart = request.getParameter("activityStart");
-			String activityEnd = request.getParameter("activityEnd");
-			String activityInbusiness = request.getParameter("activityInbusiness");
-			String activityAddress = request.getParameter("activityAddress");
-			String activityTel = request.getParameter("activityTel");
-			TransactionActivity activity = new TransactionActivity(activityName, activityPerson, activityContent,
-					activityImg, DateUtil.getDate(activitySignupStart, "yyyy-MM-dd HH:mm:ss"),
-					DateUtil.getDate(activitySignupEnd, "yyyy-MM-dd HH:mm:ss"),
-					DateUtil.getDate(activityStart, "yyyy-MM-dd HH:mm:ss"),
-					DateUtil.getDate(activityEnd, "yyyy-MM-dd HH:mm:ss"),
-					activityInbusiness,activityAddress,activityTel);
+			JSONObject json = requestJSONUtil.request(request, response);
+			String activityName = json.getString("activityName");
+			String activityPerson = json.getString("activityPerson");
+			String activityContent = json.getString("activityContent");
+			String activityImg = json.getString("activityImg");
+			Date activitySignupStart = json.getDate("activitySignupStart");
+			Date activitySignupEnd = json.getDate("activitySignupEnd");
+			Date activityStart =json.getDate("activityStart");
+			Date activityEnd = json.getDate("activityEnd");
+			String activityInbusiness = json.getString("activityInbusiness");
+			String activityAddress = json.getString("activityAddress");
+			String activityTel = json.getString("activityTel");
+			System.out.println(activitySignupStart);
+			TransactionActivity activity = new TransactionActivity(activityName, activityPerson, activityContent,activityImg, activitySignupStart,activitySignupEnd,activityStart,activityEnd,activityInbusiness,activityAddress,activityTel);
 			transactionActivityService.save(activity);
 			map.put("code", "200");
 			map.put("msg", "发布活动成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 活动:查看没有结束的活动
@@ -122,9 +123,10 @@ public class TransactionActivityController {
 		@ApiImplicitParam(name = "activityName", value = "活动名称",required = false, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
-	public String lookNoEnd(HttpServletRequest request) {
+	public String lookNoEnd(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("activityName", request.getParameter("activityName"));
+		String activityName = request.getParameter("activityName");
+		params1.put("activityName", activityName);
 		PagerModel<TransactionActivity> findPaginated = transactionActivityService.findPaginated(params1);
 		List<TransactionActivity> data = findPaginated.getData();
 		int total = findPaginated.getTotal();
@@ -143,13 +145,14 @@ public class TransactionActivityController {
 		@ApiImplicitParam(name = "activityName", value = "活动名称",required = false, dataType = "String", paramType = "query"),
 	})
 	@RequestMapping(value = "/lookEnd", method = RequestMethod.GET)
-	public String lookEnd(HttpServletRequest request) {
+	public String lookEnd(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("activityName", request.getParameter("activityName"));
+		Map<String, Object> param = new HashMap<String, Object>();
+		String activityName = request.getParameter("activityName");
+		params1.put("activityName", activityName);
 		PagerModel<ActivitySignupInfo> findEndActivityPage = activitySignupInfoService.findEndActivityPage(params1);
 		List<ActivitySignupInfo> data = findEndActivityPage.getData();
 		int total = findEndActivityPage.getTotal();
-		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("data", data);
 		param.put("total", total);
 		return JsonUtil.objectToJson(param);
@@ -161,19 +164,19 @@ public class TransactionActivityController {
 		@ApiImplicitParam(name = "activityId", value = "活动编号",required = true, dataType = "int", paramType = "query")
 	})
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
-	public String delActivity(int activityId) {
+	public String delActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int activityId = Integer.parseInt(request.getParameter("activityId"));
 		try {
 			transactionActivityService.delete(activityId);
 			transactionSignupService.delete(activityId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 查看某一个活动
@@ -182,21 +185,20 @@ public class TransactionActivityController {
 		@ApiImplicitParam(name = "activityId", value = "活动编号",required = true, dataType = "int", paramType = "query")
 	})
 	@RequestMapping(value = "/lookActivity", method = RequestMethod.GET)
-	public String lookActivity(int activityId) {
+	public String lookActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int activityId = Integer.parseInt(request.getParameter("activityId"));
 		try {
 			TransactionActivity find = transactionActivityService.find(activityId);
 			map.put("code", "200");
 			map.put("msg", "查找成功");
-			map.put("date", find);
-			return JsonUtil.objectToJson(map);
+			map.put("data", find);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
-
 
 }

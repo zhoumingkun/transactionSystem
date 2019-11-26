@@ -1,6 +1,5 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
-import java.util.List;
 import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
@@ -41,11 +40,11 @@ public interface IActivitySignupInfoDao extends IGenericDao<ActivitySignupInfo, 
 	 * @param transactionActivity
 	 * @return
 	 */
-	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findStayAttendActivityList(Map<String, Object> params);
 	/**
 	 * 查找以参加的活动列表
 	 * @param transactionActivity
 	 * @return
 	 */
-	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findEndAttendActivityList(Map<String, Object> params);
 }

@@ -64,15 +64,47 @@ public class ActivitySignupInfoDaoImpl extends GenericDaoImpl<ActivitySignupInfo
 	public ActivitySignupInfo findSignup(ActivitySignupInfo activitySignupInfo) {
 		return sqlSessionTemplate.selectOne(typeNameSpace+".findSignup",activitySignupInfo );
 	}
-	
+	//用户未参加活动
 	@Override
-	public List<ActivitySignupInfo> findStayAttendActivityList(ActivitySignupInfo activitySignupInfo) {
-		return sqlSessionTemplate.selectList(typeNameSpace+".findStayAttendActivityList", activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findStayAttendActivityList(Map<String, Object> params) {
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<ActivitySignupInfo> pm = new PagerModel<ActivitySignupInfo>();
+		int total = getTotalNumStayAttendActivity(params);
+		List<ActivitySignupInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findStayAttendActivityList",
+				params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
 	}
-
+	// -- 获取总的条目数 (分页查询中使用)
+	private int getTotalNumStayAttendActivity(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalStayAttendActivity", params);
+		return count;
+	}
+	//用户已参加活动
 	@Override
-	public List<ActivitySignupInfo> findEndAttendActivityList(ActivitySignupInfo activitySignupInfo) {
-		return sqlSessionTemplate.selectList(typeNameSpace+".findEndAttendActivityList", activitySignupInfo);
+	public PagerModel<ActivitySignupInfo> findEndAttendActivityList(Map<String, Object> params) {
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<ActivitySignupInfo> pm = new PagerModel<ActivitySignupInfo>();
+		int total = getTotalNumEndAttendActivity(params);
+		List<ActivitySignupInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findEndAttendActivityList",
+				params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+	// -- 获取总的条目数 (分页查询中使用)
+	private int getTotalNumEndAttendActivity(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalEndAttendActivity", params);
+		return count;
 	}
 	
 }

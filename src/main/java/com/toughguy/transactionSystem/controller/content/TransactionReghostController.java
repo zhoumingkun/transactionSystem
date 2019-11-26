@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionReghost;
 import com.toughguy.transactionSystem.model.content.vo.ReghostServiceInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
@@ -19,6 +20,7 @@ import com.toughguy.transactionSystem.service.content.prototype.IReghostServiceI
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionReghostService;
 import com.toughguy.transactionSystem.util.DownFileUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -45,24 +47,24 @@ public class TransactionReghostController {
 	private IReghostServiceInfoService reghostServiceInfoService;
 	
 	//下载模板表
-	@ApiOperation(value = "下载模板表", notes = "选择哪个模板下载")
+	@ApiOperation(value = "下载模板表", notes = "选择哪个模板下载,目录是根目录的down/文件")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "filename", value = "文件名字 路径是（文件名.后缀）", required = false, dataType = "String", paramType = "query")
 	})
 	@RequestMapping(value = "/downFile", method = RequestMethod.GET)
-	public String downFile(String filename, HttpServletResponse response) {
+	public String downFile(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		String filename = request.getParameter("filename");
 		try {
 			DownFileUtil.download(response,filename,"UTF-8");
 			map.put("code", "200");
 			map.put("msg", "下载成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			// TODO: handle exception
 			map.put("code", "500");
 			map.put("msg", "下载出错");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 申请登记
@@ -74,25 +76,25 @@ public class TransactionReghostController {
 			@ApiImplicitParam(name = "reghostPerson", value = "姓名", required = true, dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "reghostTel", value = "手机号", required = true, dataType = "string", paramType = "query"), })
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addReghost(HttpServletRequest request) {
+	public String addReghost(HttpServletRequest request,HttpServletResponse response) {
+		JSONObject json = requestJSONUtil.request(request, response);
 		TransactionReghost transactionReghost = new TransactionReghost();
-		transactionReghost.setServiceId(Integer.parseInt(request.getParameter("serviceId")));
-		transactionReghost.setReghostName(request.getParameter("reghostName"));
-		transactionReghost.setEnterpriseTypeId(Integer.parseInt(request.getParameter("enterpriseTypeId")));
-		transactionReghost.setReghostPerson(request.getParameter("reghostPerson"));
-		transactionReghost.setReghostTel(request.getParameter("reghostTel"));
+		transactionReghost.setServiceId(json.getInteger("serviceId"));
+		transactionReghost.setReghostName(json.getString("reghostName"));
+		transactionReghost.setEnterpriseTypeId(json.getInteger("enterpriseTypeId"));
+		transactionReghost.setReghostPerson(json.getString("reghostPerson"));
+		transactionReghost.setReghostTel(json.getString("reghostTel"));
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			transactionReghostService.save(transactionReghost);
 			map.put("code", "200");
 			map.put("msg", "登记成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			// TODO: handle exception
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 
 	// 查看所有登记托管的企业
@@ -102,9 +104,10 @@ public class TransactionReghostController {
 			@ApiImplicitParam(name = "rows", value = "页大小", required = false, dataType = "int", paramType = "query"),
 			@ApiImplicitParam(name = "reghostName", value = "企业名称", required = false, dataType = "String", paramType = "query"), })
 	@RequestMapping(value = "/look", method = RequestMethod.GET)
-	public String look(HttpServletRequest request) {
+	public String look(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("reghostName", request.getParameter("reghostName"));
+		String reghostName = request.getParameter("reghostName");
+		params1.put("reghostName", reghostName);
 		PagerModel<ReghostServiceInfo> findPaginated = reghostServiceInfoService.findPaginated(params1);
 		List<ReghostServiceInfo> data = findPaginated.getData();
 		int total = findPaginated.getTotal();
@@ -119,19 +122,19 @@ public class TransactionReghostController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "reghostId", value = "托管编号", required = true, dataType = "int", paramType = "query")})
 	@RequestMapping(value = "/lookOneReghost", method = RequestMethod.GET)
-	public String lookOneReghost(int reghostId) {
+	public String lookOneReghost(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 		try {
 			ReghostServiceInfo find = reghostServiceInfoService.find(reghostId);
 			map.put("code", "200");
 			map.put("msg", "查找成功");
-			map.put("date", find);
-			return JsonUtil.objectToJson(map);
+			map.put("data", find);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 	
 	// 删除登记托管
@@ -139,18 +142,18 @@ public class TransactionReghostController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "reghostId", value = "托管编号", required = true, dataType = "int", paramType = "query") })
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
-	public String delReghost(int reghostId) {
+	public String delReghost(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 		try {
 			transactionReghostService.delete(reghostId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
-			return JsonUtil.objectToJson(map);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
-			return JsonUtil.objectToJson(map);
 		}
+		return JsonUtil.objectToJson(map);
 	}
 
 }

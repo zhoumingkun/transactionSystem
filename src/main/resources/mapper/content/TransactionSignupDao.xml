@@ -9,7 +9,7 @@
 	
 	<!-- 修改到场状态 -->
 	<update  id="update" parameterType="TransactionSignup">
-		update transaction_signup set signup_status=#{signupStatus}  where signup_id=#{signupId} and member_id=#{memberId}
+		update transaction_signup set signup_status=1 where activity_id=#{activityId} and member_id=#{memberId}
 	</update>
 	
 	<!-- 删除因活动发布错误的报名 -->
