@@ -24,6 +24,7 @@ import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IQuestOptionInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionOptionService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionStatisticsService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
 
@@ -53,6 +54,10 @@ public class QuestOptionController {
 
 	@Autowired
 	private IQuestOptionInfoService infoService;
+	
+	@Autowired
+	private ITransactionStatisticsService statisticsService;
+	
 
 	/**
 	 * 查询某个问卷的所有的问题以及选项
@@ -130,7 +135,7 @@ public class QuestOptionController {
 	@ApiOperation(value = "投票统计",notes = "查询某个问卷的所有的问题以及选项")
 	@ApiImplicitParam(name = "json", value = "多个问题id和选项id",
             required = true, dataType = "json", paramType = "query")
-	@RequestMapping(value = "/updateCount", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateCount", method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
 		

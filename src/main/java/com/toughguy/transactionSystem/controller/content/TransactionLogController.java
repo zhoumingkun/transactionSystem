@@ -63,7 +63,7 @@ public class TransactionLogController {
 	}
 	
 
-	
+
 	/***
 	 * 删除某个日志
 	 * 

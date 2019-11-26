@@ -12,25 +12,8 @@ import com.toughguy.transactionSystem.service.prototype.IGenericService;
  */
 public interface ITransactionLogService extends  IGenericService<TransactionLog, Integer>{
 
+	void insert(String logContent, int rootId);
 	
-	
-	
-	/**
-	 * 	生成日志的方法
-	 * @param request
-	 * @return
-	 */
-	public static String insertLog(String logContent,int rootId) {
-		try {
-			TransactionLog log = new TransactionLog();
-			log.setLogContent(logContent);
-			log.setRootId(rootId);
-			log.setLogTime(new Date());
-			new TransactionLogServiceImpl().save(log);
-		} catch (Exception e) {
-			return "0";
-		}
-		return "1";
-	}
+
 	
 }

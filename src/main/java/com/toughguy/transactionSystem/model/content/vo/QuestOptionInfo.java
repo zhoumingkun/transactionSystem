@@ -14,12 +14,12 @@ public class QuestOptionInfo {
 	private String copiesTitle;			// -调查问卷题目
 	private Date copiesStartTime;		// -调查问卷开始时间
 	private Date copiesEndTime;			// -调查问卷结束时间
-	private double questStatus;			// -单选还是多选
+	private int questStatus;			// -单选还是多选
 	
-	public double getQuestStatus() {
+	public int getQuestStatus() {
 		return questStatus;
 	}
-	public void setQuestStatus(double questStatus) {
+	public void setQuestStatus(int questStatus) {
 		this.questStatus = questStatus;
 	}
 	public void setCopiesStartTime(Date copiesStartTime) {

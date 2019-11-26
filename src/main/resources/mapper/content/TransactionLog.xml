@@ -16,7 +16,7 @@
 		where log_id=#{logId};
 	</delete>
 	
-	<insert id="save" parameterType="TransactionLog">
+	<insert id="insert" parameterType="TransactionLog">
 		insert into transaction_log(log_content,root_id,log_time)
 		values(#{logContent},#{rootId},#{logTime});	
 	</insert>

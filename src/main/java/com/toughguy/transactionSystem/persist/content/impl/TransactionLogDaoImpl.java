@@ -15,5 +15,10 @@ import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 public class TransactionLogDaoImpl 
 					extends GenericDaoImpl<TransactionLog, Integer>
 					implements ITransactionLogDao{
+
+	@Override
+	public void insert(TransactionLog log) {
+		 sqlSessionTemplate.insert(typeNameSpace + ".insert", log);
+	}
 	
 }

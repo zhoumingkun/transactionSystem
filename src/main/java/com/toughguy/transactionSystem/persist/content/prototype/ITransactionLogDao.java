@@ -8,5 +8,5 @@ import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
  *
  */
 public interface ITransactionLogDao extends IGenericDao<TransactionLog, Integer>{
-
+	void insert(TransactionLog log);
 }

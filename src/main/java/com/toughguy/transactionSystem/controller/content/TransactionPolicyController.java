@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.toughguy.transactionSystem.model.content.po.TransactionPolicy;
 import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionPolicyService;
 import com.toughguy.transactionSystem.util.DateUtil;
 
@@ -38,6 +39,8 @@ public class TransactionPolicyController {
 	
 	@Autowired
 	private  ITransactionPolicyService  policyService;
+	@Autowired
+	private ITransactionLogService logService;
 	/**
 	 * 
 	 * 	查看所有的政策
@@ -113,6 +116,7 @@ public class TransactionPolicyController {
 					enterpriseAddressId,enterpriseTypeId,Double.parseDouble(policMoney)
 					);
 			policyService.update(policy);
+		
 			return "{msg:succer,code:200}";
 		} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
@@ -165,6 +169,7 @@ public class TransactionPolicyController {
 					enterpriseAddressId,enterpriseTypeId,Double.parseDouble(policMoney)
 					);
 			policyService.save(policy);
+			
 			return "{msg:succer,code:200}";
 	/*	} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
@@ -235,7 +240,6 @@ public class TransactionPolicyController {
 	
 	
 	@ApiOperation(value = "模糊查询",notes = "政策的模糊查询")
-
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "policyName", value = "模糊查询的条件",
 				required = false, dataType = "String", paramType = "query"),
