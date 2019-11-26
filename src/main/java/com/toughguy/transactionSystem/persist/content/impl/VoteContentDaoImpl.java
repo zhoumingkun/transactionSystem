@@ -31,16 +31,18 @@ implements IVoteContentDao {
 	@Override
 	public PagerModel<TransactionVoteContent> findInfo(Map<String, Object> params) {
 		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
-				if (params == null)
-					params = new HashMap<String, Object>();
-				params.put("offset", SystemContext.getOffset());
-				params.put("limit", SystemContext.getPageSize());
-				PagerModel<TransactionVoteContent> pm = new PagerModel<TransactionVoteContent>();
-				int total = getTotalInfo(params);
-				List<TransactionVoteContent> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findInfo", params);
-				pm.setTotal(total);
-				pm.setData(entitys);
-				return pm;
+		
+		  if (params == null) 
+			  params = new HashMap<String, Object>();
+		  params.put("offset", SystemContext.getOffset()); 
+		  params.put("limit",SystemContext.getPageSize()); 
+		  PagerModel<TransactionVoteContent> pm = new PagerModel<TransactionVoteContent>(); 
+		  int total = getTotalInfo(params);
+		  List<TransactionVoteContent> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findInfo", params);
+		  pm.setTotal(total); 
+		  pm.setData(entitys); 
+		  return pm;
+		 
 	}
 // -- 获取总的条目数 (分页查询中使用)
 	private int getTotalInfo(Map<String, Object> params) {
@@ -54,7 +56,7 @@ implements IVoteContentDao {
 		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
 		if (params == null)
 			params = new HashMap<String, Object>();
-		params.put("offset", SystemContext.getOffset());System.out.println("111111111111");
+		params.put("offset", SystemContext.getOffset());
 		params.put("limit", SystemContext.getPageSize());
 		PagerModel<TransactionVoteContent> pm = new PagerModel<TransactionVoteContent>();
 		int total = getTotalEndInfo(params);

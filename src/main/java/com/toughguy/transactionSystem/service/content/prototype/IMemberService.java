@@ -1,10 +1,12 @@
 package com.toughguy.transactionSystem.service.content.prototype;
 
 import java.util.List;
+import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 public interface IMemberService extends IGenericService<TransactionMember, Integer> {
@@ -106,6 +108,9 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	 * @return List<MemberBasicInfo>
 	 */
 	public List<MemberBasicInfo> enterpriseInfo();
+	
+	public PagerModel<MemberBasicInfo> enterpriseInfoPage(Map<String, Object> params);
+	
 	
 	/**
 	 * 根据关键字查找

@@ -1,10 +1,12 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
 import java.util.List;
+import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 /**
  * 会员dao
@@ -107,6 +109,14 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * @return
 	 */
 	public List<MemberBasicInfo> enterpriseInfo();
+	
+	/**
+	 * 分页查询活动结束参与的人数
+	 * @param params 查询的条件参数
+	 * @param methodName mybatis配置文件中所配置的方法名程
+	 * @return 所要的分页数据
+	 */
+	public PagerModel<MemberBasicInfo> enterpriseInfoPage(Map<String, Object> params);
 	
 	/**
 	 * 根据关键字查找

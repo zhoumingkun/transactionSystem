@@ -19,6 +19,7 @@ import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberCompleteInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
@@ -542,14 +543,16 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/enterpriseinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/enterpriseinfo", method = RequestMethod.GET)
 	@ApiOperation(value = "企业会员信息",notes = "企业会员信息")
 	public Map<String, Object> allEnterpriseInfo(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 
 		try {
-			List<MemberBasicInfo> info = memberService.enterpriseInfo();
-			map.put("data", info);
+			//List<MemberBasicInfo> info = memberService.enterpriseInfo();
+			PagerModel<MemberBasicInfo> enterpriseInfoPage = memberService.enterpriseInfoPage(null);
+			map.put("data", enterpriseInfoPage.getData());
+			map.put("total", enterpriseInfoPage.getTotal());
 			map.put("code", "200");
 			map.put("msg", "成功");
 		} catch (Exception e) {

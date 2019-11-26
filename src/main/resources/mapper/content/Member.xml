@@ -75,6 +75,24 @@
 		from transaction_member member
 		join transaction_enterprise enterprise
 		on member.member_id = enterprise.member_id
+		<!-- where e.enterprise_audit_status_id = 1 and e.member_id=m.member_id; --> 
+	</select>
+	<!-- 枫叶 -->
+	<select id="enterpriseInfoPage" parameterType="Map" resultType="map">
+		select 
+		member.member_id,
+		enterprise.enterprise_name,
+		member.member_tel,
+		member.member_rank,
+		member.member_online_times,
+		member.member_date
+		from transaction_member member
+		join transaction_enterprise enterprise
+		on member.member_id = enterprise.member_id
+		limit #{offset}, #{limit}
+	</select>
+	<select id="getTotalNumEnterPriseInfo" parameterType="Map" resultType="int">
+		select count(*) from transaction_member;
 	</select>
 	
 	<!-- 签到接口 -->

@@ -1,14 +1,18 @@
 package com.toughguy.transactionSystem.persist.content.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.content.prototype.IMemberDao;
 import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
+import com.toughguy.transactionSystem.system.SystemContext;
 @Service
 public class MemberDaoImpl 
 extends GenericDaoImpl<TransactionMember, Integer>
@@ -97,7 +101,27 @@ System.out.println(info);
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList(typeNameSpace + ".enterpriseInfo");
 	}
-
+	
+	@Override
+	public PagerModel<MemberBasicInfo> enterpriseInfoPage(Map<String, Object> params) {
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<MemberBasicInfo> pm = new PagerModel<MemberBasicInfo>();
+		int total = getTotalNumEnterPriseInfo(params);
+		List<MemberBasicInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".enterpriseInfoPage", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+	
+	// -- 获取总的条目数 (分页查询中使用)
+	private int getTotalNumEnterPriseInfo(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalNumEnterPriseInfo", params);
+		return count;
+	}
 	@Override
 	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
 		// TODO Auto-generated method stub
@@ -112,5 +136,7 @@ System.out.println(info);
 		System.out.println(selectOne);
 		return sqlSessionTemplate.selectOne(typeNameSpace + ".findTodayOnline", transactionMember);
 	}
+
+	
 	
 }

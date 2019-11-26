@@ -20,10 +20,10 @@
 		enterprise_audit_status_id=#{enterpriseAuditStatusId}
 		where member_id=#{memberId};
 	</update>
-	
+	<!-- 根据memberId查询 完整资料 -->
 	<select id="findEnterpriseInfo" resultType="MemberCompleteInfo">
 		select 
-		enterprise.member_id,
+		enterprise.*,
 		member.member_name,
 		member.member_tel,
 		member.member_card,
@@ -31,6 +31,7 @@
 		member.member_rank,
 		member.member_online_times,
 		member.member_date,
+		<!-- enterprise.member_id,
 		enterprise.enterprise_name,
 		enterprise.enterprise_card_type,
 		enterprise.enterprise_card_id,
@@ -42,7 +43,7 @@
 		enterprise.enterprise_reg_date,
 		enterprise.enterprise_reg_money,
 		enterprise.enterprise_legal_person_name,
-		enterprise.enterprise_legal_person_card,
+		enterprise.enterprise_legal_person_card, -->
 		audit_status.audit_status_type,
 		trade.trade_type,
 		type.enterprise_type,
@@ -68,16 +69,4 @@
 		where enterprise.member_id=#{memberId};
 	</select>
 
-		<!-- 查询关键字 -->
-	<!-- <select id="">
-		
-		
-		
-	</select> -->
-	
-	<!-- 查询信息是否完善 -->
-	<!-- <select id="">
-		select *	
-	</select>
-	 -->
 </mapper>
