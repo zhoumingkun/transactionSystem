@@ -14,6 +14,4 @@ public interface ITransactionLogService extends  IGenericService<TransactionLog,
 
 	void insert(String logContent, int rootId);
 	
-
-	
 }

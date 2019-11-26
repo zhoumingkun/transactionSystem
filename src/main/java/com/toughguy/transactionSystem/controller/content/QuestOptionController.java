@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
- * 		问卷调查controller
+ * 	问卷调查controller
  * @author Guozhenze
  *
  */
@@ -93,7 +93,8 @@ public class QuestOptionController {
 			
 			TransactionStatistics statistics = new TransactionStatistics(copiesId,memberId);
 			TransactionStatistics s = statisticsService.findStatistics(statistics);
-			if(s==null) {
+			System.out.println(s);
+			if(s!=null) {
 				map.put("code", "404");
 				map.put("msg", "您以做过本次调查问卷");
 				return JSON.toJSONString(map).toString();
@@ -254,7 +255,6 @@ public class QuestOptionController {
 				List<TransactionQuest> lists = questService.findInfoAll(quest);
 				int num = 0;
 				for (int j = 0; j < lists.size(); j++) {
-					System.out.println(lists.get(j));
 					lists.get(j).getQuestId();
 					TransactionOption option = new TransactionOption();
 					option.setQuestId(lists.get(j).getQuestId());

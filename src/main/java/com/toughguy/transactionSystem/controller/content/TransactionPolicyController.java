@@ -2,6 +2,7 @@ package com.toughguy.transactionSystem.controller.content;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.po.TransactionPolicy;
+import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
+import com.toughguy.transactionSystem.service.content.prototype.IMemberCompleteInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionPolicyService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -41,6 +46,8 @@ public class TransactionPolicyController {
 	private  ITransactionPolicyService  policyService;
 	@Autowired
 	private ITransactionLogService logService;
+	@Autowired
+	private IEnterpriseService enterpriseService;
 	/**
 	 * 
 	 * 	查看所有的政策
@@ -67,6 +74,49 @@ public class TransactionPolicyController {
 	}
 	
 	
+	/***
+	 * 
+	 * 	政策的智能匹配
+	 * @return
+	 */
+	@ApiOperation(value = "智能匹配",notes = "修改政策")
+	@ApiImplicitParam(name = "policyId", value = "id",
+        required = true, dataType = "int", paramType = "query")
+	@RequestMapping("/aaaaa")
+	public String getIntelligence(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		int policyId = Integer.parseInt(request.getParameter("policyId"));		
+		// - 查询用户信息
+		TransactionEnterprise m = enterpriseService.find(policyId);
+		// - 查找出所有的政策信息
+		PagerModel<TransactionPolicy> findPaginated = policyService.findPaginated(null);
+		List<TransactionPolicy> lists = findPaginated.getData();
+		// - 遍历所有的政策信息，11对比
+		for (int i = 0; i <lists.size(); i++) {
+			// - 定义所占百分比
+			int num = 0;
+			if(m.getEnterpriseAddressId()==lists.get(i).getEnterpriseAddressId()) {
+				// -如果所属地区一样，加20百分比
+				num += 20; 
+			}
+			if(m.getEnterpriseTypeId() == lists.get(i).getEnterpriseTypeId()) {
+				// -如果企业类型一样，加25百分比
+				num += 25;
+			}
+			if(m.getEnterpriseAreaId() == lists.get(i).getEnterpriseAreaId()) {
+				// -如果所属领域一样，加25百分比
+				num += 25;
+			}
+			if(m.getEnterpriseTradeId() == lists.get(i).getEnterpriseTradeId()) {
+				// -如果行业一样，加30百分比
+				num += 30;
+			}
+			lists.get(i).setIntelligentMatching(num);
+		}
+		return JSON.toJSONString(lists);
+	}
+	
+	
 	
 	/**
 	 * 	修改政策
@@ -81,8 +131,8 @@ public class TransactionPolicyController {
         required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseTradeId", value = "所属行业id",
         required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "policyName", value = "政策名称",
-        required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "policyName", value = "政策名称",
+	        required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "policyUnit", value = "发布单位",
         required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "policyContent", value = "政策内容",

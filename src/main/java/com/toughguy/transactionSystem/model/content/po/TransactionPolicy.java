@@ -17,6 +17,14 @@ public class TransactionPolicy {
 	private int enterpriseAddressId;	// -所属区域
 	private int enterpriseTypeId;		// -企业类型
 	private double policMoney;			// -奖励金额
+	private int intelligentMatching;	// -政策匹配°
+	
+	public int getIntelligentMatching() {
+		return intelligentMatching;
+	}
+	public void setIntelligentMatching(int intelligentMatching) {
+		this.intelligentMatching = intelligentMatching;
+	}
 	public int getPolicyId() {
 		return policyId;
 	}

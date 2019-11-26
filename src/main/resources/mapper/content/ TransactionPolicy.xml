@@ -13,7 +13,7 @@
 		on a.enterprise_address_id = d.address_id
 		left join transaction_enterprise_type e
 		on a.enterprise_type_id = e.enterprise_type_id
-		where b.status = 1 and   c.status = 1
+		where b.status = 1 and   c.sta tus = 1
 	</select>
 	
 	<!-- 根据id查找政策 -->
@@ -183,7 +183,7 @@
 		or e.enterprise_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
 		or b.trade_type like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
 		or a.polic_money like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
-	
+		limit #{offset},#{limit}
 	</select>	
 	
 </mapper>
