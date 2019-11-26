@@ -163,7 +163,7 @@ public class TransactionPolicyController {
 					enterpriseAddressId,enterpriseTypeId,Double.parseDouble(policMoney)
 					);
 			policyService.update(policy);
-		
+		//	logService.insert("修改了"+policyName+"政策", rootId);
 			return "{msg:succer,code:200}";
 		} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
