@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionStatistics">
+	<select id="findStatistics" resultType="TransactionStatistics">
+		select * from transaction_statistics
+		where copies_id=#{copiesId} and member_id = #{memberId};
+	</select>
+
+	
+	<insert id="save" parameterType="TransactionStatistics">
+		insert into transaction_enterprise_area(copiesId,member_id)
+		values(#{copiesId},#{memberId});	
+	</insert>
+	
+</mapper>

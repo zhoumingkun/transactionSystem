@@ -9,5 +9,11 @@ import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
  *
  */
 public interface ITransactionStatisticsDao  extends IGenericDao<TransactionStatistics, Integer>{
-
+	/**
+	 * 
+	 * 
+	 * @param statistics
+	 * @return
+	 */
+	TransactionStatistics findStatistics(TransactionStatistics statistics);
 }

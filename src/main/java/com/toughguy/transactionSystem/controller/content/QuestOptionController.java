@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.QuestOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionQuest;
+import com.toughguy.transactionSystem.model.content.po.TransactionStatistics;
 import com.toughguy.transactionSystem.model.content.vo.QuestOptionInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IQuestOptionInfoService;
@@ -65,20 +66,39 @@ public class QuestOptionController {
 	 * @return
 	 */
 	@ApiOperation(value = "问卷调查",notes = "查询某个问卷的所有的问题以及选项")
-    @ApiImplicitParam(name = "copiesId", value = "问卷ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "copiesId", value = "问卷ID",
+            required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "memberId", value = "用户ID",
+        required = true, dataType = "int", paramType = "query")
+	})
 	@RequestMapping(value = "/getQuest", method = RequestMethod.GET)
 	public String getQuestOption(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
+		
+		
+		
 		try {
 			int copiesId = 0;
+			int memberId = 0;
 			try {
 				copiesId = Integer.parseInt(request.getParameter("copiesId"));
+				memberId = Integer.parseInt(request.getParameter("memberId"));
+				
 			} catch (Exception e) {
 				map.put("code", "404");
-				map.put("msg", "请传入copiesId");
+				map.put("msg", "请传入copiesId和memberId");
 				return JSON.toJSONString(map).toString();
 			}
+			
+			TransactionStatistics statistics = new TransactionStatistics(copiesId,memberId);
+			TransactionStatistics s = statisticsService.findStatistics(statistics);
+			if(s==null) {
+				map.put("code", "404");
+				map.put("msg", "您以做过本次调查问卷");
+				return JSON.toJSONString(map).toString();
+			}
+			
 			QuestOptionInfo t = new QuestOptionInfo();
 			t.setCopiesId(copiesId);
 			List<QuestOptionInfo> infos = infoService.findOne(t);
