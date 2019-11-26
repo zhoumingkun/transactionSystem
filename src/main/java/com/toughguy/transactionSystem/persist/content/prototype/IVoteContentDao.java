@@ -1,9 +1,9 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
-import java.util.List;
+import java.util.Map;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteContent;
-import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 
 public interface IVoteContentDao extends IGenericDao<TransactionVoteContent, Integer>{
@@ -24,13 +24,13 @@ public interface IVoteContentDao extends IGenericDao<TransactionVoteContent, Int
 	 * @param sqlGeneralInfo
 	 * @return
 	 */
-	public List<TransactionVoteContent> findInfo(SqlGeneralInfo sqlGeneralInfo);
+	public PagerModel<TransactionVoteContent> findInfo(Map<String, Object> params);
 	
 	/**
 	 * 查询投票结束的信息
 	 * @param sqlGeneralInfo
 	 * @return
 	 */
-	public List<TransactionVoteContent> findEndInfo(SqlGeneralInfo sqlGeneralInfo);
+	public PagerModel<TransactionVoteContent> findEndInfo(Map<String, Object> params);
 	
 }

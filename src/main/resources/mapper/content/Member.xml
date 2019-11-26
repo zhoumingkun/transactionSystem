@@ -83,7 +83,9 @@
 		where member_id = #{memberId};
 	</select>
 	<update id="updateOnlineTimes" parameterType="TransactionMember" >
-		update transaction_member set member_online_times=#{memberOnlineTimes} 
+		update transaction_member 
+		set member_online_times=#{memberOnlineTimes},
+		 member_online_time = now()
 		where member_id= #{memberId};
 	</update>
 	
@@ -148,6 +150,13 @@
 	 or area.enterprise_area like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
 	 or address.address_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
 		
+	</select>
+	
+	<!-- 实现检验是否今天可以签到 -->
+	<select id="findTodayOnline" parameterType="TransactionMember" resultType="TransactionMember" >
+		select * from transaction_member
+		where member_id = #{memberId}
+		and TO_DAYS(member_online_time) = TO_DAYS(NOW());
 	</select>
 	
 </mapper>

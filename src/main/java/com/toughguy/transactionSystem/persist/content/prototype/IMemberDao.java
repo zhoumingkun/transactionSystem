@@ -114,4 +114,11 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * @return
 	 */
 	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
+	
+	/**
+	 * 根据memberId 和 onlinetime 查找今天签到的用户是否存在
+	 * @param transactionMember
+	 * @return
+	 */
+	public TransactionMember findTodayOnline(TransactionMember transactionMember);
 }

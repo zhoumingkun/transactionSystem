@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 字典管理模块：
- * 	企业区域	企业状态   企业类型  
+ * 	企业领域	企业状态   企业类型  
  *  审核状态    地址       行业
  * 
  * @author 张泽
@@ -60,10 +60,10 @@ public class DictionaryManagementController {
 	private IEnterpriseTypeService typeService;
 	
 	/**
-	 * 查找企业区域的所有信息
+	 * 查找企业领域的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业区域",notes = "查找企业区域的所有信息")
+	@ApiOperation(value = "企业领域",notes = "查找企业领域的所有信息")
 	@RequestMapping(value = "areamsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -73,16 +73,17 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", areaAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
 	
 	/**
-	 * 查找企业区域的所有信息(状态为1)
+	 * 查找企业领域的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "企业区域",notes = "查找企业区域的所有信息")
+	@ApiOperation(value = "企业领域",notes = "查找企业领域的所有信息")
 	@RequestMapping(value = "/areastatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -92,17 +93,18 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", areaAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
 	
 	/**
-	 * 添加企业区域的信息
+	 * 添加企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业区域",notes = "添加企业区域的信息")
-    @ApiImplicitParam(name = "enterpriseArea", value = "企业区域",
+	@ApiOperation(value = "企业领域",notes = "添加企业领域的信息")
+    @ApiImplicitParam(name = "enterpriseArea", value = "企业领域",
             required = true, dataType = "String", paramType = "query")
 	@RequestMapping(value = "/areamsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAreaMsgAdd(HttpServletRequest request) {
@@ -113,18 +115,19 @@ public class DictionaryManagementController {
 			areaService.save(new TransactionEnterpriseArea(enterpriseArea));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
 	
 	
 	/**
-	 * 删除企业区域的信息
+	 * 删除企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业区域",notes = "删除企业区域的信息")
-    @ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
+	@ApiOperation(value = "企业领域",notes = "删除企业领域的信息")
+    @ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
             required = true, dataType = "int", paramType = "query")
 	@RequestMapping(value = "/areamsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAreaMsgDel(HttpServletRequest request) {
@@ -134,19 +137,20 @@ public class DictionaryManagementController {
 			areaService.delete(enterpriseAreaId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
 	
 
 	/**
-	 * 修改企业区域的信息
+	 * 修改企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业区域",notes = "修改企业区域的信息")
+	@ApiOperation(value = "企业领域",notes = "修改企业领域的信息")
     @ApiImplicitParams({
-    		@ApiImplicitParam(name = "enterpriseareaId", value = "企业区域ID",
+    		@ApiImplicitParam(name = "enterpriseareaId", value = "企业领域ID",
             required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "status", value = "状态",
             required = true, dataType = "boolean", paramType = "query")
@@ -161,7 +165,8 @@ public class DictionaryManagementController {
 			areaService.update(new TransactionEnterpriseArea(enterpriseAreaId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -181,7 +186,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", statusAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -199,7 +205,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", statusAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -221,7 +228,8 @@ public class DictionaryManagementController {
 			statusService.save(new TransactionEnterpriseStatus(enterpriseStatus));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -242,7 +250,8 @@ public class DictionaryManagementController {
 			statusService.delete(enterpriseStatusId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -269,7 +278,8 @@ public class DictionaryManagementController {
 			statusService.update(new TransactionEnterpriseStatus(enterpriseStatusId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -288,7 +298,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", typeAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -306,7 +317,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", typeAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -327,7 +339,8 @@ public class DictionaryManagementController {
 			typeService.save(new TransactionEnterpriseType(enterpriseType));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -348,7 +361,8 @@ public class DictionaryManagementController {
 			typeService.delete(enterpriseTypeId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -375,7 +389,8 @@ public class DictionaryManagementController {
 			typeService.update(new TransactionEnterpriseType(enterpriseTypeId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -395,7 +410,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", statusAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -414,7 +430,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", statusAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -434,7 +451,8 @@ public class DictionaryManagementController {
 			auditStatusService.save(new TransactionEnterpriseAuditStatus(auditStatusType));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -455,7 +473,8 @@ public class DictionaryManagementController {
 			auditStatusService.delete(auditStatusId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -482,7 +501,8 @@ public class DictionaryManagementController {
 			auditStatusService.update(new TransactionEnterpriseAuditStatus(auditStatusId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -503,7 +523,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", addressAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -521,7 +542,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", addressAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -541,7 +563,8 @@ public class DictionaryManagementController {
 			addressService.save(new TransactionEnterpriseAddress(addressName));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -562,7 +585,8 @@ public class DictionaryManagementController {
 			addressService.delete(addressId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -589,7 +613,8 @@ public class DictionaryManagementController {
 			addressService.update(new TransactionEnterpriseAddress(addressId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -609,7 +634,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", addressAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -628,7 +654,8 @@ public class DictionaryManagementController {
 			map.put("code", "200");
 			map.put("data", addressAllMsg);
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -649,7 +676,8 @@ public class DictionaryManagementController {
 			tradeService.save(new TransactionEnterpriseTrade(tradeType));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -670,7 +698,8 @@ public class DictionaryManagementController {
 			tradeService.delete(tradeId);
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -698,7 +727,8 @@ public class DictionaryManagementController {
 			tradeService.update(new TransactionEnterpriseTrade(tradeId, status));
 			map.put("code", "200");
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}

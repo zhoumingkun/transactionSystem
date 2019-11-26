@@ -103,5 +103,14 @@ System.out.println(info);
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList(typeNameSpace + ".findKeyword", sqlGeneralInfo);
 	}
+
+	@Override
+	public TransactionMember findTodayOnline(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		System.out.println(transactionMember);
+		TransactionMember selectOne = sqlSessionTemplate.selectOne(typeNameSpace + ".findTodayOnline", transactionMember);
+		System.out.println(selectOne);
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".findTodayOnline", transactionMember);
+	}
 	
 }

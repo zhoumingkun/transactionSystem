@@ -43,7 +43,12 @@ public class MemberController {
 	@Autowired
 	private IMemberCompleteInfoService completeInfoService;
 	
-
+	
+	/**
+	 * 获取OpenId
+	 */
+	
+	
 	/**
 	 * 根据openId登录检查
 	 * @param request
@@ -439,6 +444,7 @@ System.out.println("可以为空");
 			map.put("msg", "成功");
 		}catch(Exception e) {
 			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 
 		return map;
@@ -571,14 +577,21 @@ System.out.println("可以为空");
 		try {
 			int memberId = json.getInteger("memberId");
 			//判断该会员是否今天已签到
-			
+			boolean isOnline = memberService.isOnline(new TransactionMember(memberId));
+			if(!isOnline) {
+				map.put("msg", "已经签到了");
+				map.put("code", "404");
+				return map;
+			}
 			// 查询会员签到次数
 			TransactionMember findOnlineTimes = memberService.findOnlineTimes(new TransactionMember(memberId));
 			
+			//更新签到次数和日期
 			int times = findOnlineTimes.getMemberOnlineTimes();
 			findOnlineTimes.setMemberOnlineTimes(times+1);
 				
 			memberService.updateOnlineTimes(findOnlineTimes);
+			
 			map.put("msg", "签到成功");
 			map.put("code", "200");
 		} catch (Exception e) {
@@ -721,6 +734,11 @@ System.out.println("可以为空");
 	/**
 	 * 资料是否完善//根据openId 还是 memberId
 	 */
+	@ApiOperation(value = "资料是否完善",notes = "资料是否完善")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "memberId", value = "会员ID",
+        required = true, dataType = "int", paramType = "query"),
+		})
 	@RequestMapping(value = "/iscomplete", method = RequestMethod.POST)
 	public Map<String, Object> isComplete(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
@@ -742,4 +760,36 @@ System.out.println("可以为空");
 		}
 		return map;
 	} 
+	
+	/**
+	 * 是否可以签到 memberId
+	 */
+	@ApiOperation(value = "是否可以签到",notes = "是否可以签到")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "memberId", value = "会员ID",
+        required = true, dataType = "int", paramType = "query"),
+		})
+	@RequestMapping(value = "/isonline", method = RequestMethod.POST)
+	public Map<String, Object> isOnline(HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		try {
+			int memberId = json.getInteger("memberId");
+			boolean isOnline = memberService.isOnline(new TransactionMember(memberId));
+			if(isOnline) {
+				map.put("msg", "未签到");
+				map.put("code", "200");
+			}else {
+				map.put("msg", "已经签到了");
+				map.put("code", "404");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
 }

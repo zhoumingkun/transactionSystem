@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteContent;
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteCount;
-import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteContentService;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteCountService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -49,11 +49,11 @@ public class TransactionVoteController {
 	public Map<String,Object> voteContenEndMsg() {
 		Map<String,Object> map = new HashMap<>();
 		try {
-			String date = DateUtil.toDateText(DateUtil.now());
-			List<TransactionVoteContent> all = contentService.findEndInfo(new SqlGeneralInfo(date));
+			PagerModel<TransactionVoteContent> all = contentService.findEndInfo(null);
+			List<TransactionVoteContent> data = all.getData();
 			map.put("code", "200");
 			map.put("msg", "成功");
-			map.put("data", all);
+			map.put("data", data);
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -69,8 +69,8 @@ public class TransactionVoteController {
 	public Map<String,Object> voteContenNoMsg() {
 		Map<String,Object> map = new HashMap<>();
 		try {
-			String date = DateUtil.toDateText(DateUtil.now());
-			List<TransactionVoteContent> all = contentService.findInfo(new SqlGeneralInfo(date));
+			PagerModel<TransactionVoteContent> all = contentService.findInfo(null);
+			//List<TransactionVoteContent> data = all.getData();
 			map.put("code", "200");
 			map.put("msg", "成功");
 			map.put("data", all);
@@ -89,7 +89,7 @@ public class TransactionVoteController {
 	@ApiOperation(value = "所有投票信息",notes = "查信息")
     @ApiImplicitParam(name = "votecontentid", value = "投票内容ID",
     required = true, dataType = "int", paramType = "query")
-	@RequestMapping(value = "/voteOptionMsg", method = RequestMethod.POST)
+	@RequestMapping(value = "/voteoptionmsg", method = RequestMethod.POST)
 	public Map<String,Object> voteOptionMsg(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {

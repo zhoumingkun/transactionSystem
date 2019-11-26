@@ -51,7 +51,6 @@ public class TransactionEnterprise {
 		this.enterpriseName = enterpriseName;
 	}
 	//完善资料
-	
 	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
 			String enterpriseCardId, int enterpriseTypeId, int enterpriseTradeId, int enterpriseAreaId,
 			int enterpriseAddressId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,

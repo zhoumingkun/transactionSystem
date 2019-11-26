@@ -103,5 +103,12 @@ implements IMemberService{
 		return dao.findKeyword(sqlGeneralInfo);
 	}
 
+	@Override
+	public boolean isOnline(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		TransactionMember info = dao.findTodayOnline(transactionMember);
+		return info == null;
+	}
+
 	
 }

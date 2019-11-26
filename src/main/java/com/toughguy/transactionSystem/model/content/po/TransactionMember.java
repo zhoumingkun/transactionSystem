@@ -129,8 +129,27 @@ public class TransactionMember {
 		this.memberRank = memberRank;
 		this.memberOnlineTimes = memberOnlineTimes;
 	}
+	
+	
+	
 
 
+	public TransactionMember(int memberId, String openId, String memberTel, String memberPwd, Date memberDate,
+			String memberName, String memberCard, int memberIntegral, int memberRank, int memberOnlineTimes,
+			Date memberOnlineTime) {
+		super();
+		this.memberId = memberId;
+		this.openId = openId;
+		this.memberTel = memberTel;
+		this.memberPwd = memberPwd;
+		this.memberDate = memberDate;
+		this.memberName = memberName;
+		this.memberCard = memberCard;
+		this.memberIntegral = memberIntegral;
+		this.memberRank = memberRank;
+		this.memberOnlineTimes = memberOnlineTimes;
+		this.memberOnlineTime = memberOnlineTime;
+	}
 
 	public int getMemberId() {
 		return memberId;

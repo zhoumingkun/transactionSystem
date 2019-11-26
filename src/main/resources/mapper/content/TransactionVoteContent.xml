@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionVoteContent">
-	
-	<select id="findInfo" parameterType="SqlGeneralInfo" resultType="TransactionVoteContent" >
+	<!-- 查看未结束的投票-->
+	<select id="findInfo" parameterType="Map" resultType="TransactionVoteContent" >
 		select * from transaction_vote_content
-		where end_time &lt; #{info};
+		where end_time &lt; now() 
+		limit #{offset},#{limit};
+	</select>
+	<!-- 查看未结束投票的总条数-->
+	<select id="getTotalInfo" parameterType="Map" resultType="int">
+		select count(*) from transaction_vote_content
+		where end_time &lt; now();
 	</select>
 	
-	<select id="findEndInfo" parameterType="SqlGeneralInfo" resultType="TransactionVoteContent" >
+	<!-- 查看结束的投票信息-->
+	<select id="findEndInfo" parameterType="Map" resultType="TransactionVoteContent" >
 		select * from transaction_vote_content
-		where end_time &gt; #{info};
+		where end_time &gt; now()
+		limit #{offset}, #{limit}
+	</select>
+	<!-- 查看结束的投票总条数-->
+	<select id="getTotalEndInfo" parameterType="Map" resultType="int">
+		select count(*) from transaction_vote_content
+		where end_time &gt; now();
 	</select>
 	
+	<!-- 根据id获取对应的投票信息 -->
 	<select id="find" parameterType="int" resultType="TransactionVoteContent">
 		select * from transaction_vote_content
 		where vote_content_id = #{id};
 	</select>
-	
+	<!-- 更新选项一 -->
 	<update id="updateVoteOptionOne" parameterType="TransactionVoteContent">
 		update transaction_vote_content
 		set one_count = one_count+1
 		where vote_content_id=#{voteContentId};
 	</update>
-	
+	<!-- 更新选项二 -->
 	<update id="updateVoteOptionTwo" parameterType="TransactionVoteContent">
 		update transaction_vote_content
 		set two_count = two_count+1
 		where vote_content_id=#{voteContentId};
 	</update>
-	
+	<!-- 删除投票信息 -->
 	<delete id="delete" parameterType="int">
 		delete from transaction_vote_content
 		where vote_content_id=#{id};
 	</delete>
-	
+	<!-- 新加投票信息 -->
 	<insert id="save" parameterType="TransactionVoteContent">
 		insert into 
 		transaction_vote_content(vote_content,vote_option_one,vote_option_two,start_time,end_time)

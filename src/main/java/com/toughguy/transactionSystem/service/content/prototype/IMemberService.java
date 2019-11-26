@@ -114,4 +114,11 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	 */
 	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
 	
+	/**
+	 * 是否可以签到
+	 * @param transactionMember
+	 * @return
+	 */
+	public boolean isOnline(TransactionMember transactionMember);
+	
 }

@@ -1,12 +1,12 @@
 package com.toughguy.transactionSystem.service.content.impl;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteContent;
-import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.content.prototype.IVoteContentDao;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteContentService;
 import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
@@ -31,15 +31,15 @@ implements IVoteContentService {
 	}
 
 	@Override
-	public List<TransactionVoteContent> findInfo(SqlGeneralInfo sqlGeneralInfo) {
+	public PagerModel<TransactionVoteContent> findInfo(Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return dao.findInfo(sqlGeneralInfo);
+		return dao.findInfo(params);
 	}
 
 	@Override
-	public List<TransactionVoteContent> findEndInfo(SqlGeneralInfo sqlGeneralInfo) {
+	public PagerModel<TransactionVoteContent> findEndInfo(Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return dao.findEndInfo(sqlGeneralInfo);
+		return dao.findEndInfo(params);
 	}
 	
 

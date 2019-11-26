@@ -21,7 +21,7 @@
 	
 	<!-- 公司名是否存在 -->
 	<select id="findEnterpriseName" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
-		select enterprise_name from transaction_enterprise
+		select * from transaction_enterprise
 		where enterprise_name=#{enterpriseName} 
 	</select>
 	
