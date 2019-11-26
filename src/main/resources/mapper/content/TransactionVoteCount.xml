@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionVoteCount">
+	<select id="findInfo"  parameterType="TransactionVoteCount" resultType="TransactionVoteCount">
+		select * from transaction_vote_count 
+		where 
+		vote_content_id=#{voteContentId}
+	and member_id=#{memberId}
+	</select>
+	
+	<select id="findAll" resultType="TransactionVoteCount">
+		select * from transaction_vote_count;
+	</select>
+	
+	
+	<insert id="save" parameterType="TransactionVoteCount">
+		insert into transaction_vote_option(member_id,vote_content_id)
+		values(#{memberId},#{voteContentId});	
+	</insert>
+	
+</mapper>

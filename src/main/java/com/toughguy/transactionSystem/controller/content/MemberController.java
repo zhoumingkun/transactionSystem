@@ -20,7 +20,6 @@ import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
-import com.toughguy.transactionSystem.service.content.prototype.IMemberBasicInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberCompleteInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -41,8 +40,6 @@ public class MemberController {
 	private IMemberService memberService;
 	@Autowired
 	private IEnterpriseService enterpriseService;
-	@Autowired
-	private IMemberBasicInfoService basicInfoService;
 	@Autowired
 	private IMemberCompleteInfoService completeInfoService;
 	
@@ -123,7 +120,7 @@ public class MemberController {
 	
 	
 	/**
-	 * 修改密码（检查用户名是否存在）
+	 * 修改密码（检查openId是否存在）
 	 * @param request
 	 * @return
 	 */
@@ -234,21 +231,21 @@ System.out.println("可以为空");
 			String enterpriseName = json.getString("enterpriseName");
 			String enterpriseCardType = json.getString("enterpriseCardType");
 			
-			//判断手机号是否唯一
+			//判断手机号是否唯一  ==Null
 			boolean findTel = memberService.findTel(new SqlGeneralInfo(memberTel));
 			
-			//判断企业名是否唯一
+			//判断企业名是否唯一  ==Null
 			boolean findName = false;
 			if(!enterpriseCardId.equals("")) { 
 				findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
-				if(findName) {
+				if(!findName) {
 					map.put("code", "404");
 					map.put("msg", "企业名已存在");
 					return map;
 				}
 			}
 			
-			if(findTel) {
+			if(!findTel) {
 				map.put("code", "404");
 				map.put("msg", "手机号已存在");
 				return map;
@@ -321,6 +318,7 @@ System.out.println("可以为空");
 	public Map<String,Object> completeMsgReturn(HttpServletRequest request,HttpServletResponse response) {
 		JSONObject json = requestJSONUtil.request(request, response);
 		Map<String,Object> map = new HashMap<>();
+		
 		try {
 			int memberId = json.getInteger("memberId");
 			
@@ -337,8 +335,6 @@ System.out.println("可以为空");
 			}else {
 				data.put("enterpriseName",enterpriseMsg.getEnterpriseName());
 			}
-			
-			
 			map.put("code", "200");
 			map.put("msg", "成功");
 			map.put("data", data);
@@ -417,9 +413,9 @@ System.out.println("可以为空");
 			String enterpriseLegalPersonCard = json.getString("enterpriseLegalPersonCard");
 			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
 			
-			// 判断企业名唯一
+			// 判断企业名唯一  是否为Null
 			boolean findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
-			if(findName) {
+			if(!findName) {
 				map.put("code", "404");
 				map.put("msg", "企业名已存在");
 				return map;
@@ -449,6 +445,7 @@ System.out.println("可以为空");
 	}
 	
 	/**
+	 * 【不用】
 	 * 一名个人会员的完整信息
 	 * @param request
 	 * @return
@@ -484,51 +481,52 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/oneEnterpriseMemberInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/oneenterprisememberinfo", method = RequestMethod.POST)
 	@ApiOperation(value = "完整信息",notes = "完整信息")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
+		@ApiImplicitParam(name = "memberId", value = "会员ID",
         required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
 		})
 	public Map<String, Object> oneEnterpriseMemberInfo(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try {
 			int memberId = json.getInteger("memberId");
+			
 			MemberCompleteInfo info = completeInfoService.findEnterpriseInfo(
 					new MemberCompleteInfo(memberId));
+			
 			map.put("data", info);
+			map.put("msg", "成功");
 			map.put("code", "200");
 		} catch (Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
+		
 		return map;
 	}
 	
 	/**
+	 * 【未用】
 	 * 所有的普通会员信息[分页]
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/allMemberInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/allmemberinfo", method = RequestMethod.POST)
 	@ApiOperation(value = "普通会员资料",notes = "普通会员资料")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
-        required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
-		})
 	public Map<String, Object> allMemberInfo(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
-//		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try {
 			List<TransactionMember> info = memberService.memberInfo();
 			map.put("data", info);
 			map.put("code", "200");
+			map.put("msg", "成功");
 		} catch (Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -540,21 +538,17 @@ System.out.println("可以为空");
 	 */
 	@RequestMapping(value = "/enterpriseinfo", method = RequestMethod.POST)
 	@ApiOperation(value = "企业会员信息",notes = "企业会员信息")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
-        required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
-		})
 	public Map<String, Object> allEnterpriseInfo(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
-//		JSONObject json = requestJSONUtil.request(request, response);
+
 		try {
-			List<MemberBasicInfo> info = basicInfoService.enterpriseInfo();
+			List<MemberBasicInfo> info = memberService.enterpriseInfo();
 			map.put("data", info);
 			map.put("code", "200");
+			map.put("msg", "成功");
 		} catch (Exception e) {
 			map.put("code", "404");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
@@ -564,20 +558,23 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/onlineTimes", method = RequestMethod.POST)
+	@RequestMapping(value = "/onlinetimes", method = RequestMethod.POST)
 	@ApiOperation(value = "签到接口",notes = "签到接口")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
+		@ApiImplicitParam(name = "memberId", value = "用户ID",
         required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
 		})
 	public Map<String, Object> onlineTimes(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try {
 			int memberId = json.getInteger("memberId");
+			//判断该会员是否今天已签到
+			
+			// 查询会员签到次数
 			TransactionMember findOnlineTimes = memberService.findOnlineTimes(new TransactionMember(memberId));
+			
 			int times = findOnlineTimes.getMemberOnlineTimes();
 			findOnlineTimes.setMemberOnlineTimes(times+1);
 				
@@ -598,26 +595,29 @@ System.out.println("可以为空");
 	@RequestMapping(value = "/updateIntegral", method = RequestMethod.POST)
 	@ApiOperation(value = "累加积分接口",notes = "累加积分接口")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
+		@ApiImplicitParam(name = "memberId", value = "会员ID",
         required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
 		})
 	public Map<String, Object> updateIntegral(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
 		try {
 			int memberId = json.getInteger("memberId");
+			
+			// 查询积分
 			TransactionMember findIntegral = memberService.findIntegral(new TransactionMember(memberId));
 			int integral = findIntegral.getMemberIntegral();
 			
+			// 更新积分
 			findIntegral.setMemberIntegral(integral + 1);
 			
 			memberService.updateIntegral(findIntegral);
 			
 			map.put("code", "200");
+			map.put("msg", "成功");
 		} catch (Exception e) {
 			map.put("code", "404");
+			map.put("msg", "失败");
 		}
 		return map;
 	} 
@@ -627,83 +627,119 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/findTel", method = RequestMethod.POST)
+	@RequestMapping(value = "/findtel", method = RequestMethod.POST)
 	@ApiOperation(value = "手机号验证",notes = "手机号验证")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
-        required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
+		@ApiImplicitParam(name = "memberTel", value = "手机号",
+        required = true, dataType = "String", paramType = "query"),
 		})
 	public Map<String, Object> findTel(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
 		try {
 			String memberTel = json.getString("memberTel");
+			// 判断手机号是否为Null
 			boolean findTel = memberService.findTel(new SqlGeneralInfo(memberTel));
 			if(findTel) {
+				map.put("msg", "成功");
 				map.put("code", "200");
 			}else {
-				System.out.println("存在");
+				map.put("msg", "手机号已存在");
 				map.put("code", "404");
 			}
 			
 		} catch (Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	} 
+	
 	/**
 	 * 公司名验证
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/findEnterprise", method = RequestMethod.POST)
+	@RequestMapping(value = "/findenterprise", method = RequestMethod.POST)
 	@ApiOperation(value = "公司名验证",notes = "公司名验证")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业区域ID",
-        required = true, dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "status", value = "状态",
-        required = true, dataType = "boolean", paramType = "query")
+		@ApiImplicitParam(name = "enterpriseName", value = "企业名称",
+        required = true, dataType = "String", paramType = "query"),
 		})
 	public Map<String, Object> findEnterprise(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try {
 			String enterpriseName = json.getString("enterpriseName");
+			//是否为Null
 			boolean findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
+			
 			if(findName) {
-				map.put("code", "404");
-			}else {
 				map.put("code", "200");
+				map.put("msg", "成功");
+			}else {
+				map.put("code", "404");
+				map.put("msg", "已存在");
 			}
 		} catch (Exception e) {
 			map.put("code", "404");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
 	
 	
 	/**
-	 * 查询关键字接口
+	 * 企业查询关键字接口(查询资料完善的)
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/findKeyword", method = RequestMethod.POST)
+	@ApiOperation(value = "查询关键字",notes = "查询关键字")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "keyword", value = "关键字",
+        required = true, dataType = "String", paramType = "query"),
+		})
+	@RequestMapping(value = "/findkeyword", method = RequestMethod.POST)
 	public Map<String, Object> findKeyword(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try {
-			String keyword = request.getParameter("keyword");
-			
+			String keyword = json.getString("keyword");
+			List<MemberBasicInfo> member = memberService.findKeyword(new SqlGeneralInfo(keyword));
+			map.put("data", member);
+			map.put("msg", "成功");
 			map.put("code", "200");
 		} catch (Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
 		}
 		return map;
 	} 
 	
 	/**
-	 * 资料是否完善
+	 * 资料是否完善//根据openId 还是 memberId
 	 */
-	
+	@RequestMapping(value = "/iscomplete", method = RequestMethod.POST)
+	public Map<String, Object> isComplete(HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		try {
+			int memberId = json.getInteger("memberId");
+			boolean isComplete = enterpriseService.isComplete(new TransactionEnterprise(memberId));
+			if(isComplete) {
+				map.put("msg", "信息不完善");
+				map.put("code", "404");
+			}else {
+				map.put("msg", "信息完善");
+				map.put("code", "200");
+			}
+			
+		} catch (Exception e) {
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		return map;
+	} 
 }

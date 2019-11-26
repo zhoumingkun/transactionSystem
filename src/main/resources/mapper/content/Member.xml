@@ -63,6 +63,19 @@
 		<!-- limit #{offset} , #{limit} -->
 
 	</select>
+	<!-- 查询所有企业用户的基本信息 -->
+	<select id="enterpriseInfo" resultType="MemberBasicInfo">
+		select 
+		member.member_id,
+		enterprise.enterprise_name,
+		member.member_tel,
+		member.member_rank,
+		member.member_online_times,
+		member.member_date
+		from transaction_member member
+		join transaction_enterprise enterprise
+		on member.member_id = enterprise.member_id
+	</select>
 	
 	<!-- 签到接口 -->
 	<select id="findOnlineTimes" parameterType="TransactionMember" resultType="TransactionMember">
@@ -91,5 +104,50 @@
 		where member_tel=#{info} 
 	</select>
 	
+	<!-- 根据关键字查询 -->
+	<select id="findKeyword" parameterType="SqlGeneralInfo" resultType="MemberBasicInfo">
+		select 
+		member.member_id,
+		enterprise.enterprise_name,
+		member.member_tel,
+		member.member_rank,
+		member.member_online_times,
+		member.member_date
+		from
+		transaction_enterprise enterprise
+		join transaction_member member
+		on member.member_id = enterprise.member_id
+		join transaction_enterprise_area area
+		on enterprise.enterprise_area_id = area.enterprise_area_id
+		join transaction_enterprise_type type
+		on enterprise.enterprise_type_id = type.enterprise_type_id
+		join transaction_enterprise_trade trade
+		on enterprise.enterprise_trade_id= trade.trade_id
+		join transaction_enterprise_status enterprise_status
+		on enterprise.enterprise_status_id=enterprise_status.enterprise_status_id
+		join transaction_enterprise_address address
+		on enterprise.enterprise_address_id=address.address_id
+		<!-- join transaction_enterprise_audit_status audit_status
+		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id -->
+		where 
+		member.member_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or member.member_tel like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or member.member_card like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_id like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_taxpayer like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_certification_unit like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_address like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_money like concat(concat('%', #{info, jdbcType=DOUBLE}),'%')
+	 or enterprise.enterprise_legal_person_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_legal_person_card like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or trade.trade_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or type.enterprise_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or enterprise_status.enterprise_status like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or area.enterprise_area like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+	 or address.address_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
+		
+	</select>
 	
 </mapper>

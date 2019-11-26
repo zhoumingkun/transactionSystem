@@ -24,4 +24,11 @@ public interface IEnterpriseService extends IGenericService<TransactionEnterpris
 	 */
 	public void saveCompleteInfo(TransactionEnterprise info);
 	
+	/**
+	 * 是否完善信息
+	 * @param transactionEnterprise
+	 * @return boolean
+	 */
+	public boolean isComplete(TransactionEnterprise transactionEnterprise);
+	
 }

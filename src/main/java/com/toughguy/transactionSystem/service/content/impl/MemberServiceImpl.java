@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
+import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.persist.content.prototype.IMemberDao;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
@@ -88,6 +89,18 @@ implements IMemberService{
 	public TransactionMember openIdFindUser(TransactionMember info) {
 		// TODO Auto-generated method stub
 		return dao.openIdFindUser(info);
+	}
+
+	@Override
+	public List<MemberBasicInfo> enterpriseInfo() {
+		// TODO Auto-generated method stub
+		return dao.enterpriseInfo();
+	}
+	
+	@Override
+	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
+		// TODO Auto-generated method stub
+		return dao.findKeyword(sqlGeneralInfo);
 	}
 
 	

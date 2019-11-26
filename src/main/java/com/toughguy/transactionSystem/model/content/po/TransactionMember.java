@@ -3,7 +3,7 @@ package com.toughguy.transactionSystem.model.content.po;
 import java.util.Date;
 /**
  * 会员实体类
- * @author liDongSheng
+ * @author 张泽
  *
  */
 public class TransactionMember {
@@ -17,11 +17,17 @@ public class TransactionMember {
 	private int memberIntegral;			//会员积分
 	private int memberRank;				//会员等级
 	private int memberOnlineTimes;		//会员签到次数
-	
+	private Date memberOnlineTime;		//会员签到时间
 	public TransactionMember() {
 		super();
 	}	
 	
+	public TransactionMember(int memberId, Date memberOnlineTime) {
+		super();
+		this.memberId = memberId;
+		this.memberOnlineTime = memberOnlineTime;
+	}
+
 	public TransactionMember(int memberId) {
 		super();
 		this.memberId = memberId;
@@ -206,6 +212,15 @@ public class TransactionMember {
 		this.memberOnlineTimes = memberOnlineTimes;
 	}
 
+	
+	public Date getMemberOnlineTime() {
+		return memberOnlineTime;
+	}
+
+	public void setMemberOnlineTime(Date memberOnlineTime) {
+		this.memberOnlineTime = memberOnlineTime;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -215,6 +230,7 @@ public class TransactionMember {
 		result = prime * result + memberId;
 		result = prime * result + memberIntegral;
 		result = prime * result + ((memberName == null) ? 0 : memberName.hashCode());
+		result = prime * result + ((memberOnlineTime == null) ? 0 : memberOnlineTime.hashCode());
 		result = prime * result + memberOnlineTimes;
 		result = prime * result + ((memberPwd == null) ? 0 : memberPwd.hashCode());
 		result = prime * result + memberRank;
@@ -251,6 +267,11 @@ public class TransactionMember {
 				return false;
 		} else if (!memberName.equals(other.memberName))
 			return false;
+		if (memberOnlineTime == null) {
+			if (other.memberOnlineTime != null)
+				return false;
+		} else if (!memberOnlineTime.equals(other.memberOnlineTime))
+			return false;
 		if (memberOnlineTimes != other.memberOnlineTimes)
 			return false;
 		if (memberPwd == null) {
@@ -278,7 +299,7 @@ public class TransactionMember {
 		return "TransactionMember [memberId=" + memberId + ", openId=" + openId + ", memberTel=" + memberTel
 				+ ", memberPwd=" + memberPwd + ", memberDate=" + memberDate + ", memberName=" + memberName
 				+ ", memberCard=" + memberCard + ", memberIntegral=" + memberIntegral + ", memberRank=" + memberRank
-				+ ", memberOnlineTimes=" + memberOnlineTimes + "]";
+				+ ", memberOnlineTimes=" + memberOnlineTimes + ", memberOnlineTime=" + memberOnlineTime + "]";
 	}
 	
 	

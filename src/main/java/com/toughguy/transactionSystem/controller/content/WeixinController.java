@@ -6,7 +6,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,19 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.druid.support.json.JSONUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.toughguy.transactionSystem.model.content.Material;
 import com.toughguy.transactionSystem.model.content.MaterialImage;
 import com.toughguy.transactionSystem.model.content.MaterialParam;
 import com.toughguy.transactionSystem.util.CommonUtil;
-import com.toughguy.transactionSystem.util.DateUtil;
 import com.toughguy.transactionSystem.util.HttpsUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
 
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;

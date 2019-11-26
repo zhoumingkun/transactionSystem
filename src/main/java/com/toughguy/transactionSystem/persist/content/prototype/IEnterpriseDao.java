@@ -26,4 +26,11 @@ public interface IEnterpriseDao extends IGenericDao<TransactionEnterprise, Integ
 	 * @param info
 	 */
 	public void saveCompleteInfo(TransactionEnterprise info);
+	
+	/**
+	 * 返回资料完善的对象
+	 * @param transactionEnterprise
+	 * @return TransactionEnterprise
+	 */
+	public TransactionEnterprise isComplete(TransactionEnterprise transactionEnterprise);
 }

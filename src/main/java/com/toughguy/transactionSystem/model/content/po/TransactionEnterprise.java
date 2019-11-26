@@ -78,10 +78,11 @@ public class TransactionEnterprise {
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
 	}
-	
-	
 
-
+	public TransactionEnterprise(int memberId) {
+		super();
+		this.memberId = memberId;
+	}
 	public TransactionEnterprise(int enterpriseId, int memberId, String enterpriseName, String enterpriseCardType,
 			String enterpriseCardId, int enterpriseTypeId, int enterpriseTradeId, int enterpriseAreaId,
 			int enterpriseAddressId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,

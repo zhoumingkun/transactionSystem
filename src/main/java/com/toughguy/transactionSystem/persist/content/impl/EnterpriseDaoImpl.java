@@ -34,6 +34,12 @@ implements IEnterpriseDao{
 		sqlSessionTemplate.update(typeNameSpace + ".saveCompleteInfo", info);
 	}
 
+	@Override
+	public TransactionEnterprise isComplete(TransactionEnterprise transactionEnterprise) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".isComplete", transactionEnterprise);
+	}
+
 	
 
 

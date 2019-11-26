@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionVoteContent">
-	<select id="findAll" resultType="TransactionVoteContent">
-		select * from transaction_vote_content;
+	
+	<select id="findInfo" parameterType="SqlGeneralInfo" resultType="TransactionVoteContent" >
+		select * from transaction_vote_content
+		where end_time &lt; #{info};
 	</select>
 	
-	<update id="update" parameterType="TransactionVoteContent">
+	<select id="findEndInfo" parameterType="SqlGeneralInfo" resultType="TransactionVoteContent" >
+		select * from transaction_vote_content
+		where end_time &gt; #{info};
+	</select>
+	
+	<select id="find" parameterType="int" resultType="TransactionVoteContent">
+		select * from transaction_vote_content
+		where vote_content_id = #{id};
+	</select>
+	
+	<update id="updateVoteOptionOne" parameterType="TransactionVoteContent">
 		update transaction_vote_content
-		set vote_content=#{voteContent}
+		set one_count = one_count+1
 		where vote_content_id=#{voteContentId};
 	</update>
 	
-	<delete id="delete" parameterType="TransactionVoteContent">
-		delete from transaction_vote_content
+	<update id="updateVoteOptionTwo" parameterType="TransactionVoteContent">
+		update transaction_vote_content
+		set two_count = two_count+1
 		where vote_content_id=#{voteContentId};
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from transaction_vote_content
+		where vote_content_id=#{id};
 	</delete>
 	
 	<insert id="save" parameterType="TransactionVoteContent">
-		insert into transaction_vote_content(vote_content)
-		values(#{voteContent});	
+		insert into 
+		transaction_vote_content(vote_content,vote_option_one,vote_option_two,start_time,end_time)
+		values(#{voteContent},#{voteOptionOne},#{voteOptionTwo},#{startTime},#{endTime});	
 	</insert>
 	
-	<insert id="insertVoteContent" parameterType="TransactionVoteContent" useGeneratedKeys="true" keyProperty="voteContentId">
-		insert into transaction_vote_content(vote_content)
-		values(#{voteContent});	
-	</insert>
 </mapper>

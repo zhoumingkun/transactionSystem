@@ -3,6 +3,7 @@ package com.toughguy.transactionSystem.service.content.prototype;
 import java.util.List;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
+import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
@@ -95,9 +96,22 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	public boolean findTel(SqlGeneralInfo info);
 	
 	/**
-	 * 查询所有会员的基本信息
+	 * 查询所有个人会员的基本信息
 	 * @return
 	 */
-	List<TransactionMember> memberInfo();
+	public List<TransactionMember> memberInfo();
+	
+	/**
+	 * 查询所有企业会员的基本信息
+	 * @return List<MemberBasicInfo>
+	 */
+	public List<MemberBasicInfo> enterpriseInfo();
+	
+	/**
+	 * 根据关键字查找
+	 * @param sqlGeneralInfo
+	 * @return List<MemberBasicInfo>
+	 */
+	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
 	
 }

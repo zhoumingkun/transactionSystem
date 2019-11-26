@@ -91,5 +91,17 @@ System.out.println(info);
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne(typeNameSpace + ".openIdFindUser", info);
 	}
+
+	@Override
+	public List<MemberBasicInfo> enterpriseInfo() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".enterpriseInfo");
+	}
+
+	@Override
+	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList(typeNameSpace + ".findKeyword", sqlGeneralInfo);
+	}
 	
 }

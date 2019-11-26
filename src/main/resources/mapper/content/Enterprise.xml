@@ -48,4 +48,26 @@
 		where member_id=#{memberId};
 	</update>
 	
+	<!-- 判断信息是否完善 -->
+	<select id="isComplete" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
+		select * from transaction_enterprise
+		where member_id=#{memberId} and
+		enterprise_name is not null and
+		enterprise_card_type is not null and
+		enterprise_card_id is not null and
+		enterprise_type_id is not null and
+		enterprise_trade_id is not null and
+		enterprise_area_id is not null and
+		enterprise_address_id is not null and
+		enterprise_taxpayer is not null and
+		enterprise_validity_date_start is not null and
+		enterprise_validity_date_end is not null and
+		enterprise_certification_unit is not null and
+		enterprise_reg_address is not null and
+		enterprise_status_id is not null and
+		enterprise_reg_date is not null and
+		enterprise_reg_money is not null and
+		enterprise_legal_person_name is not null and
+		enterprise_legal_person_card is not null
+	</select>
 </mapper>

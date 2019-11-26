@@ -3,6 +3,7 @@ package com.toughguy.transactionSystem.persist.content.prototype;
 import java.util.List;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
+import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 /**
@@ -96,8 +97,21 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	public boolean findTel(SqlGeneralInfo info);
 	
 	/**
-	 * 查询所有会员的基本信息
+	 * 查询所有个人会员的基本信息
 	 * @return
 	 */
 	List<TransactionMember> memberInfo();
+	
+	/**
+	 * 查询所有企业会员的基本信息
+	 * @return
+	 */
+	public List<MemberBasicInfo> enterpriseInfo();
+	
+	/**
+	 * 根据关键字查找
+	 * @param sqlGeneralInfo
+	 * @return
+	 */
+	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
 }

@@ -36,6 +36,12 @@ implements IEnterpriseService{
 		// TODO Auto-generated method stub
 		dao.saveCompleteInfo(info);
 	}
+	@Override
+	public boolean isComplete(TransactionEnterprise transactionEnterprise) {
+		// TODO Auto-generated method stub
+		TransactionEnterprise complete = dao.isComplete(transactionEnterprise);
+		return  complete==null;
+	}
 
 	
 	
