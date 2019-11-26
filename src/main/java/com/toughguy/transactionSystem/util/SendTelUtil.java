@@ -13,7 +13,7 @@ import org.apache.http.util.EntityUtils;
  * @author Guozhenze
  *
  */
-public class SendTelUtli {
+public class SendTelUtil {
 
 	public static int sendTel(String tel) {
 	    String host = "https://dxyzm.market.alicloudapi.com";
@@ -43,9 +43,6 @@ public class SendTelUtli {
 	    }
             return a;
 	}
-	public static void main(String[] args) {
-		int a = sendTel("15161126613");
-		System.out.println(a);
-	}
+
 
 }
