@@ -51,8 +51,8 @@ public class TransactionSignupController {
 	@Autowired
 	private IEnterpriseSignupInfoService enterpriseSignupInfoService;
 	
-	//会员查看某一个活动的详情
-	@ApiOperation(value = "会员查看某一个活动的详情",notes = "通过活动id和会员id进行查询")
+	//会员报名成功后查看某一个活动的详情
+	@ApiOperation(value = "会员报名成功后查看某一个活动的详情",notes = "通过活动id和会员id进行查询")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "activityId", value = "活动的id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "memberId", value = "会员的id",required = true, dataType = "int", paramType = "query"),
@@ -72,7 +72,31 @@ public class TransactionSignupController {
 	    return JsonUtil.objectToJson(map);
 	}
 	
-	
+	//判断会员是否报名同一个活动
+	@ApiOperation(value = "判断会员是否报名同一个活动",notes = "通过活动id和会员id进行判断是否报名")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "activityId", value = "活动的id",required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "memberId", value = "会员的id",required = true, dataType = "int", paramType = "query"),
+	})
+	@RequestMapping(value="/judgeSignup",method=RequestMethod.GET)
+	public String judgeSignup(HttpServletRequest request,HttpServletResponse response) {
+		int activityId = Integer.parseInt(request.getParameter("activityId"));
+		int memberId = Integer.parseInt(request.getParameter("memberId"));
+		TransactionSignup signup = new TransactionSignup();
+		signup.setActivityId(activityId);
+		signup.setMemberId(memberId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
+		if(judgeSignup!=null) {
+			map.put("code", "500");
+	        map.put("msg", "已报名");
+		}else {
+			map.put("code", "200");
+		    map.put("msg", "未报名");
+		}
+		return JsonUtil.objectToJson(map);
+	}
+
 	//新增报名
 	@ApiOperation(value = "新增报名",notes = "先通过活动id和会员id进行判断是否报名，没有的话进行报名")
 	@ApiImplicitParams({
@@ -124,6 +148,8 @@ public class TransactionSignupController {
 		List<ActivitySignupInfo> data = findPaginated.getData();
 		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("code", "200");
+		params.put("msg", "查找成功");
 		params.put("data", data);
 		params.put("total", total);
 		return JsonUtil.objectToJson(params);
@@ -144,6 +170,8 @@ public class TransactionSignupController {
 		List<ActivitySignupInfo> data = findEndActivityPage.getData();
 		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("code", "200");
+		param.put("msg", "查找成功");
 		param.put("data", data);
 		param.put("total", total);
 		return JsonUtil.objectToJson(param);

@@ -131,6 +131,8 @@ public class TransactionActivityController {
 		List<TransactionActivity> data = findPaginated.getData();
 		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("code", "200");
+		params.put("msg", "查找成功");
 		params.put("data", data);
 		params.put("total", total);
 		return JsonUtil.objectToJson(params);
@@ -153,6 +155,8 @@ public class TransactionActivityController {
 		PagerModel<ActivitySignupInfo> findEndActivityPage = activitySignupInfoService.findEndActivityPage(params1);
 		List<ActivitySignupInfo> data = findEndActivityPage.getData();
 		int total = findEndActivityPage.getTotal();
+		param.put("code", "200");
+		param.put("msg", "查找成功");
 		param.put("data", data);
 		param.put("total", total);
 		return JsonUtil.objectToJson(param);
@@ -179,7 +183,7 @@ public class TransactionActivityController {
 		return JsonUtil.objectToJson(map);
 	}
 	
-	// 查看某一个活动
+	// pc:查看某一个活动
 	@ApiOperation(value = "查看具体某一个的活动",notes = "通过活动id来查找")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "activityId", value = "活动编号",required = true, dataType = "int", paramType = "query")

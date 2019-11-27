@@ -3,8 +3,13 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionReghost">
 	<!-- 申请登记 -->
 	<insert id="save" parameterType="TransactionReghost">
-		insert into transaction_reghost(service_id,reghost_name,enterprise_type_id,reghost_person,reghost_tel) values(#{serviceId},#{reghostName},#{enterpriseTypeId},#{reghostPerson},#{reghostTel}) 
+		<!-- insert into transaction_reghost(service_id,reghost_name,enterprise_type_id,reghost_person,reghost_tel,) values(#{serviceId},#{reghostName},#{enterpriseTypeId},#{reghostPerson},#{reghostTel}) -->
+		insert into transaction_reghost(member_id,service_id,reghost_date) values(#{memberId},#{serviceId},now()) 
 	</insert>
+	<!-- 查看是否登记托管 -->
+	<select id="find" resultType="TransactionReghost">
+		select * from transaction_reghost where member_id=#{memberId}
+	</select>
 	
 	<!-- 删除托管 -->
 	<delete id="delete" parameterType="int"> 

@@ -17,4 +17,10 @@ public interface ITransactionFinancingService extends IGenericService<Transactio
 	 * @return
 	 */
 	public PagerModel<TransactionFinancing> findEndFinancingPage(Map<String, Object> params);
+	/**
+	 * 查询热门的融资活动
+	 * @param params
+	 * @return
+	 */
+	public PagerModel<TransactionFinancing> findHostFinancingPage(Map<String, Object> params);
 }

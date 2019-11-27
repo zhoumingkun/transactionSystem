@@ -3,8 +3,15 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancingApply">
 	<!-- 会员的融资申请 -->
 	<insert id="save" parameterType="TransactionFinancingApply">
-		insert into transaction_financing_apply(financing_id,member_id,apply_enterprise_name,enterprise_code,apply_money,listed_time,financing_do,whether_mortgage,compliance_situation,enterprise_setup_time,enterprise_reg_province,enterprise_reg_city,enterprise_reg_counties,apply_person_name,apply_person_tel,apply_person_position,apply_person_email,enterprise_reg_money,last_year_income,last_year_sharp,last_year_netprofit,netasset_size,last_year_gross_profit,assets_debt_ratio,year_growth_rate,half_year_sales,competitive_advantage_content,apply_img,apply_date) values(#{financingId},#{memberId},#{applyEnterpriseName},#{enterpriseCode},#{applyMoney},#{listedTime},#{financingDo},#{whetherMortgage},#{complianceSituation},#{enterpriseSetupTime},#{enterpriseRegProvince},#{enterpriseRegCity},#{enterpriseRegCounties},#{applyPersonName},#{applyPersonTel},#{applyPersonPosition},#{applyPersonEmail},#{enterpriseRegMoney},#{lastYearIncome},#{lastYearSharp},#{lastYearNetprofit},#{netassetSize},#{lastYearGrossProfit},#{assetsDebtRatio},#{yearGrowthRate},#{halfYearSales},#{competitiveAdvantageContent},#{applyImg},#{applyDate}) 
-	</insert>
+		<!-- insert into transaction_financing_apply(financing_id,member_id,apply_enterprise_name,enterprise_code,apply_money,listed_time,financing_do,whether_mortgage,compliance_situation,enterprise_setup_time,enterprise_reg_province,enterprise_reg_city,enterprise_reg_counties,apply_person_name,apply_person_tel,apply_person_position,apply_person_email,enterprise_reg_money,last_year_income,last_year_sharp,last_year_netprofit,netasset_size,last_year_gross_profit,assets_debt_ratio,year_growth_rate,half_year_sales,competitive_advantage_content,apply_img,apply_date) values(#{financingId},#{memberId},#{applyEnterpriseName},#{enterpriseCode},#{applyMoney},#{listedTime},#{financingDo},#{whetherMortgage},#{complianceSituation},#{enterpriseSetupTime},#{enterpriseRegProvince},#{enterpriseRegCity},#{enterpriseRegCounties},#{applyPersonName},#{applyPersonTel},#{applyPersonPosition},#{applyPersonEmail},#{enterpriseRegMoney},#{lastYearIncome},#{lastYearSharp},#{lastYearNetprofit},#{netassetSize},#{lastYearGrossProfit},#{assetsDebtRatio},#{yearGrowthRate},#{halfYearSales},#{competitiveAdvantageContent},#{applyImg},#{applyDate}) 
+	 -->
+	 	insert into transaction_financing_apply(financing_id,member_id,apply_date) values(#{financingId},#{memberId},now())
+	 </insert>
+	
+	<!-- 通过该融资的请求 -->
+	<update id="update" parameterType="TransactionFinancingApply">
+		update transaction_financing_apply set apply_status=1 where apply_id=#{applyId}
+	</update>
 	
 	
 </mapper>

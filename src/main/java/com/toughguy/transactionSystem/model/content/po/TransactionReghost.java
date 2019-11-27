@@ -1,42 +1,36 @@
 package com.toughguy.transactionSystem.model.content.po;
+
+import java.util.Date;
+
 /**
  * 登记托管实体类
+ * 
  * @author liDongSheng
  *
  */
 public class TransactionReghost {
-	private int reghostId;					//登记托管id
-	private String reghostName;				//登记企业名称
-	private String reghostPerson;			//联系人
-	private String reghostTel;				//手机号
-	private int serviceId;					//服务类型
-	private String reghostServicePerson;	//服务人员
-	private String reghostNeed;				//需求说明
-	private int enterpriseTypeId;			//企业类型
-	public TransactionReghost(int reghostId, String reghostName, String reghostPerson, String reghostTel, int serviceId,
-			String reghostServicePerson, String reghostNeed, int enterpriseTypeId) {
+	private int reghostId; // 登记托管id
+	private int memberId; // 会员id
+	private int serviceId; // 服务类型
+	private Date reghostDate;//登记托管的时间
+	/*
+	 * private String reghostPerson; //联系人 private String reghostName; //登记企业名称
+	 * private String reghostTel; //手机号 private String reghostServicePerson; //服务人员
+	 * private String reghostNeed; //需求说明 private int enterpriseTypeId; //企业类型
+	 */
+	public TransactionReghost(int reghostId, int memberId, int serviceId, Date reghostDate) {
 		super();
 		this.reghostId = reghostId;
-		this.reghostName = reghostName;
-		this.reghostPerson = reghostPerson;
-		this.reghostTel = reghostTel;
+		this.memberId = memberId;
 		this.serviceId = serviceId;
-		this.reghostServicePerson = reghostServicePerson;
-		this.reghostNeed = reghostNeed;
-		this.enterpriseTypeId = enterpriseTypeId;
+		this.reghostDate = reghostDate;
 	}
-	public TransactionReghost(String reghostName, String reghostPerson, String reghostTel, int serviceId,
-			String reghostServicePerson, String reghostNeed, int enterpriseTypeId) {
+	public TransactionReghost(int memberId, int serviceId, Date reghostDate) {
 		super();
-		this.reghostName = reghostName;
-		this.reghostPerson = reghostPerson;
-		this.reghostTel = reghostTel;
+		this.memberId = memberId;
 		this.serviceId = serviceId;
-		this.reghostServicePerson = reghostServicePerson;
-		this.reghostNeed = reghostNeed;
-		this.enterpriseTypeId = enterpriseTypeId;
+		this.reghostDate = reghostDate;
 	}
-	
 	
 	public TransactionReghost() {
 		super();
@@ -47,23 +41,11 @@ public class TransactionReghost {
 	public void setReghostId(int reghostId) {
 		this.reghostId = reghostId;
 	}
-	public String getReghostName() {
-		return reghostName;
+	public int getMemberId() {
+		return memberId;
 	}
-	public void setReghostName(String reghostName) {
-		this.reghostName = reghostName;
-	}
-	public String getReghostPerson() {
-		return reghostPerson;
-	}
-	public void setReghostPerson(String reghostPerson) {
-		this.reghostPerson = reghostPerson;
-	}
-	public String getReghostTel() {
-		return reghostTel;
-	}
-	public void setReghostTel(String reghostTel) {
-		this.reghostTel = reghostTel;
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 	public int getServiceId() {
 		return serviceId;
@@ -71,88 +53,17 @@ public class TransactionReghost {
 	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
 	}
-	public String getReghostServicePerson() {
-		return reghostServicePerson;
+	public Date getReghostDate() {
+		return reghostDate;
 	}
-	public void setReghostServicePerson(String reghostServicePerson) {
-		this.reghostServicePerson = reghostServicePerson;
-	}
-	public String getReghostNeed() {
-		return reghostNeed;
-	}
-	public void setReghostNeed(String reghostNeed) {
-		this.reghostNeed = reghostNeed;
-	}
-	public int getEnterpriseTypeId() {
-		return enterpriseTypeId;
-	}
-	public void setEnterpriseTypeId(int enterpriseTypeId) {
-		this.enterpriseTypeId = enterpriseTypeId;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + enterpriseTypeId;
-		result = prime * result + reghostId;
-		result = prime * result + ((reghostName == null) ? 0 : reghostName.hashCode());
-		result = prime * result + ((reghostNeed == null) ? 0 : reghostNeed.hashCode());
-		result = prime * result + ((reghostPerson == null) ? 0 : reghostPerson.hashCode());
-		result = prime * result + ((reghostServicePerson == null) ? 0 : reghostServicePerson.hashCode());
-		result = prime * result + ((reghostTel == null) ? 0 : reghostTel.hashCode());
-		result = prime * result + serviceId;
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TransactionReghost other = (TransactionReghost) obj;
-		if (enterpriseTypeId != other.enterpriseTypeId)
-			return false;
-		if (reghostId != other.reghostId)
-			return false;
-		if (reghostName == null) {
-			if (other.reghostName != null)
-				return false;
-		} else if (!reghostName.equals(other.reghostName))
-			return false;
-		if (reghostNeed == null) {
-			if (other.reghostNeed != null)
-				return false;
-		} else if (!reghostNeed.equals(other.reghostNeed))
-			return false;
-		if (reghostPerson == null) {
-			if (other.reghostPerson != null)
-				return false;
-		} else if (!reghostPerson.equals(other.reghostPerson))
-			return false;
-		if (reghostServicePerson == null) {
-			if (other.reghostServicePerson != null)
-				return false;
-		} else if (!reghostServicePerson.equals(other.reghostServicePerson))
-			return false;
-		if (reghostTel == null) {
-			if (other.reghostTel != null)
-				return false;
-		} else if (!reghostTel.equals(other.reghostTel))
-			return false;
-		if (serviceId != other.serviceId)
-			return false;
-		return true;
+	public void setReghostDate(Date reghostDate) {
+		this.reghostDate = reghostDate;
 	}
 	@Override
 	public String toString() {
-		return "TransactionReghost [reghostId=" + reghostId + ", reghostName=" + reghostName + ", reghostPerson="
-				+ reghostPerson + ", reghostTel=" + reghostTel + ", serviceId=" + serviceId + ", reghostServicePerson="
-				+ reghostServicePerson + ", reghostNeed=" + reghostNeed + ", enterpriseTypeId=" + enterpriseTypeId
-				+ "]";
+		return "TransactionReghost [reghostId=" + reghostId + ", memberId=" + memberId + ", serviceId=" + serviceId
+				+ ", reghostDate=" + reghostDate + "]";
 	}
 	
-	
-	
+
 }

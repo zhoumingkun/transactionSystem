@@ -3,26 +3,51 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancing">
 	<!-- 新增融资信息发布 -->
 	<insert id="save" parameterType="TransactionFinancing">
-		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank,financing_release_date) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank},now()) 
+		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank,financing_release_date,address_id,trade_id) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank},now(),#{addressId},#{tradeId}) 
 	</insert>
 	
-	<!-- 查看未开始的融资活动 -->
+	<!-- 查看未开始的融资活动 连微信的搜索框-->
 	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancing">
-		select *
-		from transaction_financing
+		select financing.*
+		from transaction_financing financing
+		join transaction_enterprise_trade trade
+		on trade.trade_id=financing.trade_id
+		join transaction_enterprise_address address
+		on address.address_id=financing.address_id
 		where now() &lt; financing_end
-		<if test="financingName != null and financingName != null">
-		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
-	     </if>
+		<if test="financingName != null and financingName != '' ">
+			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or address_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="tradeId != null and tradeId != '' ">
+			 and trade_id = #{tradeId}
+		</if>
+		<if test="addressId != null and addressId != '' ">
+			 and address_id = #{addressId}
+		</if>
 		limit #{offset}, #{limit}
 	</select>
 	<!-- 查看未开始的融资活动的总条数-->
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
-		select count(*) from transaction_financing
+		select count(*) 
+		from transaction_financing financing
+		join transaction_enterprise_trade trade
+		on trade.trade_id=financing.trade_id
+		join transaction_enterprise_address address
+		on address.address_id=financing.address_id
 		where now() &lt; financing_end
-		<if test="financingName != null and financingName != null">
-		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
-	     </if>
+		<if test="financingName != null and financingName != '' ">
+			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or address_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="tradeId != null and tradeId != '' ">
+			 and trade_id = #{tradeId}
+		</if>
+		<if test="addressId != null and addressId != '' ">
+			 and address_id = #{addressId}
+		</if>
 	</select>
 	
 	<!-- 查看结束的融资活动 -->
@@ -30,7 +55,7 @@
 		select *
 		from transaction_financing
 		where now() &gt; financing_end
-		<if test="financingName != null and financingName != null">
+		<if test="financingName != null and financingName != '' ">
 			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 		</if>
 		limit #{offset}, #{limit}
@@ -39,12 +64,12 @@
 	<select id="getTotalEndFinancing" parameterType="Map" resultType="int">
 		select count(*) from transaction_financing
 		where now() &gt; financing_end
-		<if test="financingName != null and financingName != null">
+		<if test="financingName != null and financingName != '' ">
 		 	and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 	     </if>
 	</select>
 	
-	<!-- 查看某一个融资活动 -->
+	<!-- 查看某一个融资活动内容 -->
 	<select id="find" parameterType="int" resultType="TransactionFinancing">
 		select * from transaction_financing where financing_id =#{financingId}
 	</select>
@@ -58,5 +83,29 @@
 	<update id="update" parameterType="int"> 
 		update  transaction_financing set financing_pv=financing_pv+1  where financing_id =#{financingId}
 	</update>
+	
+	<!-- 查看热门的融资活动 -->
+	<select id="findHostFinancing" parameterType="Map" resultType="TransactionFinancing">
+		SELECT *
+		FROM transaction_financing
+		<where>
+			<if test="financingPv != null and financingPv != '' ">
+			 	financing_pv &gt;= #{financingPv}
+		     </if>
+	     </where>
+		ORDER BY financing_pv desc
+		limit #{offset}, #{limit}
+	</select>
+	<!-- 查看热门的融资活动总条数-->
+	<select id="getTotalHostFinancing" parameterType="Map" resultType="int">
+		SELECT count(*)
+		FROM transaction_financing
+		<where>
+			<if test="financingPv != null and financingPv != '' ">
+			 	financing_pv &gt;= #{financingPv}
+		     </if>
+	     </where>
+	</select>
+	
 	
 </mapper>

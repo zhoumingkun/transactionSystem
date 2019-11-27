@@ -33,4 +33,22 @@ public class TransactionFinancingDaoImpl extends GenericDaoImpl<TransactionFinan
 		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalEndFinancing", params);
 		return count;
 	}
+
+	@Override
+	public PagerModel<TransactionFinancing> findHostFinancing(Map<String, Object> params) {
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<TransactionFinancing> pm = new PagerModel<TransactionFinancing>();
+		int total = getTotalNumHostFinancing(params);
+		List<TransactionFinancing> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findHostFinancing", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+	private int getTotalNumHostFinancing(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalHostFinancing", params);
+		return count;
+	}
 }

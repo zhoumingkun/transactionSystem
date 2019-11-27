@@ -10,7 +10,7 @@
 			  GROUP BY activity_id) b
 		ON act.activity_id=b.bid
 		where now() &lt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != ''">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 		limit #{offset}, #{limit}
@@ -20,7 +20,7 @@
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &lt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 	</select>
@@ -34,7 +34,7 @@
 			  GROUP BY activity_id) b
 		ON act.activity_id=b.bid
 		where now() &gt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 		limit #{offset}, #{limit}
@@ -44,7 +44,7 @@
 	<select id="getTotalEndActivitySignup" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &gt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 	</select>
@@ -60,7 +60,7 @@
 			  GROUP BY activity_id) b
 		ON act.activity_id=b.bid
 		where now() &gt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 		limit #{offset}, #{limit}
@@ -70,7 +70,7 @@
 	<select id="getTotalEndActivity" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &gt; activity_end
-		<if test="activityName != null and activityName != null">
+		<if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 	</select>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.ReghostServiceMemberEnterpriseInfo">
+	<!-- 查看登记的所有数据 -->
+	<select id="findPaginated" parameterType="Map" resultType="ReghostServiceMemberEnterpriseInfo">
+		select reghost.* ,service.*,enterprise.*,member.*
+		from transaction_reghost reghost
+		join transaction_service service
+		on reghost.service_id=service.service_id
+		join transaction_member member
+		on member.member_id=reghost.member_id
+		join transaction_enterprise enterprise
+		on enterprise.member_id = member.member_id
+		<where>
+			<if test="enterpriseName != null and enterpriseName != null">
+			 	enterprise_name like concat(concat('%', #{enterpriseName, jdbcType=VARCHAR}),'%')
+		     </if>
+	     </where>
+		limit #{offset}, #{limit}
+	</select>
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*)
+		from transaction_reghost reghost
+		join transaction_service service
+		on reghost.service_id=service.service_id
+		join transaction_member member
+		on member.member_id=reghost.member_id
+		join transaction_enterprise enterprise
+		on enterprise.member_id = member.member_id
+		<where>
+			<if test="enterpriseName != null and enterpriseName != null">
+			 	enterprise_name like concat(concat('%', #{enterpriseName, jdbcType=VARCHAR}),'%')
+		     </if>
+	     </where>
+	</select>
+	
+	<!-- 查看某一个登记的数据 -->
+	<select id="find" parameterType="int" resultType="ReghostServiceMemberEnterpriseInfo">
+		select reghost.* ,service.*,enterprise.*,member.*
+		from transaction_reghost reghost
+		join transaction_service service
+		on reghost.service_id=service.service_id
+		join transaction_member member
+		on member.member_id=reghost.member_id
+		join transaction_enterprise enterprise
+		on enterprise.member_id = member.member_id
+		where reghost.reghost_id=#{reghostId}
+	</select>
+	
+</mapper>

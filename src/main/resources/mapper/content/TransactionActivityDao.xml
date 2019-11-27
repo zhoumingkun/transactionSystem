@@ -21,7 +21,7 @@
 	<select id="findPaginated" parameterType="Map" resultType="TransactionActivity">
 		select * from transaction_activity
 		where now() &lt; activity_end
-		 <if test="activityName != null and activityName != null">
+		 <if test="activityName != null and activityName != '' ">
 		 	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 		limit #{offset}, #{limit}
@@ -31,7 +31,7 @@
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) from transaction_activity
 		where now() &lt; activity_end
-		 <if test="activityName != null and activityName != null">
+		 <if test="activityName != null and activityName != '' ">
 	    	and activity_name like concat(concat('%', #{activityName, jdbcType=VARCHAR}),'%')
 	     </if>
 	</select> 

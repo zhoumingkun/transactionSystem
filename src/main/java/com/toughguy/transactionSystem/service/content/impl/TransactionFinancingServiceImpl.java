@@ -21,4 +21,9 @@ public class TransactionFinancingServiceImpl extends GenericServiceImpl< Transac
 		return transactionFinancingDao.findEndFinancing(params);
 	}
 
+	@Override
+	public PagerModel<TransactionFinancing> findHostFinancingPage(Map<String, Object> params) {
+		return transactionFinancingDao.findHostFinancing(params);
+	}
+
 }
