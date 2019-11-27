@@ -58,5 +58,26 @@ public class TransactionPolicyDaoImpl
 		return count;
 	}
 
+	@Override
+	public PagerModel<TransactionPolicy> findLike(Map<String, Object> params) {
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<TransactionPolicy> pm = new PagerModel<TransactionPolicy>();
+		int total = getTotalNumOfItemsLike(params);
+		List<TransactionPolicy> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findLike", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+	// -- 获取总的条目数 (分页查询中使用)
+	private int getTotalNumOfItemsLike(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getfindLike", params);
+		return count;
+	}
+
+
 }
 

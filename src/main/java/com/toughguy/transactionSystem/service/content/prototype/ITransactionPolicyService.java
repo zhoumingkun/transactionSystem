@@ -28,4 +28,12 @@ public interface ITransactionPolicyService extends IGenericService<TransactionPo
 	 * @return
 	 */
 	PagerModel<TransactionPolicy> selectLike(Map<String, Object> params);
+	
+	
+	/**
+	 * 	根据政策名字 和行业id或者领域id进行筛选或企业类型id进行筛选
+	 * @param params
+	 * @return
+	 */
+	PagerModel<TransactionPolicy>  findLike(Map<String, Object> params);
 }

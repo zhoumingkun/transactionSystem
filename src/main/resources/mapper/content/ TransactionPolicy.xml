@@ -186,4 +186,65 @@
 		limit #{offset},#{limit}
 	</select>	
 	
+	
+	
+	
+	
+	
+		<!-- 根据政策名字 和行业id或者领域id进行筛选或企业类型id进行筛选 -->
+	<select id="findLike" parameterType="Map" resultType="TransactionPolicy">
+		select a.*,b.trade_type,c.enterprise_area ,
+		d.address_name,e.enterprise_type from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1 
+		<if test="enterpriseAddressId != null and enterpriseAddressId !='' ">
+			and   a.enterprise_address_id  =  #{enterpriseAddressId}
+		</if>
+		<if test="enterpriseTypeId != null and enterpriseTypeId != '' ">
+			and   a.enterprise_type_id  = #{enterpriseTypeId} 
+		</if>
+		<if test="enterpriseTradeId != null and enterpriseTradeId != '' ">
+			and   a.enterprise_trade_id = #{enterpriseTradeId}
+		</if>
+		<if test="policyName != null and policyName != '' ">
+			and a.policy_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		</if>
+		limit #{offset},#{limit}
+	</select>
+	
+	
+	
+	
+	<!-- 根据政策名字 和行业id或者领域id进行筛选或企业类型id进行筛选全部的条数 -->
+	<select id="getfindLike" parameterType="Map" resultType="int">
+		select count(*) from Transaction_policy a
+		left join transaction_enterprise_trade b
+		on  a.enterprise_trade_id = b.trade_id 
+		left join transaction_enterprise_area c 
+		on  a.enterprise_area_id = c.enterprise_area_id
+		left join transaction_enterprise_address d
+		on a.enterprise_address_id = d.address_id
+		left join transaction_enterprise_type e
+		on a.enterprise_type_id = e.enterprise_type_id
+		where b.status = 1 and   c.status = 1 		
+		<if test="enterpriseAddressId != null and enterpriseAddressId !='' ">
+			and   a.enterprise_address_id  =  #{enterpriseAddressId}
+		</if>
+		<if test="enterpriseTypeId != null and enterpriseTypeId != '' ">
+			and   a.enterprise_type_id  = #{enterpriseTypeId} 
+		</if>
+		<if test="enterpriseTradeId != null and enterpriseTradeId != '' ">
+			and   a.enterprise_trade_id = #{enterpriseTradeId}
+		</if>
+		<if test="policyName != null and policyName != '' ">
+			and a.policy_name like concat(concat('%', #{policyName, jdbcType=VARCHAR}),'%')
+		</if>
+	</select>
 </mapper>

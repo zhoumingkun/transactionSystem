@@ -23,6 +23,7 @@ import com.toughguy.transactionSystem.model.content.po.TransactionStatistics;
 import com.toughguy.transactionSystem.model.content.vo.QuestOptionInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IQuestOptionInfoService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionOptionService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionStatisticsService;
@@ -59,6 +60,9 @@ public class QuestOptionController {
 	@Autowired
 	private ITransactionStatisticsService statisticsService;
 	
+	
+	@Autowired
+	private ITransactionLogService logService;
 
 	/**
 	 * 查询某个问卷的所有的问题以及选项
@@ -188,22 +192,28 @@ public class QuestOptionController {
 	 * @param request
 	 * @return
 	 */
+	@ApiImplicitParam(name = "rootId", value = "管理员id",
+	        required = true, dataType = "int", paramType = "query")
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-			QuestOptionInfo info = new QuestOptionInfo();
+		/*	QuestOptionInfo info = new QuestOptionInfo();
 			info.setCopiesTitle("关于****，你知道多少");
 			info.setQuestContent("关于股票，你了解的多么");
 			infoService.insertInfo(info);
 
 			TransactionOption option = new TransactionOption();
 			option.setQuestId(info.getQuestId());
-			option.setOptionContent("多，不多");
-			optionService.insertOption(option);
+			option.setOptionContent("多，不多");*/
+			int a  = 0;
+			int rootId =  Integer.parseInt(request.getParameter("rootId"));
+			logService.insert("新增"+a+"调查问卷", rootId);
+			//optionService.insertOption(option);
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
+			e.printStackTrace();
 			return JsonUtil.objectToJson(map);
 		}
 		map.put("code", 200);

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.po.TransactionPolicy;
 import com.toughguy.transactionSystem.pagination.PagerModel;
@@ -19,6 +22,7 @@ import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseServi
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionPolicyService;
 import com.toughguy.transactionSystem.util.DateUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
- * 
+ * 	政策
  * @author Guozhenze
  *
  */
@@ -78,13 +82,13 @@ public class TransactionPolicyController {
 	 * @return
 	 */
 	@ApiOperation(value = "智能匹配",notes = "修改政策")
-	@ApiImplicitParam(name = "policyId", value = "id",
+	@ApiImplicitParam(name = "memberId", value = "用户id",
         required = true, dataType = "int", paramType = "query")
-	@RequestMapping("/aaaaa")
+	@RequestMapping(value = "/intelligent",method=RequestMethod.GET)
 	public String getIntelligence(HttpServletRequest request) {
-		int policyId = Integer.parseInt(request.getParameter("policyId"));		
+		int memberId = Integer.parseInt(request.getParameter("memberId"));		
 		// - 查询用户信息
-		TransactionEnterprise m = enterpriseService.find(policyId);
+		TransactionEnterprise m = enterpriseService.find(memberId);
 		// - 查找出所有的政策信息
 		PagerModel<TransactionPolicy> findPaginated = policyService.findPaginated(null);
 		List<TransactionPolicy> lists = findPaginated.getData();
@@ -141,21 +145,25 @@ public class TransactionPolicyController {
 		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型",
         required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "policMoney", value = "奖励金额",
-        required = true, dataType = "double", paramType = "query")
+        required = true, dataType = "double", paramType = "query"),
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query")		
 	}) 
-	@RequestMapping(value = "/update",method = RequestMethod.GET)
-	public String getUpdate(HttpServletRequest request) {
+	@RequestMapping(value = "/update",method = RequestMethod.POST)
+	public String getUpdate(HttpServletRequest request,HttpServletResponse response) {
 
 		try {
-			int policyId = Integer.parseInt(request.getParameter("policyId"));
-			int enterpriseAreaId = Integer.parseInt(request.getParameter("enterpriseAreaId"));
-			int enterpriseTradeId = Integer.parseInt(request.getParameter("enterpriseTradeId"));
-			String policyName = request.getParameter("policyName");
-			String policyUnit = request.getParameter("policyUnit");
-			String policyContent = request.getParameter("policyContent");
-			String policyTime = request.getParameter("policyTime");
-			int enterpriseAddressId = Integer.parseInt(request.getParameter("enterpriseAddressId"));
-			int enterpriseTypeId = Integer.parseInt(request.getParameter("enterpriseTypeId"));
+			JSONObject json = requestJSONUtil.request(request, response);
+			int policyId = json.getInteger("policyId");
+			int enterpriseAreaId = json.getInteger("enterpriseAreaId");
+			int enterpriseTradeId = json.getInteger("enterpriseTradeId");
+			String policyName = json.getString("policyName");
+			String policyUnit = json.getString("policyUnit");
+			int rootId =  json.getInteger("rootId");
+			String policyContent = json.getString("policyContent");
+			String policyTime = json.getString("policyTime");
+			int enterpriseAddressId = json.getInteger("enterpriseAddressId");
+			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
 			String policMoney = request.getParameter("policMoney");
 			TransactionPolicy policy  = new TransactionPolicy(
 					policyId,enterpriseAreaId,enterpriseTradeId,
@@ -163,7 +171,7 @@ public class TransactionPolicyController {
 					enterpriseAddressId,enterpriseTypeId,Double.parseDouble(policMoney)
 					);
 			policyService.update(policy);
-		//	logService.insert("修改了"+policyName+"政策", rootId);
+			logService.insert("修改了"+policyName+"政策", rootId);
 			return "{msg:succer,code:200}";
 		} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
@@ -194,29 +202,33 @@ public class TransactionPolicyController {
 		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型",
         required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "policMoney", value = "奖励金额",
-        required = true, dataType = "double", paramType = "query")
+        required = true, dataType = "double", paramType = "query"),
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query")	
 	}) 
-	@RequestMapping(value = "/add",method = RequestMethod.GET)
-	public String getAdd(HttpServletRequest request) {
+	@RequestMapping(value = "/add",method = RequestMethod.POST)
+	public String getAdd(HttpServletRequest request,HttpServletResponse response) {
 		/*try {*/
-		
-		
-			int enterpriseAreaId = Integer.parseInt(request.getParameter("enterpriseAreaId"));
-			int enterpriseTradeId = Integer.parseInt(request.getParameter("enterpriseTradeId"));
-			int enterpriseAddressId = Integer.parseInt(request.getParameter("enterpriseAddressId"));
-			int enterpriseTypeId = Integer.parseInt(request.getParameter("enterpriseTypeId"));
+	
+			JSONObject json = requestJSONUtil.request(request, response);
+			int policyId = json.getInteger("policyId");
+			int enterpriseAreaId = json.getInteger("enterpriseAreaId");
+			int enterpriseTradeId = json.getInteger("enterpriseTradeId");
+			String policyName = json.getString("policyName");
+			String policyUnit = json.getString("policyUnit");
+			int rootId =  json.getInteger("rootId");
+			String policyContent = json.getString("policyContent");
+			String policyTime = json.getString("policyTime");
+			int enterpriseAddressId = json.getInteger("enterpriseAddressId");
+			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
 			String policMoney = request.getParameter("policMoney");
-			String policyName = request.getParameter("policyName");
-			String policyUnit = request.getParameter("policyUnit");
-			String policyContent = request.getParameter("policyContent");
-			String policyTime = request.getParameter("policyTime");
 			TransactionPolicy policy  = new TransactionPolicy(
 					enterpriseAreaId,enterpriseTradeId,
 					policyName,policyUnit,policyContent,DateUtil.getDate(policyTime),
 					enterpriseAddressId,enterpriseTypeId,Double.parseDouble(policMoney)
 					);
 			policyService.save(policy);
-			
+			logService.insert("发布 "+policyName+"政策", rootId);
 			return "{msg:succer,code:200}";
 	/*	} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
@@ -230,14 +242,18 @@ public class TransactionPolicyController {
 	 * @return
 	 */
 	@ApiOperation(value = "删除政策",notes = "删除政策")
-
-	@ApiImplicitParam(name = "policyId", value = "所属领域id",
-			required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "policyId", value = "所属领域id",
+				required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+	    required = true, dataType = "int", paramType = "query")	})
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	public String getDelete(HttpServletRequest request) {
 		try {
 	
 			policyService.delete(Integer.parseInt(request.getParameter("policyId")));
+			int rootId = Integer.parseInt(request.getParameter("rootId"));
+			logService.insert("", rootId);
 			return "{msg:succer,code:200}";
 		} catch (Exception e) {
 			return "{msg:服务器错误,code:500}";
@@ -255,13 +271,13 @@ public class TransactionPolicyController {
 
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "enterpriseAddressId", value = "所属区域id",
-				required = false, dataType = "String", paramType = "query"),
+				required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseTypeId", value = "行业类型id",
 		required = false, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "page", value = "页数",
-        required = true, dataType = "int", paramType = "query"),
+        required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "rows", value = "条数",
-		required = true, dataType = "int", paramType = "query")
+		required = false, dataType = "int", paramType = "query")
 	})
 	@RequestMapping(value = "/selectOrId",method = RequestMethod.GET)
 	public String getListOrId(HttpServletRequest request) {
@@ -291,9 +307,9 @@ public class TransactionPolicyController {
 		@ApiImplicitParam(name = "policyName", value = "模糊查询的条件",
 				required = false, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "page", value = "页数",
-        required = true, dataType = "int", paramType = "query"),
+        required = false, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "rows", value = "条数",
-		required = true, dataType = "int", paramType = "query")
+		required = false, dataType = "int", paramType = "query")
 	})
 	@RequestMapping(value  ="/like",method=RequestMethod.GET)
 	public String getSelectLike(HttpServletRequest request) {
@@ -302,5 +318,60 @@ public class TransactionPolicyController {
 		map.put("policyName", policyName);
 		PagerModel<TransactionPolicy> list = policyService.selectLike(map);
 		return JSON.toJSONString(list).toString();
+	}
+	
+	
+	@ApiOperation(value = "根据政策名字 和行业id或者领域id进行筛选或企业类型id进行筛选",notes = "根据政策名字 和行业id或者领域id进行筛选或企业类型id进行筛选")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "policyName", value = "政策名字",
+		required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseAddressId", value = "所属区域id",
+		required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseTypeId", value = "行业类型id",
+		required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseTradeId", value = "企業类型id",
+		required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "page", value = "页数",
+        required = false, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "条数",
+		required = false, dataType = "int", paramType = "query")
+	})
+	@RequestMapping(value  ="/findlike",method=RequestMethod.GET)
+	public String getFindLike(HttpServletRequest request) {
+		Map<String ,Object> map = new HashMap<>();
+		String policyName = null;
+		String enterpriseTypeId = null;
+		String enterpriseTradeId = null;
+		try {
+			policyName = request.getParameter("policyName");
+			enterpriseTypeId = request.getParameter("enterpriseTypeId");
+			enterpriseTradeId = request.getParameter("enterpriseTradeId");
+		} catch (Exception e) {
+		}
+		map.put("policyName", policyName);
+		map.put("enterpriseTypeId", enterpriseTypeId);
+		map.put("enterpriseTradeId", enterpriseTradeId);
+		PagerModel<TransactionPolicy> list = policyService.findLike(map);
+		return JSON.toJSONString(list).toString();
+	}
+	
+	
+	@ApiOperation(value = "查看某哥政策的详细信息政策",notes = "查看某哥政策的详细信息政策")
+	
+	@ApiImplicitParam(name = "policyId", value = "所属领域id",
+	required = true, dataType = "int", paramType = "query")
+	public String getFind(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int policyId = Integer.parseInt(request.getParameter("policyId"));
+			
+			TransactionPolicy policy = policyService.find(policyId);
+			map.put("data", policy);
+			map.put("code", 200);
+		} catch (NumberFormatException e) {
+			map.put("msg", "服务器异常");
+			map.put("code", 500);
+		}
+		return JSON.toJSONString(map).toString();
 	}
 }
