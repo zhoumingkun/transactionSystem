@@ -6,6 +6,7 @@ import java.util.Map;
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralTwoString;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 /**
@@ -30,7 +31,7 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * 更新密码
 	 * @param info
 	 */
-	public void updatePassword(TransactionMember info);
+	public void updatePassword(SqlGeneralTwoString info);
 	/**
 	 * 忘记密码
 	 * @param info
@@ -111,10 +112,9 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	public List<MemberBasicInfo> enterpriseInfo();
 	
 	/**
-	 * 分页查询活动结束参与的人数
-	 * @param params 查询的条件参数
-	 * @param methodName mybatis配置文件中所配置的方法名程
-	 * @return 所要的分页数据
+	 * 查询所有企业会员的基本信息【分页】
+	 * @param params
+	 * @return
 	 */
 	public PagerModel<MemberBasicInfo> enterpriseInfoPage(Map<String, Object> params);
 	

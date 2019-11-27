@@ -4,25 +4,25 @@
 	<!-- 查看未结束的投票-->
 	<select id="findInfo" parameterType="Map" resultType="TransactionVoteContent" >
 		select * from transaction_vote_content
-		where end_time &lt; now() 
+		where end_time &gt; now() 
 		limit #{offset},#{limit};
 	</select>
 	<!-- 查看未结束投票的总条数-->
 	<select id="getTotalInfo" parameterType="Map" resultType="int">
 		select count(*) from transaction_vote_content
-		where end_time &lt; now();
+		where end_time &gt; now();
 	</select>
 	
 	<!-- 查看结束的投票信息-->
 	<select id="findEndInfo" parameterType="Map" resultType="TransactionVoteContent" >
 		select * from transaction_vote_content
-		where end_time &gt; now()
+		where end_time &lt; now()
 		limit #{offset}, #{limit}
 	</select>
 	<!-- 查看结束的投票总条数-->
 	<select id="getTotalEndInfo" parameterType="Map" resultType="int">
 		select count(*) from transaction_vote_content
-		where end_time &gt; now();
+		where end_time &lt; now();
 	</select>
 	
 	<!-- 根据id获取对应的投票信息 -->

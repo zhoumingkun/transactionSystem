@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
+import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.persist.content.prototype.IEnterpriseDao;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
 import com.toughguy.transactionSystem.service.impl.GenericServiceImpl;
@@ -41,6 +42,11 @@ implements IEnterpriseService{
 		// TODO Auto-generated method stub
 		TransactionEnterprise complete = dao.isComplete(transactionEnterprise);
 		return  complete==null;
+	}
+	@Override
+	public MemberCompleteInfo findEnterpriseInfo(TransactionEnterprise transactionEnterprise) {
+		// TODO Auto-generated method stub
+		return dao.findEnterpriseInfo(transactionEnterprise);
 	}
 
 	

@@ -3,6 +3,7 @@ package com.toughguy.transactionSystem.persist.content.impl;
 import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
+import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.persist.content.prototype.IEnterpriseDao;
 import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 @Service
@@ -38,6 +39,12 @@ implements IEnterpriseDao{
 	public TransactionEnterprise isComplete(TransactionEnterprise transactionEnterprise) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne(typeNameSpace + ".isComplete", transactionEnterprise);
+	}
+
+	@Override
+	public MemberCompleteInfo findEnterpriseInfo(TransactionEnterprise transactionEnterprise) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".findEnterpriseInfo", transactionEnterprise);
 	}
 
 	

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseType">
+	<select id="find" resultType="TransactionEnterpriseType">
+		select * from transaction_enterprise_type
+		where enterprise_type_id=#{enterpriseTypeId};
+	</select>
+	
 	<select id="findStatusAll" resultType="TransactionEnterpriseType">
 		select * from transaction_enterprise_type
 		where status=1;

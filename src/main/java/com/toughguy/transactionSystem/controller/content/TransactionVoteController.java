@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteContent;
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteCount;
 import com.toughguy.transactionSystem.pagination.PagerModel;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteContentService;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteCountService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -40,6 +41,9 @@ public class TransactionVoteController {
 	@Autowired
 	private IVoteCountService countService;
 	
+	@Autowired
+	private ITransactionLogService logService;
+	
 	/**
 	 * 查投票内容的所有信息【分页实现】:已结束
 	 * @return
@@ -54,6 +58,7 @@ public class TransactionVoteController {
 			map.put("code", "200");
 			map.put("msg", "成功");
 			map.put("data", data);
+			map.put("total", all.getTotal());
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -73,7 +78,8 @@ public class TransactionVoteController {
 			//List<TransactionVoteContent> data = all.getData();
 			map.put("code", "200");
 			map.put("msg", "成功");
-			map.put("data", all);
+			map.put("data", all.getData());
+			map.put("total", all.getTotal());
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -87,7 +93,7 @@ public class TransactionVoteController {
 	 */
 	
 	@ApiOperation(value = "所有投票信息",notes = "查信息")
-    @ApiImplicitParam(name = "votecontentid", value = "投票内容ID",
+    @ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
     required = true, dataType = "int", paramType = "query")
 	@RequestMapping(value = "/voteoptionmsg", method = RequestMethod.POST)
 	public Map<String,Object> voteOptionMsg(HttpServletRequest request) {
@@ -109,6 +115,8 @@ public class TransactionVoteController {
 	 */
 	@ApiOperation(value = "添加投票内容及选项信息",notes = "添加投票内容及选项信息")
     @ApiImplicitParams({
+    		@ApiImplicitParam(name = "rootId", value = "管理员id",
+    	    required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "voteContent", value = "投票内容",
             required = true, dataType = "String", paramType = "query"),
     		@ApiImplicitParam(name = "voteOptionOne", value = "选项一",
@@ -136,6 +144,13 @@ public class TransactionVoteController {
 
 			map.put("msg", "添加成功");
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加投票内容: "
+					+ voteContent
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "404");
 			map.put("msg", "服务器异常");
@@ -147,6 +162,8 @@ public class TransactionVoteController {
 	 */
 	@ApiOperation(value = "投票接口",notes = "更新投票信息")
     @ApiImplicitParams({
+    		@ApiImplicitParam(name = "rootId", value = "管理员id",
+    	    required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "memberId", value = "会员ID",
             required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
@@ -173,6 +190,9 @@ public class TransactionVoteController {
 			
 			map.put("code", "200");
 			map.put("msg", "成功");
+			
+			
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -185,11 +205,11 @@ public class TransactionVoteController {
 	 */
 	@ApiOperation(value = "投票检查接口",notes = "投票检查接口")
     @ApiImplicitParams({
-		@ApiImplicitParam(name = "memberId", value = "会员ID",
-	            required = true, dataType = "int", paramType = "query"),
-	    		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
-	            required = true, dataType = "int", paramType = "query")
-    		})
+    	@ApiImplicitParam(name = "memberId", value = "会员ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
+        required = true, dataType = "int", paramType = "query")
+	})
             
 	@RequestMapping(value = "/votecheck", method = RequestMethod.POST)
 	public Map<String,Object> voteCheck(HttpServletRequest request) {
@@ -220,20 +240,28 @@ public class TransactionVoteController {
 	 */
 	@ApiOperation(value = "删除投票",notes = "删除投票")
     @ApiImplicitParams({
-	    		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
-	            required = true, dataType = "int", paramType = "query")
-    		})
+    	@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),	
+    	@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
+	    required = true, dataType = "int", paramType = "query")
+    })
 	@RequestMapping(value = "/votedel", method = RequestMethod.POST)
 	public Map<String,Object> voteDelete(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int voteContentId = Integer.parseInt(request.getParameter("voteContentId"));
 			
-			countService.delete(voteContentId);
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除投票内容: "
+					+ contentService.find(voteContentId).getVoteContent()
+					, rootId);
+			
+			contentService.delete(voteContentId);
 			
 			map.put("code", "200");
-			map.put("msg", "可以投票");
-		
+			map.put("msg", "成功");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");

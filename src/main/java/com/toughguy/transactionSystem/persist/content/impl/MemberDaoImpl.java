@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralTwoString;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.content.prototype.IMemberDao;
 import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
@@ -31,9 +32,8 @@ implements IMemberDao{
 	}
 
 	@Override
-	public void updatePassword(TransactionMember info) {
+	public void updatePassword(SqlGeneralTwoString info) {
 		// TODO Auto-generated method stub
-System.out.println(info);
 		sqlSessionTemplate.update(typeNameSpace + ".updatePassword", info);
 	}
 
@@ -122,6 +122,8 @@ System.out.println(info);
 		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalNumEnterPriseInfo", params);
 		return count;
 	}
+	
+	
 	@Override
 	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
 		// TODO Auto-generated method stub

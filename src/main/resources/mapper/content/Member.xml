@@ -18,13 +18,13 @@
 	</select>
 	
 	<!-- 更改密码 -->
-	<update id="updatePassword">
-		update transaction_member set member_pwd=#{memberTel} 
-		where open_id= #{openId};
+	<update id="updatePassword" parameterType="SqlGeneralTwoString">
+		update transaction_member set member_pwd=#{arg2} 
+		where open_id= #{arg1};
 	</update>
 	
 	<!-- 解除绑定 -->
-	<update id="updateUser">
+	<update id="updateUser" parameterType="TransactionMember">
 		update transaction_member 
 		set member_tel=#{memberTel},open_id='0'
 		where member_id= #{memberId};

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterpriseArea">
+	<select id="find" resultType="TransactionEnterpriseArea">
+		select * from transaction_enterprise_area
+		where enterprise_area_id = #{enterpriseAreaId};
+	</select>
+	
+	
 	<select id="findStatusAll" resultType="TransactionEnterpriseArea">
 		select * from transaction_enterprise_area
 		where status=1;

@@ -1,6 +1,7 @@
 package com.toughguy.transactionSystem.service.content.prototype;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
+import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 public interface IEnterpriseService extends IGenericService<TransactionEnterprise, Integer>{
@@ -10,6 +11,10 @@ public interface IEnterpriseService extends IGenericService<TransactionEnterpris
 	 * @param member
 	 */
 	public void insertMsg(TransactionEnterprise info);
+	/**
+	 * 注册基本信息【没有企业证号】
+	 * @param info
+	 */
 	public void insertMsgNoCard(TransactionEnterprise info);
 	/**
 	 * 判断公司名是否存在
@@ -30,5 +35,12 @@ public interface IEnterpriseService extends IGenericService<TransactionEnterpris
 	 * @return boolean
 	 */
 	public boolean isComplete(TransactionEnterprise transactionEnterprise);
+	
+	/**
+	 * 返回企业用户完整信息
+	 * @param transactionEnterprise
+	 * @return
+	 */
+	public MemberCompleteInfo findEnterpriseInfo(TransactionEnterprise transactionEnterprise);
 	
 }

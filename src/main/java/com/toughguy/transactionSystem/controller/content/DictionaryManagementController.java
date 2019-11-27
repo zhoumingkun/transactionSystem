@@ -23,6 +23,7 @@ import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseAudit
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseStatusService;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseTradeService;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseTypeService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -40,6 +41,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/dictionary")
 @Slf4j
 public class DictionaryManagementController {
+	
+	@Autowired
+	private ITransactionLogService logService;
 	
 	@Autowired
 	private IEnterpriseAddressService addressService;
@@ -104,8 +108,13 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业领域",notes = "添加企业领域的信息")
-    @ApiImplicitParam(name = "enterpriseArea", value = "企业领域",
-            required = true, dataType = "String", paramType = "query")
+    @ApiImplicitParams({
+    		@ApiImplicitParam(name = "enterpriseArea", value = "企业领域",
+            required = true, dataType = "String", paramType = "query"),
+    		@ApiImplicitParam(name = "rootId", value = "管理员id",
+            required = true, dataType = "int", paramType = "query")
+    })
+	
 	@RequestMapping(value = "/areamsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAreaMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -113,6 +122,10 @@ public class DictionaryManagementController {
 		try {
 			String enterpriseArea = request.getParameter("enterpriseArea");		
 			areaService.save(new TransactionEnterpriseArea(enterpriseArea));
+			
+			int rootId =  Integer.parseInt(request.getParameter("rootId"));
+			logService.insert("添加企业领域的信息: "+ enterpriseArea +"", rootId);
+			
 			map.put("code", "200");
 		}catch(Exception e) {
 			map.put("code", "500");
@@ -127,14 +140,26 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业领域",notes = "删除企业领域的信息")
-    @ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
-            required = true, dataType = "int", paramType = "query")
+    
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
+	            required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+	    required = true, dataType = "int", paramType = "query")
+	  })
 	@RequestMapping(value = "/areamsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAreaMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int enterpriseAreaId = Integer.parseInt(request.getParameter("enterpriseAreaId"));
+			
+			int rootId =  Integer.parseInt(request.getParameter("rootId"));
+			logService.insert("删除企业领域的信息: "+ areaService.find(enterpriseAreaId).getEnterpriseArea() +"", rootId);
+			
 			areaService.delete(enterpriseAreaId);
+			
+			
+			
 			map.put("code", "200");
 		}catch(Exception e) {
 			map.put("code", "500");
@@ -150,11 +175,14 @@ public class DictionaryManagementController {
 	 */
 	@ApiOperation(value = "企业领域",notes = "修改企业领域的信息")
     @ApiImplicitParams({
-    		@ApiImplicitParam(name = "enterpriseareaId", value = "企业领域ID",
+    		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
             required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
+            required = true, dataType = "int", paramType = "query"),
+    		@ApiImplicitParam(name = "rootId", value = "管理员id",
+            required = true, dataType = "int", paramType = "query")
+    		
+    })
             
 	@RequestMapping(value = "/areamsgupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAreaMsgUpdate(HttpServletRequest request) {
@@ -164,7 +192,14 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			areaService.update(new TransactionEnterpriseArea(enterpriseAreaId, status));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("修改企业领域的信息: "
+					+ areaService.find(enterpriseAreaId).getEnterpriseArea() +"的状态"
+					, rootId);
 		}catch(Exception e) {
+			e.printStackTrace();
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
 		}
@@ -218,8 +253,14 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业状态",notes = "添加企业状态的信息")
-    @ApiImplicitParam(name = "enterpriseStatus", value = "企业状态",
-            required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "enterpriseStatus", value = "企业状态",
+	    required = true, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query")
+		
+	})
+	
 	@RequestMapping(value = "/statusmsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseStatusMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -227,6 +268,13 @@ public class DictionaryManagementController {
 			String enterpriseStatus = request.getParameter("enterpriseStatus");		
 			statusService.save(new TransactionEnterpriseStatus(enterpriseStatus));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加企业状态: "
+					+ enterpriseStatus
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -240,15 +288,28 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业状态",notes = "删除企业状态的信息")
-    @ApiImplicitParam(name = "enterpriseStatusId", value = "企业状态ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseStatusId", value = "企业状态ID",
+        required = true, dataType = "int", paramType = "query")
+		
+	})
 	@RequestMapping(value = "/statusmsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseStatusMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int enterpriseStatusId = Integer.parseInt(request.getParameter("enterpriseStatusId"));
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除企业状态: "
+					+ statusService.find(enterpriseStatusId).getEnterpriseStatus()
+					, rootId);
+			
 			statusService.delete(enterpriseStatusId);
 			map.put("code", "200");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -262,13 +323,15 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业状态",notes = "修改企业状态的信息")
-    @ApiImplicitParams({
-    		@ApiImplicitParam(name = "enterpriseStatusId", value = "企业状态ID",
-            required = true, dataType = "int", paramType = "query"),
-    		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
-            
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseStatusId", value = "企业状态ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "status", value = "状态",
+        required = true, dataType = "int", paramType = "query")
+		
+	})
 	@RequestMapping(value = "/statusmsgupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseStatusMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -277,6 +340,13 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			statusService.update(new TransactionEnterpriseStatus(enterpriseStatusId, status));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("修改企业状态: "
+					+ statusService.find(enterpriseStatusId).getEnterpriseStatus() + " 状态 "
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -329,8 +399,14 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业类型",notes = "添加企业类型的信息")
-    @ApiImplicitParam(name = "enterpriseType", value = "企业类型",
-            required = true, dataType = "String", paramType = "query")
+    
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseType", value = "企业类型",
+        required = true, dataType = "String", paramType = "query")
+		
+	})
 	@RequestMapping(value = "/typemsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTypeMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -338,6 +414,13 @@ public class DictionaryManagementController {
 			String enterpriseType = request.getParameter("enterpriseType");		
 			typeService.save(new TransactionEnterpriseType(enterpriseType));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加企业类型: "
+					+ enterpriseType
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -351,15 +434,27 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业类型",notes = "删除企业类型的信息")
-    @ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型ID",
+        required = true, dataType = "int", paramType = "query")
+	})
 	@RequestMapping(value = "/typemsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTypeMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int enterpriseTypeId = Integer.parseInt(request.getParameter("enterpriseTypeId"));
+
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除企业类型: "
+					+ typeService.find(enterpriseTypeId).getEnterpriseType()
+					, rootId);
+			
 			typeService.delete(enterpriseTypeId);
 			map.put("code", "200");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -373,13 +468,14 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "企业类型",notes = "修改企业类型")
-    @ApiImplicitParams({
-    		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型ID",
-            required = true, dataType = "int", paramType = "query"),
-    		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
-            
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "status", value = "状态",
+        required = true, dataType = "int", paramType = "query")
+	})       
 	@RequestMapping(value = "/typemsgupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTypeMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -388,6 +484,13 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			typeService.update(new TransactionEnterpriseType(enterpriseTypeId, status));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("修改企业类型: "
+					+ typeService.find(enterpriseTypeId).getEnterpriseType()+" 状态 "
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -441,8 +544,12 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "审核状态",notes = "添加审核状态的信息")
-    @ApiImplicitParam(name = "auditStatusType", value = "审核状态",
-            required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "auditStatusType", value = "审核状态",
+        required = true, dataType = "String", paramType = "query")
+	})       
 	@RequestMapping(value = "/auditstatusmsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAuditStatusMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -450,6 +557,13 @@ public class DictionaryManagementController {
 			String auditStatusType = request.getParameter("auditStatusType");		
 			auditStatusService.save(new TransactionEnterpriseAuditStatus(auditStatusType));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加审核状态: "
+					+ auditStatusType
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -463,15 +577,27 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "审核状态",notes = "删除审核状态的信息")
-    @ApiImplicitParam(name = "auditStatusId", value = "审核状态ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "auditStatusId", value = "审核状态ID",
+        required = true, dataType = "int", paramType = "query")
+	}) 
 	@RequestMapping(value = "/auditstatusmsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAuditStatusMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int auditStatusId = Integer.parseInt(request.getParameter("auditStatusId"));
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除审核状态: "
+					+ auditStatusService.find(auditStatusId).getAuditStatusType()
+					, rootId);
+			
 			auditStatusService.delete(auditStatusId);
 			map.put("code", "200");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -485,13 +611,14 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "审核状态",notes = "修改审核状态")
-    @ApiImplicitParams({
-    		@ApiImplicitParam(name = "auditStatusId", value = "审核状态ID",
-            required = true, dataType = "int", paramType = "query"),
-    		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
-            
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "auditStatusId", value = "审核状态ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "status", value = "状态",
+        required = true, dataType = "int", paramType = "query")
+	})         
 	@RequestMapping(value = "/auditstatusmsgupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAuditStatusMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -500,6 +627,13 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			auditStatusService.update(new TransactionEnterpriseAuditStatus(auditStatusId, status));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除审核状态: "
+					+ auditStatusService.find(auditStatusId).getAuditStatusType() + "状态"
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -553,8 +687,12 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "地址",notes = "添加地址的信息")
-    @ApiImplicitParam(name = "addressName", value = "地址",
-            required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		 @ApiImplicitParam(name = "addressName", value = "地址",
+         required = true, dataType = "String", paramType = "query")
+	})
 	@RequestMapping(value = "/addressmsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAddressMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -562,6 +700,13 @@ public class DictionaryManagementController {
 			String addressName = request.getParameter("addressName");		
 			addressService.save(new TransactionEnterpriseAddress(addressName));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加地址: "
+					+ addressName
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -575,15 +720,27 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "地址",notes = "删除地址的信息")
-    @ApiImplicitParam(name = "addressId", value = "地址ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "addressId", value = "地址ID",
+        required = true, dataType = "int", paramType = "query")
+	})
 	@RequestMapping(value = "/addressmsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAddressMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int addressId = Integer.parseInt(request.getParameter("addressId"));
+
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除地址: "
+					+ addressService.find(addressId).getAddressName()
+					, rootId);
+			
 			addressService.delete(addressId);
 			map.put("code", "200");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -597,13 +754,14 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "地址",notes = "修改地址的信息")
-    @ApiImplicitParams({
-    		@ApiImplicitParam(name = "addressId", value = "地址ID",
-            required = true, dataType = "int", paramType = "query"),
-    		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
-            
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "addressId", value = "地址ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "status", value = "状态",
+        required = true, dataType = "int", paramType = "query")
+	})       
 	@RequestMapping(value = "/addressupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseAddressMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -612,7 +770,15 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			addressService.update(new TransactionEnterpriseAddress(addressId, status));
 			map.put("code", "200");
+			System.out.println(map);
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("修改地址: "
+					+ addressService.find(addressId).getAddressName()+"状态"
+					, rootId);
+			
 		}catch(Exception e) {
+			e.printStackTrace();
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
 		}
@@ -666,8 +832,12 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "行业",notes = "添加行业的信息")
-    @ApiImplicitParam(name = "tradeType", value = "行业",
-            required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "tradeType", value = "行业",
+        required = true, dataType = "String", paramType = "query")
+	}) 
 	@RequestMapping(value = "/trademsgadd", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTradeMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -675,6 +845,13 @@ public class DictionaryManagementController {
 			String tradeType = request.getParameter("tradeType");		
 			tradeService.save(new TransactionEnterpriseTrade(tradeType));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("添加行业: "
+					+ tradeType
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
@@ -688,35 +865,47 @@ public class DictionaryManagementController {
 	 * @return
 	 */
 	@ApiOperation(value = "行业",notes = "删除行业的信息")
-    @ApiImplicitParam(name = "tradeId", value = "行业ID",
-            required = true, dataType = "int", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+	    @ApiImplicitParam(name = "tradeId", value = "行业ID",
+        required = true, dataType = "int", paramType = "query")
+	}) 
 	@RequestMapping(value = "/trademsgdel", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTradeMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
 			int tradeId = Integer.parseInt(request.getParameter("tradeId"));
+
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("删除行业: "
+					+ tradeService.find(tradeId).getTradeType()
+					, rootId);
+			
 			tradeService.delete(tradeId);
 			map.put("code", "200");
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
 		}
 		return map;
 	}
-	
 
 	/**
 	 * 修改行业的信息
 	 * @return
 	 */
 	@ApiOperation(value = "行业",notes = "修改行业的信息")
-    @ApiImplicitParams({
-    		@ApiImplicitParam(name = "tradeId", value = "行业ID",
-            required = true, dataType = "int", paramType = "query"),
-    		@ApiImplicitParam(name = "status", value = "状态",
-            required = true, dataType = "boolean", paramType = "query")
-    		})
-            
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "tradeId", value = "行业ID",
+        required = true, dataType = "int", paramType = "query"),
+		@ApiImplicitParam(name = "status", value = "状态",
+        required = true, dataType = "int", paramType = "query")
+	})         
 	@RequestMapping(value = "/tradeupdate", method = RequestMethod.POST)
 	public Map<String,Object> enterpriseTradeMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
@@ -726,6 +915,13 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			tradeService.update(new TransactionEnterpriseTrade(tradeId, status));
 			map.put("code", "200");
+			
+			int rootId =  Integer.parseInt
+					(request.getParameter("rootId"));
+			logService.insert("修改行业: "
+					+ tradeService.find(tradeId).getTradeType() + "状态"
+					, rootId);
+			
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");

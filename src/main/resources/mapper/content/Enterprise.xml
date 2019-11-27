@@ -4,7 +4,7 @@
 	<!-- 根据member_id获取信息 -->
 	<select id="find" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
 		select * from transaction_enterprise
-		where member_id=#{id}
+		where member_id = #{id}
 	</select>
 	
 	<!-- 注册基本信息 -->
@@ -70,4 +70,54 @@
 		enterprise_legal_person_name is not null and
 		enterprise_legal_person_card is not null
 	</select>
+	
+	
+	<!-- 返回会员的完整信息 -->
+	<select id="findEnterpriseInfo" resultType="MemberCompleteInfo">
+		select 
+		enterprise.member_id,
+		member.member_name,
+		member.member_tel,
+		member.member_card,
+		member.member_integral,
+		member.member_rank,
+		member.member_online_times,
+		member.member_date,
+		enterprise.enterprise_name,
+		enterprise.enterprise_card_type,
+		enterprise.enterprise_card_id,
+		enterprise.enterprise_taxpayer,
+		enterprise.enterprise_validity_date_start,
+		enterprise.enterprise_validity_date_end,
+		enterprise.enterprise_certification_unit,
+		enterprise.enterprise_reg_address,
+		enterprise.enterprise_reg_date,
+		enterprise.enterprise_reg_money,
+		enterprise.enterprise_legal_person_name,
+		enterprise.enterprise_legal_person_card,
+		audit_status.audit_status_type,
+		trade.trade_type,
+		type.enterprise_type,
+		enterprise_status.enterprise_status,
+		area.enterprise_area,
+		address.address_name
+		from
+		transaction_enterprise enterprise
+		join transaction_member member
+		on member.member_id = enterprise.member_id
+		join transaction_enterprise_area area
+		on enterprise.enterprise_area_id = area.enterprise_area_id
+		join transaction_enterprise_type type
+		on enterprise.enterprise_type_id = type.enterprise_type_id
+		join transaction_enterprise_trade trade
+		on enterprise.enterprise_trade_id= trade.trade_id
+		join transaction_enterprise_status enterprise_status
+		on enterprise.enterprise_status_id=enterprise_status.enterprise_status_id
+		join transaction_enterprise_address address
+		on enterprise.enterprise_address_id=address.address_id
+		join transaction_enterprise_audit_status audit_status
+		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id
+		where enterprise.member_id=#{memberId};
+	</select>
+
 </mapper>

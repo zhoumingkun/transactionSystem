@@ -58,7 +58,12 @@ public class MemberCompleteInfo {
 	
 	
 	
-	 public MemberCompleteInfo(int memberId) {
+	 public MemberCompleteInfo() {
+		super();
+	}
+
+
+	public MemberCompleteInfo(int memberId) {
 		super();
 		this.memberId = memberId;
 	}
@@ -69,54 +74,6 @@ public class MemberCompleteInfo {
 		this.memberId = memberId;
 		this.enterpriseName = enterpriseName;
 	}
-	
-
-	/**
-	  * 完善资料
-	  * 
-	  * @param memberId
-	  * @param openId
-	  * @param enterpriseAddressId
-	  * @param enterpriseTradeId
-	  * @param enterpriseAreaId
-	  * @param enterpriseTaxpayer
-	  * @param enterpriseValidityDateStart
-	  * @param enterpriseValidityDateEnd
-	  * @param enterpriseCertificationUnit
-	  * @param enterpriseRegAddress
-	  * @param enterpriseStatusId
-	  * @param enterpriseRegDate
-	  * @param enterpriseRegMoney
-	  * @param enterpriseLegalPersonName
-	  * @param enterpriseLegalPersonCard
-	  * @param enterpriseAuditStatus
-	  * @param enterpriseTypeId
-	  */
-//	public MemberCompleteInfo(int memberId, String openId, int enterpriseAddressId, int enterpriseTradeId, int enterpriseAreaId, String enterpriseTaxpayer,
-//			Date enterpriseValidityDateStart, Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
-//			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-//			String enterpriseLegalPersonCard, int enterpriseAuditStatus, int enterpriseTypeId) {
-//		super();
-//		this.memberId = memberId;
-//		this.openId = openId;
-//		this.enterpriseAddressId = enterpriseAddressId;
-//		this.enterpriseTradeId = enterpriseTradeId;
-//		this.enterpriseAreaId = enterpriseAreaId;
-//		this.enterpriseTaxpayer = enterpriseTaxpayer;
-//		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
-//		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
-//		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
-//		this.enterpriseRegAddress = enterpriseRegAddress;
-//		this.enterpriseStatusId = enterpriseStatusId;
-//		this.enterpriseRegDate = enterpriseRegDate;
-//		this.enterpriseRegMoney = enterpriseRegMoney;
-//		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
-//		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
-//		this.enterpriseAuditStatusId = enterpriseAuditStatus;
-//		this.enterpriseTypeId = enterpriseTypeId;
-//	}
-	
-	
 	
 	public MemberCompleteInfo(int memberId, String memberName, String memberTel, String memberCard, int memberIntegral,
 			int memberRank, int memberOnlineTimes, Date memberDate, String enterpriseName, String enterpriseCardType,
@@ -154,7 +111,9 @@ public class MemberCompleteInfo {
 		this.addressName = addressName;
 	}
 
-	public MemberCompleteInfo(int memberId, String openId, String memberName, String memberTel, String memberCard,
+
+//	企业会员的完整资料
+	public MemberCompleteInfo(int memberId,  String memberName, String memberTel, String memberCard,
 			int memberIntegral, int memberRank, int memberOnlineTimes, Date memberDate, int enterpriseId,
 			String enterpriseName, String enterpriseCardType, String enterpriseCardId, int enterpriseTypeId,
 			int enterpriseTradeId, int enterpriseAreaId, int enterpriseAddressId, String enterpriseTaxpayer,
@@ -165,7 +124,6 @@ public class MemberCompleteInfo {
 			String enterpriseArea, String addressName) {
 		super();
 		this.memberId = memberId;
-		this.openId = openId;
 		this.memberName = memberName;
 		this.memberTel = memberTel;
 		this.memberCard = memberCard;
@@ -199,6 +157,55 @@ public class MemberCompleteInfo {
 		this.enterpriseArea = enterpriseArea;
 		this.addressName = addressName;
 	}
+	
+	
+	
+	public MemberCompleteInfo(int memberId, String openId, String memberName, String memberTel, String memberCard,
+		int memberIntegral, int memberRank, int memberOnlineTimes, Date memberDate, int enterpriseId,
+		String enterpriseName, String enterpriseCardType, String enterpriseCardId, int enterpriseTypeId,
+		int enterpriseTradeId, int enterpriseAreaId, int enterpriseAddressId, String enterpriseTaxpayer,
+		Date enterpriseValidityDateStart, Date enterpriseValidityDateEnd, String enterpriseCertificationUnit,
+		String enterpriseRegAddress, int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney,
+		String enterpriseLegalPersonName, String enterpriseLegalPersonCard, int enterpriseAuditStatusId,
+		String auditStatusType, String tradeType, String enterpriseType, String enterpriseStatus, String enterpriseArea,
+		String addressName) {
+	super();
+	this.memberId = memberId;
+	this.openId = openId;
+	this.memberName = memberName;
+	this.memberTel = memberTel;
+	this.memberCard = memberCard;
+	this.memberIntegral = memberIntegral;
+	this.memberRank = memberRank;
+	this.memberOnlineTimes = memberOnlineTimes;
+	this.memberDate = memberDate;
+	this.enterpriseId = enterpriseId;
+	this.enterpriseName = enterpriseName;
+	this.enterpriseCardType = enterpriseCardType;
+	this.enterpriseCardId = enterpriseCardId;
+	this.enterpriseTypeId = enterpriseTypeId;
+	this.enterpriseTradeId = enterpriseTradeId;
+	this.enterpriseAreaId = enterpriseAreaId;
+	this.enterpriseAddressId = enterpriseAddressId;
+	this.enterpriseTaxpayer = enterpriseTaxpayer;
+	this.enterpriseValidityDateStart = enterpriseValidityDateStart;
+	this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
+	this.enterpriseCertificationUnit = enterpriseCertificationUnit;
+	this.enterpriseRegAddress = enterpriseRegAddress;
+	this.enterpriseStatusId = enterpriseStatusId;
+	this.enterpriseRegDate = enterpriseRegDate;
+	this.enterpriseRegMoney = enterpriseRegMoney;
+	this.enterpriseLegalPersonName = enterpriseLegalPersonName;
+	this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
+	this.enterpriseAuditStatusId = enterpriseAuditStatusId;
+	this.auditStatusType = auditStatusType;
+	this.tradeType = tradeType;
+	this.enterpriseType = enterpriseType;
+	this.enterpriseStatus = enterpriseStatus;
+	this.enterpriseArea = enterpriseArea;
+	this.addressName = addressName;
+}
+
 
 	public MemberCompleteInfo(int memberId2, String openId2, int enterpriseAddressId2, int enterpriseTradeId2,
 			int enterpriseAreaId2, String enterpriseTaxpayer2, java.util.Date date, java.util.Date date2,

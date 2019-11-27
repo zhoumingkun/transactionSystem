@@ -19,12 +19,13 @@ import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralTwoString;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
-import com.toughguy.transactionSystem.service.content.prototype.IMemberCompleteInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
 import com.toughguy.transactionSystem.util.DateUtil;
 import com.toughguy.transactionSystem.util.MD5Util;
+import com.toughguy.transactionSystem.util.SendTelUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,15 +42,72 @@ public class MemberController {
 	private IMemberService memberService;
 	@Autowired
 	private IEnterpriseService enterpriseService;
-	@Autowired
-	private IMemberCompleteInfoService completeInfoService;
 	
 	
 	/**
 	 * 获取OpenId
 	 */
+	@ApiOperation(value = "获取OpenId",notes = "获取OpenId")
+	@RequestMapping(value = "/getopenid", method = RequestMethod.POST)
+	public Map<String,Object> sendOpenId(HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		try {
+			String openId = "00001111";
+			
+			map.put("data", openId);
+			map.put("code", "200");
+			map.put("msg", "发送成功");
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
 	
 	
+	
+	
+	/**
+	 * 发送手机验证码
+	 * 
+	 */
+	
+	@ApiOperation(value = "发送手机验证码",notes = "发送手机验证码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "memberTel", value = "用户的手机号",
+        required = true, dataType = "String", paramType = "query")
+	})
+	@RequestMapping(value = "/sendcode", method = RequestMethod.GET)
+	public Map<String,Object> sendCode(HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+//		JSONObject json = requestJSONUtil.request(request, response);
+		try {
+			String tel = request.getParameter("memberTel");
+//			String tel = json.getString("memberTel");
+			// 手机是否已经注册
+			boolean findTel = memberService.findTel(new SqlGeneralInfo(tel));
+			if(findTel) {
+//				int sendCode = SendTelUtil.sendTel(tel);
+//				map.put("data", sendCode);
+				map.put("code", "200");
+				map.put("msg", "发送成功");
+				
+			}else {
+				map.put("msg", "手机号已存在");
+				map.put("code", "404");
+				return map;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
 	/**
 	 * 根据openId登录检查
 	 * @param request
@@ -148,7 +206,7 @@ public class MemberController {
 			String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
 			
 			memberService.updatePassword(
-					new TransactionMember(openId,memberPassword));
+					new SqlGeneralTwoString(openId,memberPassword));
 			map.put("code", "200");
 			map.put("msg", "成功");
 		}catch (Exception e) {
@@ -198,7 +256,7 @@ public class MemberController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/registered", method = RequestMethod.POST)
+	
 	@ApiOperation(value = "注册用户",notes = "注册用户")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "openId", value = "唯一ID",
@@ -215,8 +273,8 @@ public class MemberController {
         required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseCardId", value = "证件号",
         required = true, dataType = "String", paramType = "query"),
-		
 	})
+	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public Map<String,String> registeredMsg(HttpServletRequest request,HttpServletResponse response) {
 		JSONObject json = requestJSONUtil.request(request, response);
 		Map<String,String> map = new HashMap<>();
@@ -451,37 +509,6 @@ System.out.println("可以为空");
 		return map;
 	}
 	
-	/**
-	 * 【不用】
-	 * 一名个人会员的完整信息
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/memberallinfo", method = RequestMethod.POST)
-	@ApiOperation(value = "完整信息",notes = "完整信息")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "memberId", value = "会员ID",
-        required = true, dataType = "int", paramType = "query"),
-		})
-	public Map<String, Object> oneMemberInfo(HttpServletRequest request, HttpServletResponse response){
-		Map<String,Object> map = new HashMap<>();
-		JSONObject json = requestJSONUtil.request(request, response);
-		
-		try {
-			int memberId = json.getInteger("memberId");
-			MemberCompleteInfo info = completeInfoService.findEnterpriseInfo(
-					new MemberCompleteInfo(memberId));
-			
-			map.put("data", info);
-			map.put("code", "200");
-			map.put("msg", "成功");
-		} catch (Exception e) {
-			map.put("code", "500");
-			map.put("msg", "服务器异常");
-		}
-		
-		return map;
-	}
 	
 	/**
 	 * 一名企业会员的完整信息
@@ -501,13 +528,14 @@ System.out.println("可以为空");
 		try {
 			int memberId = json.getInteger("memberId");
 			
-			MemberCompleteInfo info = completeInfoService.findEnterpriseInfo(
-					new MemberCompleteInfo(memberId));
+			MemberCompleteInfo info = enterpriseService.findEnterpriseInfo(
+					new TransactionEnterprise(memberId));
 			
 			map.put("data", info);
 			map.put("msg", "成功");
 			map.put("code", "200");
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.put("code", "500");
 			map.put("msg", "服务器异常");
 		}
@@ -550,12 +578,14 @@ System.out.println("可以为空");
 
 		try {
 			//List<MemberBasicInfo> info = memberService.enterpriseInfo();
+			
 			PagerModel<MemberBasicInfo> enterpriseInfoPage = memberService.enterpriseInfoPage(null);
 			map.put("data", enterpriseInfoPage.getData());
 			map.put("total", enterpriseInfoPage.getTotal());
 			map.put("code", "200");
 			map.put("msg", "成功");
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.put("code", "404");
 			map.put("msg", "服务器异常");
 		}

@@ -23,7 +23,7 @@
 	<!-- 根据memberId查询 完整资料 -->
 	<select id="findEnterpriseInfo" resultType="MemberCompleteInfo">
 		select 
-		enterprise.*,
+		enterprise.member_id,
 		member.member_name,
 		member.member_tel,
 		member.member_card,
@@ -31,7 +31,6 @@
 		member.member_rank,
 		member.member_online_times,
 		member.member_date,
-		<!-- enterprise.member_id,
 		enterprise.enterprise_name,
 		enterprise.enterprise_card_type,
 		enterprise.enterprise_card_id,
@@ -43,13 +42,13 @@
 		enterprise.enterprise_reg_date,
 		enterprise.enterprise_reg_money,
 		enterprise.enterprise_legal_person_name,
-		enterprise.enterprise_legal_person_card, -->
+		enterprise.enterprise_legal_person_card,
 		audit_status.audit_status_type,
 		trade.trade_type,
 		type.enterprise_type,
 		enterprise_status.enterprise_status,
 		area.enterprise_area,
-		address.address_name
+		address.address_name,
 		from
 		transaction_enterprise enterprise
 		join transaction_member member
@@ -68,5 +67,7 @@
 		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id
 		where enterprise.member_id=#{memberId};
 	</select>
+
+
 
 </mapper>

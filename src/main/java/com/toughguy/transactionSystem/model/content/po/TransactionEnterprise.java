@@ -25,7 +25,7 @@ public class TransactionEnterprise {
 	private double enterpriseRegMoney;			// 注册资本
 	private String enterpriseLegalPersonName;   // 法定代表人名称
 	private String enterpriseLegalPersonCard;	// 法定代表人身份证
-	private int enterpriseAuditStatusId;			// 企业审核状态
+	private int enterpriseAuditStatusId;		// 企业审核状态
 	
 	
 	// 注册基本信息1
@@ -110,7 +110,7 @@ public class TransactionEnterprise {
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
 		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
 	}
-
+	
 	
 	public TransactionEnterprise() {
 		super();

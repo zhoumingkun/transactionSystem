@@ -1,6 +1,7 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
+import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 /**
  * 企业dao
@@ -33,4 +34,10 @@ public interface IEnterpriseDao extends IGenericDao<TransactionEnterprise, Integ
 	 * @return TransactionEnterprise
 	 */
 	public TransactionEnterprise isComplete(TransactionEnterprise transactionEnterprise);
+	/**
+	 * 返回企业会员完整资料
+	 * @param transactionEnterprise
+	 * @return
+	 */
+	public MemberCompleteInfo findEnterpriseInfo(TransactionEnterprise transactionEnterprise);
 }

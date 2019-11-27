@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.MemberBasicInfo;
 import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralTwoString;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.persist.content.prototype.IMemberDao;
 import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
@@ -34,7 +35,7 @@ implements IMemberService{
 	}
 
 	@Override
-	public void updatePassword(TransactionMember info) {
+	public void updatePassword(SqlGeneralTwoString info) {
 		// TODO Auto-generated method stub
 		dao.updatePassword(info);
 	}
