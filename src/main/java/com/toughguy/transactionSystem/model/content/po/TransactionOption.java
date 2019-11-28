@@ -1,4 +1,7 @@
 package com.toughguy.transactionSystem.model.content.po;
+
+import java.util.List;
+
 /**
  * 
  *   问卷调差选项实体类
@@ -10,8 +13,15 @@ public class TransactionOption {
 	private int questId;				// -问题id
 	private String optionContent;		// -选项内容
 	private int optionCount;			// -选择的人数的统计
+	private List<Integer> optionIds;	// -选项问题的集合
 	
-
+	
+	public List<Integer> getOptionIds() {
+		return optionIds;
+	}
+	public void setOptionIds(List<Integer> optionIds) {
+		this.optionIds = optionIds;
+	}
 	public int getOptionId() {
 		return optionId;
 	}

@@ -52,14 +52,18 @@ public class TransactionLogController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	
 	public String  getList() {
+		Map<String, Object> map = new HashMap<>();
 		PagerModel<TransactionLog> lits = null;
 		
 		try {
 			lits = logService.findPaginated(null);
+			map.put("code", 200);
+			map.put("data", lits);
 		} catch (Exception e) {
-			return "{code:500,msg:服务器异常}";
+			map.put("code", 500);
+			map.put("msg","服务器异常" );
 		}
-		return "{'code':200,'msg':'success','date':"+JSON.toJSONString(lits).toString()+"}";
+		return JSON.toJSONString(map);
 	}
 	
 

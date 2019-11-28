@@ -97,7 +97,6 @@ public class QuestOptionController {
 			
 			TransactionStatistics statistics = new TransactionStatistics(copiesId,memberId);
 			TransactionStatistics s = statisticsService.findStatistics(statistics);
-			System.out.println(s);
 			if(s!=null) {
 				map.put("code", "404");
 				map.put("msg", "您以做过本次调查问卷");
@@ -158,7 +157,7 @@ public class QuestOptionController {
 	 * @param request
 	 */
 	@ApiOperation(value = "投票统计",notes = "查询某个问卷的所有的问题以及选项")
-	@ApiImplicitParam(name = "json", value = "多个问题id和选项id",
+	@ApiImplicitParam(name = "json", value = "多个问题id和选项id,问卷id以及会员id",
             required = true, dataType = "json", paramType = "query")
 	@RequestMapping(value = "/updateCount", method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response) {
@@ -166,13 +165,21 @@ public class QuestOptionController {
 		
 		try {
 			JSONObject json =  requestJSONUtil.request(request, response);
+			System.out.println(json);
 			JSONArray array = json.getJSONArray("data");
+			int copiesId = json.getInteger("copiesId");
+			int memberId = json.getInteger("memberId");
 			for (int i = 0; i < array.size(); i++) {
-				TransactionOption options = 	(TransactionOption)array.get(i);
+				TransactionOption options =(TransactionOption)array.get(i);
 				TransactionOption option = new TransactionOption();
-				option.setOptionId(options.getOptionId());
-				option.setQuestId(options.getQuestId());
-				optionService.updateCount(option);
+				List<Integer> optionIds = options.getOptionIds();
+				for (int j = 0; j < optionIds.size(); j++) {
+					option.setOptionId(optionIds.get(i));
+					option.setQuestId(options.getQuestId());
+					optionService.updateCount(option);
+					
+				}	
+				statisticsService.save(new TransactionStatistics(copiesId, memberId));
 			}
 		
 			

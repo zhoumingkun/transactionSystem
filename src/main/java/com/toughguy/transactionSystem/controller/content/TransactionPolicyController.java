@@ -211,7 +211,6 @@ public class TransactionPolicyController {
 		/*try {*/
 	
 			JSONObject json = requestJSONUtil.request(request, response);
-			int policyId = json.getInteger("policyId");
 			int enterpriseAreaId = json.getInteger("enterpriseAreaId");
 			int enterpriseTradeId = json.getInteger("enterpriseTradeId");
 			String policyName = json.getString("policyName");
@@ -249,14 +248,19 @@ public class TransactionPolicyController {
 	    required = true, dataType = "int", paramType = "query")	})
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	public String getDelete(HttpServletRequest request) {
+		Map<String,Object> map = new HashMap<>();
 		try {
-	
+			System.out.println(11111);
 			policyService.delete(Integer.parseInt(request.getParameter("policyId")));
 			int rootId = Integer.parseInt(request.getParameter("rootId"));
-			logService.insert("", rootId);
-			return "{msg:succer,code:200}";
+			logService.insert("删除政策", rootId);
+			map.put("code", 200);
+			map.put("msg", "success");
+			return JSON.toJSONString(map);
 		} catch (Exception e) {
-			return "{msg:服务器错误,code:500}";
+			map.put("code", 500);
+			map.put("msg", "服务器错误");
+			return JSON.toJSONString(map);
 		}
 	}
 	
@@ -285,12 +289,17 @@ public class TransactionPolicyController {
 		try {
 			Map<String,Object> params = new HashMap<>();
 			try {
-				int enterpriseAddressId = Integer.parseInt(request.getParameter("enterpriseAddressId"));
-				int enterpriseTypeId = Integer.parseInt(request.getParameter("enterpriseAddressId"));
-				System.out.println(enterpriseAddressId);
-				System.out.println(enterpriseTypeId);
-				params.put("enterpriseAddressId", enterpriseAddressId);
-				params.put("enterpriseTypeId", enterpriseTypeId);
+				int enterpriseAddressId;
+				try {
+					enterpriseAddressId = Integer.parseInt(request.getParameter("enterpriseAddressId"));
+					params.put("enterpriseAddressId", enterpriseAddressId);
+				} catch (Exception e) {
+				}
+				try {
+					int enterpriseTypeId = Integer.parseInt(request.getParameter("enterpriseTypeId"));					
+					params.put("enterpriseTypeId", enterpriseTypeId);
+				} catch (Exception e) {
+				}
 			} catch (Exception e) {
 			}
 			pa = policyService.selectOrId(params);
@@ -360,6 +369,7 @@ public class TransactionPolicyController {
 	
 	@ApiImplicitParam(name = "policyId", value = "所属领域id",
 	required = true, dataType = "int", paramType = "query")
+	@RequestMapping(value  ="/findpolicy",method=RequestMethod.GET)
 	public String getFind(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
 		try {

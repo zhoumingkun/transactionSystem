@@ -9,16 +9,90 @@ import java.util.Date;
 public class TransactionPolicy {
 	private int policyId;				// -id
 	private int enterpriseAreaId;		// -所属领域
+	private String enterpriseArea;		// -所属领域
 	private int enterpriseTradeId;		// -所属行业
+	private String tradeType;			// -所属行业
 	private String policyName;			// -政策名称
 	private String policyUnit;			// -发布单位
 	private String policyContent;		// -政策内容
 	private Date policyTime;			// -发布时间
 	private int enterpriseAddressId;	// -所属区域
+	private String addressName;			// -所属区域
 	private int enterpriseTypeId;		// -企业类型
+	private String enterpriseType;		// -企业类型
 	private double policMoney;			// -奖励金额
 	private int intelligentMatching;	// -政策匹配°
 	
+	
+	
+	
+	
+	public TransactionPolicy(int enterpriseAreaId, String enterpriseArea, int enterpriseTradeId, String tradeType,
+			String policyName, String policyUnit, String policyContent, Date policyTime, int enterpriseAddressId,
+			String addressName, int enterpriseTypeId, String enterpriseType, double policMoney,
+			int intelligentMatching) {
+		super();
+		this.enterpriseAreaId = enterpriseAreaId;
+		this.enterpriseArea = enterpriseArea;
+		this.enterpriseTradeId = enterpriseTradeId;
+		this.tradeType = tradeType;
+		this.policyName = policyName;
+		this.policyUnit = policyUnit;
+		this.policyContent = policyContent;
+		this.policyTime = policyTime;
+		this.enterpriseAddressId = enterpriseAddressId;
+		this.addressName = addressName;
+		this.enterpriseTypeId = enterpriseTypeId;
+		this.enterpriseType = enterpriseType;
+		this.policMoney = policMoney;
+		this.intelligentMatching = intelligentMatching;
+	}
+	public TransactionPolicy(int policyId, int enterpriseAreaId, String enterpriseArea, int enterpriseTradeId,
+			String tradeType, String policyName, String policyUnit, String policyContent, Date policyTime,
+			int enterpriseAddressId, String addressName, int enterpriseTypeId, String enterpriseType, double policMoney,
+			int intelligentMatching) {
+		super();
+		this.policyId = policyId;
+		this.enterpriseAreaId = enterpriseAreaId;
+		this.enterpriseArea = enterpriseArea;
+		this.enterpriseTradeId = enterpriseTradeId;
+		this.tradeType = tradeType;
+		this.policyName = policyName;
+		this.policyUnit = policyUnit;
+		this.policyContent = policyContent;
+		this.policyTime = policyTime;
+		this.enterpriseAddressId = enterpriseAddressId;
+		this.addressName = addressName;
+		this.enterpriseTypeId = enterpriseTypeId;
+		this.enterpriseType = enterpriseType;
+		this.policMoney = policMoney;
+		this.intelligentMatching = intelligentMatching;
+	}
+	public String getTradeType() {
+		return tradeType;
+	}
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
+	}
+	public String getAddressName() {
+		return addressName;
+	}
+	public void setAddressName(String addressName) {
+		this.addressName = addressName;
+	}
+	public String getEnterpriseArea() {
+		return enterpriseArea;
+	}
+	public void setEnterpriseArea(String enterpriseArea) {
+		this.enterpriseArea = enterpriseArea;
+	}
+
+	public String getEnterpriseType() {
+		return enterpriseType;
+	}
+	public void setEnterpriseType(String enterpriseType) {
+		this.enterpriseType = enterpriseType;
+	}
 	public int getIntelligentMatching() {
 		return intelligentMatching;
 	}
