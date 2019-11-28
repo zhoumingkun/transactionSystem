@@ -60,6 +60,7 @@
 		left join transaction_enterprise_type e
 		on a.enterprise_type_id = e.enterprise_type_id
 		where b.status = 1 and   c.status = 1
+		order by a.policy_id 
 		limit #{offset},#{limit}
 	</select> 
 	
