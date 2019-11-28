@@ -21,6 +21,7 @@ import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IActivitySignupInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionActivityService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionSignupService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.UploadUtil;
@@ -52,7 +53,8 @@ public class TransactionActivityController {
 	//报名
 	@Autowired
 	private ITransactionSignupService transactionSignupService;
-	
+	@Autowired
+	private ITransactionLogService logService;
 	
 	//处理图片上传
 	@ApiOperation(value = "图片上传",notes = "上传的图片在upload/picture/文件夹下")
@@ -75,6 +77,7 @@ public class TransactionActivityController {
 	// 发布活动
 	@ApiOperation(value = "活动发布",notes = "发布活动的具体内容")
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "activityName", value = "活动的名称",required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "activityPerson", value = "活动发起企业（人）",required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "activityContent", value = "活动内容",required = true, dataType = "String", paramType = "query"),
@@ -92,6 +95,7 @@ public class TransactionActivityController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			JSONObject json = requestJSONUtil.request(request, response);
+			int rootId =  json.getInteger("rootId");
 			String activityName = json.getString("activityName");
 			String activityPerson = json.getString("activityPerson");
 			String activityContent = json.getString("activityContent");
@@ -106,6 +110,7 @@ public class TransactionActivityController {
 			System.out.println(activitySignupStart);
 			TransactionActivity activity = new TransactionActivity(activityName, activityPerson, activityContent,activityImg, activitySignupStart,activitySignupEnd,activityStart,activityEnd,activityInbusiness,activityAddress,activityTel);
 			transactionActivityService.save(activity);
+			logService.insert("发布 "+activityName+"活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "发布活动成功");
 		} catch (Exception e) {
@@ -165,15 +170,19 @@ public class TransactionActivityController {
 	// 删除活动
 	@ApiOperation(value = "删除活动",notes = "通过活动id")
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "activityId", value = "活动编号",required = true, dataType = "int", paramType = "query")
 	})
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
 	public String delActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int rootId = Integer.parseInt(request.getParameter("rootId"));
 		int activityId = Integer.parseInt(request.getParameter("activityId"));
 		try {
 			transactionActivityService.delete(activityId);
 			transactionSignupService.delete(activityId);
+			TransactionActivity find = transactionActivityService.find(activityId);
+			logService.insert("删除了"+find.getActivityName()+"活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
 		} catch (Exception e) {

@@ -18,6 +18,7 @@ import com.toughguy.transactionSystem.model.content.vo.FinancingapplyFinancingMe
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IFinancingapplyFinancingMemberEnterpriseInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionFinancingService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
 
@@ -40,10 +41,13 @@ public class TransactionFinancingController {
 	private ITransactionFinancingService transactionFinancingService; 
 	@Autowired
 	private IFinancingapplyFinancingMemberEnterpriseInfoService financingapplyFinancingInfoService;
-	
+	@Autowired
+	private ITransactionLogService logService;
+
 	// 新增融资内容
 	@ApiOperation(value = "新增融资内容", notes = "发布融资的具体内容")
 	@ApiImplicitParams({
+			@ApiImplicitParam(name = "rootId", value = "管理员id",required = true, dataType = "int", paramType = "query"),
 			@ApiImplicitParam(name = "financingName", value = "产品的名称", required = true, dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "financingPeople", value = "发起企业（人）", required = true, dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "financingContent", value = "融资产品内容", required = true, dataType = "String", paramType = "query"),
@@ -64,7 +68,9 @@ public class TransactionFinancingController {
 		transactionFinancing.setFinancingEnd(json.getDate("financingEnd"));
 		transactionFinancing.setFinancingRank(json.getInteger("financingRank"));
 		try {
+			int rootId =  json.getInteger("rootId");
 			transactionFinancingService.save(transactionFinancing);
+			logService.insert("发布 "+json.getString("financingName")+"融资活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "发布成功");
 		} catch (Exception e) {
@@ -217,13 +223,17 @@ public class TransactionFinancingController {
 	// 删除融资活动
 	@ApiOperation(value = "删除融资活动", notes = "通过融资id")
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "rootId", value = "管理员id",required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "financingId", value = "融资编号", required = true, dataType = "int", paramType = "query") })
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
 	public String delFinancing(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		int rootId = Integer.parseInt(request.getParameter("rootId"));
 		int financingId = Integer.parseInt(request.getParameter("financingId"));
 		try {
 			transactionFinancingService.delete(financingId);
+			TransactionFinancing find = transactionFinancingService.find(financingId);
+			logService.insert("删除了 "+find.getFinancingName()+"融资活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
 		} catch (Exception e) {

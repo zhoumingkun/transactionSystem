@@ -8,5 +8,9 @@ import com.toughguy.transactionSystem.service.prototype.IGenericService;
  *
  */
 public interface ITransactionFinancingApplyService extends IGenericService<TransactionFinancingApply, Integer> {
-
+	/**
+	 * 修改还款的状态
+	 * @param transactionFinancingApply
+	 */
+	public void updateFinancingCompleteStatus(TransactionFinancingApply transactionFinancingApply);
 }

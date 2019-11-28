@@ -8,10 +8,14 @@
 	 	insert into transaction_financing_apply(financing_id,member_id,apply_date) values(#{financingId},#{memberId},now())
 	 </insert>
 	
-	<!-- 通过该融资的请求 -->
+	<!-- 通过该融资的请求(修改融资申请的状态) -->
 	<update id="update" parameterType="TransactionFinancingApply">
 		update transaction_financing_apply set apply_status=1 where apply_id=#{applyId}
 	</update>
 	
+	<!-- 修改融资完成的状态 -->
+	<update id="updateFinancingCompleteStatus" parameterType="TransactionFinancingApply">
+		update transaction_financing_apply set financing_complete_status=1 where apply_id=#{applyId}
+	</update>
 	
 </mapper>

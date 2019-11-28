@@ -163,6 +163,26 @@ public class TransactionFinancingApplyController {
 		return JsonUtil.objectToJson(params);
 	}
 	
-	
+	// 修改某人的融资状态
+	@ApiOperation(value = "修改某人的融资状态", notes = "申请id必传")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "applyId", value = "申请id", required = true, dataType = "int", paramType = "query") })
+	@RequestMapping(value = "/completeStatus", method = RequestMethod.GET)
+	public String completeStatus(HttpServletRequest request, HttpServletResponse response) {
+		int applyId = Integer.parseInt(request.getParameter("applyId"));
+		TransactionFinancingApply transactionFinancingApply = new TransactionFinancingApply();
+		transactionFinancingApply.setApplyId(applyId);
+		Map<String, Object> params = new HashMap<String, Object>();
+		try {
+			transactionFinancingApplyService.updateFinancingCompleteStatus(transactionFinancingApply);
+			params.put("code", "200");
+			params.put("msg", "修改成功");
+		} catch (Exception e) {
+			params.put("code", "500");
+			params.put("msg", "服务器错误");
+		}
+		return JsonUtil.objectToJson(params);
+	}
+		
 	
 }

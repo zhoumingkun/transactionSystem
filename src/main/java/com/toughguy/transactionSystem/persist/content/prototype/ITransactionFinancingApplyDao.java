@@ -8,5 +8,8 @@ import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
  *
  */
 public interface ITransactionFinancingApplyDao extends IGenericDao<TransactionFinancingApply, Integer>{
-
+	/**
+	 * 修改还款的状态
+	 */
+	public void updateFinancingCompleteStatus(TransactionFinancingApply transactionFinancingApply);
 }

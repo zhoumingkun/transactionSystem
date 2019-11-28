@@ -28,7 +28,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 	private String enterpriseLegalPersonName;   // 法定代表人名称
 	private String enterpriseLegalPersonCard;	// 法定代表人身份证
 	private int enterpriseAuditStatusId;			// 企业审核状态
-	private String openId;				//openid
 	private String memberTel;			//会员的电话
 	private String memberPwd;			//会员的密码
 	private Date memberDate;			//会员的注册时间
@@ -59,8 +58,8 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 			int enterpriseAreaId, int enterpriseAddressId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,
 			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
 			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-			String enterpriseLegalPersonCard, int enterpriseAuditStatusId, String openId, String memberTel,
-			String memberPwd, Date memberDate, String memberName, String memberCard, int memberIntegral, int memberRank,
+			String enterpriseLegalPersonCard, int enterpriseAuditStatusId, String memberTel, String memberPwd,
+			Date memberDate, String memberName, String memberCard, int memberIntegral, int memberRank,
 			int memberOnlineTimes, Date memberOnlineTime, int financingId, String financingName, String financingPeople,
 			String financingContent, String financingImg, Date financingStart, Date financingEnd, int financingRank,
 			int financingPv, Date financingReleaseDate, int addressId, int tradeId, int applyId, Date applyDate,
@@ -86,7 +85,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
 		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
-		this.openId = openId;
 		this.memberTel = memberTel;
 		this.memberPwd = memberPwd;
 		this.memberDate = memberDate;
@@ -235,12 +233,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 	}
 	public void setEnterpriseAuditStatusId(int enterpriseAuditStatusId) {
 		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
-	}
-	public String getOpenId() {
-		return openId;
-	}
-	public void setOpenId(String openId) {
-		this.openId = openId;
 	}
 	public String getMemberTel() {
 		return memberTel;
@@ -442,7 +434,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 		result = prime * result + ((memberPwd == null) ? 0 : memberPwd.hashCode());
 		result = prime * result + memberRank;
 		result = prime * result + ((memberTel == null) ? 0 : memberTel.hashCode());
-		result = prime * result + ((openId == null) ? 0 : openId.hashCode());
 		result = prime * result + tradeId;
 		return result;
 	}
@@ -624,11 +615,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 				return false;
 		} else if (!memberTel.equals(other.memberTel))
 			return false;
-		if (openId == null) {
-			if (other.openId != null)
-				return false;
-		} else if (!openId.equals(other.openId))
-			return false;
 		if (tradeId != other.tradeId)
 			return false;
 		return true;
@@ -645,18 +631,17 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 				+ ", enterpriseRegAddress=" + enterpriseRegAddress + ", enterpriseStatusId=" + enterpriseStatusId
 				+ ", enterpriseRegDate=" + enterpriseRegDate + ", enterpriseRegMoney=" + enterpriseRegMoney
 				+ ", enterpriseLegalPersonName=" + enterpriseLegalPersonName + ", enterpriseLegalPersonCard="
-				+ enterpriseLegalPersonCard + ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + ", openId="
-				+ openId + ", memberTel=" + memberTel + ", memberPwd=" + memberPwd + ", memberDate=" + memberDate
-				+ ", memberName=" + memberName + ", memberCard=" + memberCard + ", memberIntegral=" + memberIntegral
-				+ ", memberRank=" + memberRank + ", memberOnlineTimes=" + memberOnlineTimes + ", memberOnlineTime="
-				+ memberOnlineTime + ", financingId=" + financingId + ", financingName=" + financingName
-				+ ", financingPeople=" + financingPeople + ", financingContent=" + financingContent + ", financingImg="
-				+ financingImg + ", financingStart=" + financingStart + ", financingEnd=" + financingEnd
-				+ ", financingRank=" + financingRank + ", financingPv=" + financingPv + ", financingReleaseDate="
-				+ financingReleaseDate + ", addressId=" + addressId + ", tradeId=" + tradeId + ", applyId=" + applyId
-				+ ", applyDate=" + applyDate + ", applyStatus=" + applyStatus + ", financingCompleteStatus="
-				+ financingCompleteStatus + "]";
+				+ enterpriseLegalPersonCard + ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + ", memberTel="
+				+ memberTel + ", memberPwd=" + memberPwd + ", memberDate=" + memberDate + ", memberName=" + memberName
+				+ ", memberCard=" + memberCard + ", memberIntegral=" + memberIntegral + ", memberRank=" + memberRank
+				+ ", memberOnlineTimes=" + memberOnlineTimes + ", memberOnlineTime=" + memberOnlineTime
+				+ ", financingId=" + financingId + ", financingName=" + financingName + ", financingPeople="
+				+ financingPeople + ", financingContent=" + financingContent + ", financingImg=" + financingImg
+				+ ", financingStart=" + financingStart + ", financingEnd=" + financingEnd + ", financingRank="
+				+ financingRank + ", financingPv=" + financingPv + ", financingReleaseDate=" + financingReleaseDate
+				+ ", addressId=" + addressId + ", tradeId=" + tradeId + ", applyId=" + applyId + ", applyDate="
+				+ applyDate + ", applyStatus=" + applyStatus + ", financingCompleteStatus=" + financingCompleteStatus
+				+ "]";
 	}
-	
 	
 }

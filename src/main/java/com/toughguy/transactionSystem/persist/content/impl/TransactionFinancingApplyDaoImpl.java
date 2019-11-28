@@ -8,4 +8,9 @@ import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 @Repository
 public class TransactionFinancingApplyDaoImpl extends GenericDaoImpl<TransactionFinancingApply, Integer>implements ITransactionFinancingApplyDao{
 
+	@Override
+	public void updateFinancingCompleteStatus(TransactionFinancingApply transactionFinancingApply) {
+		sqlSessionTemplate.update(typeNameSpace + ".updateFinancingCompleteStatus", transactionFinancingApply);
+	}
+
 }

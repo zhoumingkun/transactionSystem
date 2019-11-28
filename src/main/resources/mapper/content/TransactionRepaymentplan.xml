@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionRepaymentplan">
+	
+	<!-- 新增还款计划 -->
+	<insert id="save" parameterType="TransactionRepaymentplan">
+		insert into transaction_repaymentplan(apply_id,repaymentplan_start,repaymentplan_end,repaymentplan_moneyall,repaymentplan_period,repaymentplan_period_money) values(#{applyId},#{repaymentplanStart},#{repaymentplanEnd},#{repaymentplanMoneyall},#{repaymentplanPeriod},#{repaymentplanPeriodMoney}) 
+	</insert>
+	
+	<!-- 修改还款计划 -->
+	<update id="update" parameterType="TransactionRepaymentplan">
+		update transaction_repaymentplan set repaymentplan_start=#{repaymentplanStart},repaymentplan_end=#{repaymentplanEnd},repaymentplan_moneyall=#{repaymentplanMoneyall},repaymentplan_period=#{repaymentplanPeriod},repaymentplan_period_money=#{repaymentplanPeriodMoney} where repaymentplan_id=#{repaymentplanId}
+	</update>
+	
+	<!-- 查看某一个还款计划 -->
+	<select id="find" parameterType="int" resultType="TransactionRepaymentplan">
+		select * from transaction_repaymentplan where apply_id=#{applyId}
+	</select>
+	
+</mapper>
