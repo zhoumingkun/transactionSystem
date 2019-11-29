@@ -122,7 +122,7 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	 * @param sqlGeneralInfo
 	 * @return List<MemberBasicInfo>
 	 */
-	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
+	public PagerModel<MemberBasicInfo> findKeyword(Map<String, Object> params);
 	
 	/**
 	 * 是否可以签到
@@ -131,4 +131,32 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	 */
 	public boolean isOnline(TransactionMember transactionMember);
 	
+	/**
+	 * 检测手机号和密码是否正确
+	 * @param sqlGeneralTwoString
+	 * @return
+	 */
+	public boolean checkTelPwd(SqlGeneralTwoString sqlGeneralTwoString);
+	
+	/**
+	 * 设置解绑后的用户再次登录的openId
+	 * @param transactionMember
+	 */
+	public void setOpenId(TransactionMember transactionMember);
+	
+	/**
+	 * 通过检测手机号和密码及openid==0是否为解绑用户
+	 * @param sqlGeneralTwoString
+	 * @return
+	 */
+	public boolean checkOpenIdZero(SqlGeneralTwoString sqlGeneralTwoString);
+	
+	/**
+	 * 通过memberid 检测手机号和密码是否正确
+	 * @param transactionMember
+	 * @return
+	 */
+	public boolean checkPwd(TransactionMember transactionMember);
+	
+
 }

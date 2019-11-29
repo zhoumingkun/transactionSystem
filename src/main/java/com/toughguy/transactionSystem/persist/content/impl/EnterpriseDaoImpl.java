@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.persist.content.prototype.IEnterpriseDao;
 import com.toughguy.transactionSystem.persist.impl.GenericDaoImpl;
 @Service
@@ -48,7 +49,11 @@ implements IEnterpriseDao{
 	}
 
 	
-
+	@Override
+	public TransactionEnterprise isUniqueEnterCard(SqlGeneralInfo sqlGeneralInfo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".isUniqueEnterCard", sqlGeneralInfo);
+	}
 
 
 }

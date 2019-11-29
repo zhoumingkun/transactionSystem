@@ -115,7 +115,7 @@ public class DictionaryManagementController {
             required = true, dataType = "int", paramType = "query")
     })
 	
-	@RequestMapping(value = "/areamsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/areamsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 //		JSONObject json = requestJSONUtil.request(request, response);
@@ -147,7 +147,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
 	    required = true, dataType = "int", paramType = "query")
 	  })
-	@RequestMapping(value = "/areamsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/areamsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -184,7 +184,7 @@ public class DictionaryManagementController {
     		
     })
             
-	@RequestMapping(value = "/areamsgupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/areamsgupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -261,7 +261,7 @@ public class DictionaryManagementController {
 		
 	})
 	
-	@RequestMapping(value = "/statusmsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/statusmsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseStatusMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -295,7 +295,7 @@ public class DictionaryManagementController {
         required = true, dataType = "int", paramType = "query")
 		
 	})
-	@RequestMapping(value = "/statusmsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/statusmsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseStatusMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -332,7 +332,7 @@ public class DictionaryManagementController {
         required = true, dataType = "int", paramType = "query")
 		
 	})
-	@RequestMapping(value = "/statusmsgupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/statusmsgupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseStatusMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -407,7 +407,7 @@ public class DictionaryManagementController {
         required = true, dataType = "String", paramType = "query")
 		
 	})
-	@RequestMapping(value = "/typemsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/typemsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTypeMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -440,7 +440,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型ID",
         required = true, dataType = "int", paramType = "query")
 	})
-	@RequestMapping(value = "/typemsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/typemsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTypeMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -476,7 +476,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "status", value = "状态",
         required = true, dataType = "int", paramType = "query")
 	})       
-	@RequestMapping(value = "/typemsgupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/typemsgupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTypeMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -550,7 +550,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "auditStatusType", value = "审核状态",
         required = true, dataType = "String", paramType = "query")
 	})       
-	@RequestMapping(value = "/auditstatusmsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/auditstatusmsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAuditStatusMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -583,7 +583,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "auditStatusId", value = "审核状态ID",
         required = true, dataType = "int", paramType = "query")
 	}) 
-	@RequestMapping(value = "/auditstatusmsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/auditstatusmsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAuditStatusMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -619,7 +619,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "status", value = "状态",
         required = true, dataType = "int", paramType = "query")
 	})         
-	@RequestMapping(value = "/auditstatusmsgupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/auditstatusmsgupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAuditStatusMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -693,7 +693,7 @@ public class DictionaryManagementController {
 		 @ApiImplicitParam(name = "addressName", value = "地址",
          required = true, dataType = "String", paramType = "query")
 	})
-	@RequestMapping(value = "/addressmsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/addressmsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAddressMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -726,7 +726,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "addressId", value = "地址ID",
         required = true, dataType = "int", paramType = "query")
 	})
-	@RequestMapping(value = "/addressmsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/addressmsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAddressMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -762,7 +762,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "status", value = "状态",
         required = true, dataType = "int", paramType = "query")
 	})       
-	@RequestMapping(value = "/addressupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/addressupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAddressMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -770,7 +770,6 @@ public class DictionaryManagementController {
 			boolean status = Integer.parseInt(request.getParameter("status"))>0;
 			addressService.update(new TransactionEnterpriseAddress(addressId, status));
 			map.put("code", "200");
-			System.out.println(map);
 			int rootId =  Integer.parseInt
 					(request.getParameter("rootId"));
 			logService.insert("修改地址: "
@@ -838,7 +837,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "tradeType", value = "行业",
         required = true, dataType = "String", paramType = "query")
 	}) 
-	@RequestMapping(value = "/trademsgadd", method = RequestMethod.POST)
+	@RequestMapping(value = "/trademsgadd", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTradeMsgAdd(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -871,7 +870,7 @@ public class DictionaryManagementController {
 	    @ApiImplicitParam(name = "tradeId", value = "行业ID",
         required = true, dataType = "int", paramType = "query")
 	}) 
-	@RequestMapping(value = "/trademsgdel", method = RequestMethod.POST)
+	@RequestMapping(value = "/trademsgdel", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTradeMsgDel(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -906,7 +905,7 @@ public class DictionaryManagementController {
 		@ApiImplicitParam(name = "status", value = "状态",
         required = true, dataType = "int", paramType = "query")
 	})         
-	@RequestMapping(value = "/tradeupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/tradeupdate", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTradeMsgUpdate(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		

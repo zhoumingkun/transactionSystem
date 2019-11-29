@@ -8,6 +8,22 @@
 		where open_id=#{openId}
 	</select>
 	
+	<!-- 检查openId是否为0  解绑后的openId -->
+	<select id="checkOpenIdZero" parameterType="SqlGeneralTwoString" resultType="TransactionMember">
+		select * from transaction_member 
+		where open_id = '0' and
+		member_tel=#{arg1} and 
+		member_pwd=#{arg2};
+	</select>
+	
+	<!-- 设置openId -->
+	<update id="setOpenId" parameterType="TransactionMember" >
+		update transaction_member 
+		set open_id = #{openId}
+		where member_tel = #{memberTel}
+		and member_pwd = #{memberPwd}
+	</update>
+	
 	<!-- 检查会员是否存在 -->
 	<select id="loginCheck" parameterType="TransactionMember" resultType="TransactionMember">
 		select * from transaction_member 
@@ -16,6 +32,13 @@
 		member_tel=#{memberTel} and 
 		member_pwd=#{memberPwd};
 	</select>
+	<select id="checkTelPwd" parameterType="SqlGeneralTwoString" resultType="TransactionMember">
+		select * from transaction_member 
+		where 
+		member_tel=#{arg1} and 
+		member_pwd=#{arg2};
+	</select>
+	
 	
 	<!-- 更改密码 -->
 	<update id="updatePassword" parameterType="SqlGeneralTwoString">
@@ -23,10 +46,22 @@
 		where open_id= #{arg1};
 	</update>
 	
-	<!-- 解除绑定 -->
-	<update id="updateUser" parameterType="TransactionMember">
+	<!-- 解除绑定 第一步 通过memberid 检测手机号和密码是否正确-->
+	<select id="checkPwd" parameterType="TransactionMember" resultType="TransactionMember">
+		select * from transaction_member
+		where 
+		member_id = #{memberId} and
+		member_tel = #{memberTel} and
+		member_pwd = #{memberPwd}
+	</select>
+	
+	<!-- 解除绑定 第二步 -->
+	<update id="updateUserTel" parameterType="TransactionMember">
 		update transaction_member 
-		set member_tel=#{memberTel},open_id='0'
+		set 
+		member_tel = #{memberTel},
+		member_pwd = #{memberPwd},
+		open_id = '0'
 		where member_id= #{memberId};
 	</update>
 	
@@ -77,7 +112,7 @@
 		on member.member_id = enterprise.member_id
 		<!-- where e.enterprise_audit_status_id = 1 and e.member_id=m.member_id; --> 
 	</select>
-	<!-- 枫叶 -->
+	<!-- 分页 -->
 	<select id="enterpriseInfoPage" parameterType="Map" resultType="map">
 		select 
 		member.member_id,
@@ -150,25 +185,62 @@
 		<!-- join transaction_enterprise_audit_status audit_status
 		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id -->
 		where 
-		member.member_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or member.member_tel like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or member.member_card like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_card_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_card_id like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_taxpayer like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_certification_unit like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_reg_address like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_reg_money like concat(concat('%', #{info, jdbcType=DOUBLE}),'%')
-	 or enterprise.enterprise_legal_person_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise.enterprise_legal_person_card like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or trade.trade_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or type.enterprise_type like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or enterprise_status.enterprise_status like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or area.enterprise_area like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-	 or address.address_name like concat(concat('%', #{info, jdbcType=VARCHAR}),'%')
-		
+		member.member_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or member.member_tel like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or member.member_card like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_id like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_taxpayer like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_certification_unit like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_address like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_money like concat(concat('%', #{keyword, jdbcType=DOUBLE}),'%')
+	 or enterprise.enterprise_legal_person_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_legal_person_card like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or trade.trade_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or type.enterprise_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise_status.enterprise_status like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or area.enterprise_area like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or address.address_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+		limit #{offset}, #{limit}
 	</select>
+	<select id="getTotalFindKeyword" parameterType="Map" resultType="int">
+		select count(*) from 
+		transaction_enterprise enterprise
+		join transaction_member member
+		on member.member_id = enterprise.member_id
+		join transaction_enterprise_area area
+		on enterprise.enterprise_area_id = area.enterprise_area_id
+		join transaction_enterprise_type type
+		on enterprise.enterprise_type_id = type.enterprise_type_id
+		join transaction_enterprise_trade trade
+		on enterprise.enterprise_trade_id= trade.trade_id
+		join transaction_enterprise_status enterprise_status
+		on enterprise.enterprise_status_id=enterprise_status.enterprise_status_id
+		join transaction_enterprise_address address
+		on enterprise.enterprise_address_id=address.address_id
+		<!-- join transaction_enterprise_audit_status audit_status
+		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id -->
+		where 
+		member.member_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or member.member_tel like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or member.member_card like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_card_id like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_taxpayer like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_certification_unit like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_address like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_reg_money like concat(concat('%', #{keyword, jdbcType=DOUBLE}),'%')
+	 or enterprise.enterprise_legal_person_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise.enterprise_legal_person_card like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or trade.trade_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or type.enterprise_type like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or enterprise_status.enterprise_status like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or area.enterprise_area like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	 or address.address_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+	</select>
+	
 	
 	<!-- 实现检验是否今天可以签到 -->
 	<select id="findTodayOnline" parameterType="TransactionMember" resultType="TransactionMember" >
@@ -176,5 +248,6 @@
 		where member_id = #{memberId}
 		and TO_DAYS(member_online_time) = TO_DAYS(NOW());
 	</select>
+	
 	
 </mapper>

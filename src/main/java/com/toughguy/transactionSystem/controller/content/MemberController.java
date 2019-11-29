@@ -2,7 +2,6 @@ package com.toughguy.transactionSystem.controller.content;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +51,8 @@ public class MemberController {
 	public Map<String,Object> sendOpenId(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
 		try {
-			String openId = "00001111";
+			// 获取openId
+			String openId = "000011112" ;//+ ((Math.random()*9+1)*1000);
 			
 			map.put("data", openId);
 			map.put("code", "200");
@@ -66,12 +66,47 @@ public class MemberController {
 		return map;
 	}
 	
+	/**
+	 * 发送手机验证码
+	 */
 	
+	@ApiOperation(value = "发送手机验证码",notes = "发送手机验证码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "memberTel", value = "用户的手机号",
+        required = true, dataType = "String", paramType = "query")
+	})
+	@RequestMapping(value = "/sendcodetwo", method = RequestMethod.GET)
+	public Map<String,Object> sendCodeTwo(HttpServletRequest request,HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		try {
+			String tel = request.getParameter("memberTel");
+			// 手机是否已经注册
+			boolean findTel = memberService.findTel(new SqlGeneralInfo(tel));
+			if(findTel) {	//未注册
+				map.put("msg", "手机号未存在");
+				map.put("code", "404");
+				return map;
+			}else {		//已注册
+				int sendCode = SendTelUtil.sendTel(tel);
+//				int sendCode =2000;
+				map.put("data", sendCode);
+				map.put("code", "200");
+				map.put("msg", "发送成功");
+				return map;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
 	
 	
 	/**
 	 * 发送手机验证码
-	 * 
+	 * 注册
 	 */
 	
 	@ApiOperation(value = "发送手机验证码",notes = "发送手机验证码")
@@ -82,19 +117,19 @@ public class MemberController {
 	@RequestMapping(value = "/sendcode", method = RequestMethod.GET)
 	public Map<String,Object> sendCode(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
-//		JSONObject json = requestJSONUtil.request(request, response);
 		try {
 			String tel = request.getParameter("memberTel");
-//			String tel = json.getString("memberTel");
 			// 手机是否已经注册
 			boolean findTel = memberService.findTel(new SqlGeneralInfo(tel));
-			if(findTel) {
-//				int sendCode = SendTelUtil.sendTel(tel);
-//				map.put("data", sendCode);
+			if(findTel) {	//未注册
+				int sendCode = SendTelUtil.sendTel(tel);
+//				int sendCode =2000;
+				map.put("data", sendCode);
 				map.put("code", "200");
 				map.put("msg", "发送成功");
+				return map;
 				
-			}else {
+			}else {		//已注册
 				map.put("msg", "手机号已存在");
 				map.put("code", "404");
 				return map;
@@ -126,11 +161,12 @@ public class MemberController {
 			String openId = json.getString("openId");
 			boolean check = memberService.check(new TransactionMember(openId));
 			if(check) {
-				map.put("code", "200");
-				map.put("msg", "用户已注册");
-			}else {
 				map.put("code", "404");
 				map.put("msg", "用户未注册");
+				
+			}else {
+				map.put("code", "200");
+				map.put("msg", "用户已注册");
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -159,20 +195,58 @@ public class MemberController {
 	public Map<String,String> loginCheck(HttpServletRequest request, HttpServletResponse response){
 		Map<String,String> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
+		
 		try{
 			String openId = json.getString("openId");
+		//解除绑定后openId为0; 
+		//判断是不是该用户是不是解绑后的用户 openId==0
+		//如果手机号和密码正确，设置该用户的openId为当前的。
 			String memberTel = json.getString("memberTel");
 			String memberPwd = json.getString("memberPwd");
 			//MD5加密
 			String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
-			boolean loginCheck = memberService.loginCheck(new TransactionMember(openId,memberTel, memberPassword));
-			if(loginCheck) {
-				map.put("code", "200");
-				map.put("msg", "登录成功");
-			}else {
-				map.put("code", "404");
-				map.put("msg", "用户名或密码错误");
+			
+			// 判定当前openId是否存在
+			boolean check = memberService.check(new TransactionMember(openId));
+			
+			if(check) {		// openId不存在
+				
+				//检测手机号和密码
+				boolean checkTelPwd = memberService.checkTelPwd(new SqlGeneralTwoString(memberTel, memberPassword));
+				if(checkTelPwd) { // 手机号和密码不正确
+					map.put("code", "404");
+					map.put("msg", "手机号或密码错误");
+					return map;
+				
+				}else {	// 手机号和密码正确
+					
+					//判断是否为解绑用户
+					boolean checkOpenIdZero = memberService.checkOpenIdZero(new SqlGeneralTwoString(memberTel, memberPassword));
+					if(checkOpenIdZero) {	//不是解绑用户
+						map.put("code", "404");
+						map.put("msg", "登录失败");
+						return map;
+					}else {  	//是解绑用户  将用户当前的openId 存到数据库
+						memberService.setOpenId(new TransactionMember(openId,memberTel, memberPassword) );
+						map.put("code", "200");
+						map.put("msg", "登录成功");
+						return map;
+					}
+					
+				}
+			}else {		// openId存在
+				boolean loginCheck = memberService.loginCheck(new TransactionMember(openId,memberTel, memberPassword));
+				if(loginCheck) {	// 不存在
+					map.put("code", "404");
+					map.put("msg", "手机号或密码错误");
+					return map;
+				}else {	// 存在
+					map.put("code", "200");
+					map.put("msg", "登录成功");
+					return map;
+				}
 			}
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			map.put("code", "500");
@@ -215,21 +289,71 @@ public class MemberController {
 		}
 		return map;
 	}
-	
-	
+
 	/**
-	 * 解除绑定[ openid改为0]
+	 * 解除绑定第一步：判定用户手机号和密码
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/updatetel", method = RequestMethod.POST)
-	@ApiOperation(value = "解除绑定",notes = "解除绑定")
+	
+	@ApiOperation(value = "解除绑定第一步",notes = "解除绑定")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "memberId", value = "会员ID",
         required = true, dataType = "String", paramType = "query"),
 		@ApiImplicitParam(name = "memberTel", value = "手机号",
+        required = true, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "memberPwd", value = "旧的密码",
         required = true, dataType = "String", paramType = "query")
 		})
+	@RequestMapping(value = "/checkpwd", method = RequestMethod.POST)
+	public Map<String,String> checkPwd(HttpServletRequest request,HttpServletResponse response){
+		Map<String,String> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		
+		try {
+			int memberId = json.getInteger("memberId");
+			String memberTel = json.getString("memberTel");
+			String memberPwd = json.getString("memberPwd");
+			String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
+			
+			boolean check = memberService.checkPwd(
+					new TransactionMember(memberId, memberTel, memberPassword));
+			if(check) {		//手机号和密码错误
+				map.put("code", "404");
+				map.put("msg", "手机号或密码错误");
+				return map;
+			}else{			//手机号和密码正确
+				map.put("code", "200");
+				map.put("msg", "成功");
+				return map;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+
+		return map;
+	}
+	
+	
+	/**
+	 * 解除绑定第二部：设置新的手机号和密码 [ openid改为0] 更换手机号 密码
+	 * @param request
+	 * @return
+	 */
+	
+	@ApiOperation(value = " 解除绑定第二部：设置新的手机号和密码",notes = "解除绑定")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "memberId", value = "会员ID",
+        required = true, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "memberTel", value = "手机号",
+        required = true, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "memberPwd", value = "新的密码",
+        required = true, dataType = "String", paramType = "query")
+		})
+	@RequestMapping(value = "/updatetel", method = RequestMethod.POST)
 	public Map<String,String> updateTel(HttpServletRequest request,HttpServletResponse response){
 		Map<String,String> map = new HashMap<>();
 		JSONObject json = requestJSONUtil.request(request, response);
@@ -237,9 +361,11 @@ public class MemberController {
 		try {
 			int memberId = json.getInteger("memberId");
 			String memberTel = json.getString("memberTel");
+			String memberPwd = json.getString("memberPwd");
 			
+			String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
 			memberService.updateUserTel(
-					new TransactionMember(memberId, memberTel));
+					new TransactionMember(memberId, memberTel, memberPassword));
 			
 			map.put("code", "200");
 			map.put("msg", "成功");
@@ -295,49 +421,60 @@ System.out.println("可以为空");
 			String enterpriseName = json.getString("enterpriseName");
 			String enterpriseCardType = json.getString("enterpriseCardType");
 			
-			//判断手机号是否唯一  ==Null
-			boolean findTel = memberService.findTel(new SqlGeneralInfo(memberTel));
-			
-			//判断企业名是否唯一  ==Null
-			boolean findName = false;
-			if(!enterpriseCardId.equals("")) { 
-				findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
-				if(!findName) {
-					map.put("code", "404");
-					map.put("msg", "企业名已存在");
-					return map;
-				}
+			//判断openId是否注册  ==Null
+			boolean isUniqueOpenId = memberService.check(new TransactionMember(openId));
+			if(!isUniqueOpenId) {
+				map.put("msg", "已经注册过了");
+				map.put("code", "404");
 			}
 			
+			//判断手机号是否唯一  ==Null
+			boolean findTel = memberService.findTel(new SqlGeneralInfo(memberTel));
 			if(!findTel) {
 				map.put("code", "404");
 				map.put("msg", "手机号已存在");
 				return map;
-			}else {
-				//MD5加密
-				String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
-				// 向会员表存取数据
-				TransactionMember memberInfo = memberService.saveBasicInfo(
-						new TransactionMember(openId, memberTel, memberPassword, new Date(), memberName, memberCard));
-				int memberId = memberInfo.getMemberId();
-				
-				// 向企业表存取数据
-				if(enterpriseCardId.equals("")) { 
-					enterpriseService.insertMsgNoCard(
-							new TransactionEnterprise(memberId,enterpriseName, enterpriseCardType));
-				}else{
-					enterpriseService.insertMsg(
-							new TransactionEnterprise(memberId,enterpriseName, enterpriseCardType, enterpriseCardId));
+			}
+			//判断企业名是否唯一  ==Null
+			boolean findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
+			if(!findName) {
+				map.put("code", "404");
+				map.put("msg", "企业名已存在");
+				return map;
+			}
+			//判断企业证件号是否唯一  ==Null
+			if(!enterpriseCardId.equals("")) { 
+				boolean isUnique = enterpriseService.isUniqueEnterCard(new SqlGeneralInfo(enterpriseCardId));
+				if(!isUnique) {
+					map.put("msg", "企业证件号已经存在了");
+					map.put("code", "404");
+					return map;
 				}
-				
-				map.put("code", "200");	
-				map.put("msg", "注册成功");
 			}
 			
+			//MD5加密
+			String memberPassword = MD5Util.MD5Encode(memberPwd, "UTF-8");
 			
+			// 向会员表存取数据
+			TransactionMember memberInfo = memberService.saveBasicInfo(
+					new TransactionMember(openId, memberTel, memberPassword, new Date(), memberName, memberCard));
+			int memberId = memberInfo.getMemberId();
+			
+			// 向企业表存取数据
+			if(enterpriseCardId.equals("")) { 
+				enterpriseService.insertMsgNoCard(
+						new TransactionEnterprise(memberId,enterpriseName, enterpriseCardType));
+			}else{
+				enterpriseService.insertMsg(
+						new TransactionEnterprise(memberId,enterpriseName, enterpriseCardType, enterpriseCardId));
+			}
+				
+			map.put("code", "200");	
+			map.put("msg", "注册成功");
+		
 		}catch(Exception e) {
 			map.put("code", "500");
-			map.put("msg", "注册失败");
+			map.put("msg", "服务器异常");
 		}
 
 		return map;
@@ -515,7 +652,7 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/oneenterprisememberinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/oneenterprisememberinfo", method = RequestMethod.GET)
 	@ApiOperation(value = "完整信息",notes = "完整信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "memberId", value = "会员ID",
@@ -523,10 +660,10 @@ System.out.println("可以为空");
 		})
 	public Map<String, Object> oneEnterpriseMemberInfo(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
-		JSONObject json = requestJSONUtil.request(request, response);
+//		JSONObject json = requestJSONUtil.request(request, response);
 		
 		try {
-			int memberId = json.getInteger("memberId");
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
 			
 			MemberCompleteInfo info = enterpriseService.findEnterpriseInfo(
 					new TransactionEnterprise(memberId));
@@ -549,22 +686,22 @@ System.out.println("可以为空");
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/allmemberinfo", method = RequestMethod.POST)
-	@ApiOperation(value = "普通会员资料",notes = "普通会员资料")
-	public Map<String, Object> allMemberInfo(HttpServletRequest request, HttpServletResponse response){
-		Map<String,Object> map = new HashMap<>();
-		
-		try {
-			List<TransactionMember> info = memberService.memberInfo();
-			map.put("data", info);
-			map.put("code", "200");
-			map.put("msg", "成功");
-		} catch (Exception e) {
-			map.put("code", "500");
-			map.put("msg", "服务器异常");
-		}
-		return map;
-	}
+//	@RequestMapping(value = "/allmemberinfo", method = RequestMethod.POST)
+//	@ApiOperation(value = "普通会员资料",notes = "普通会员资料")
+//	public Map<String, Object> allMemberInfo(HttpServletRequest request, HttpServletResponse response){
+//		Map<String,Object> map = new HashMap<>();
+//		
+//		try {
+//			List<TransactionMember> info = memberService.memberInfo();
+//			map.put("data", info);
+//			map.put("code", "200");
+//			map.put("msg", "成功");
+//		} catch (Exception e) {
+//			map.put("code", "500");
+//			map.put("msg", "服务器异常");
+//		}
+//		return map;
+//	}
 	
 	/**
 	 * 所有的企业会员信息[分页]
@@ -737,7 +874,7 @@ System.out.println("可以为空");
 	
 	
 	/**
-	 * 企业查询关键字接口(查询资料完善的)
+	 * 企业查询关键字接口[分页]
 	 * @param request
 	 * @return
 	 */
@@ -746,14 +883,16 @@ System.out.println("可以为空");
 		@ApiImplicitParam(name = "keyword", value = "关键字",
         required = true, dataType = "String", paramType = "query"),
 		})
-	@RequestMapping(value = "/findkeyword", method = RequestMethod.POST)
+	@RequestMapping(value = "/findkeyword", method = RequestMethod.GET)
 	public Map<String, Object> findKeyword(HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> map = new HashMap<>();
-		JSONObject json = requestJSONUtil.request(request, response);
 		
 		try {
-			String keyword = json.getString("keyword");
-			List<MemberBasicInfo> member = memberService.findKeyword(new SqlGeneralInfo(keyword));
+			String keyword = request.getParameter("keyword");
+			Map<String, Object> hashMap = new HashMap<>();
+			hashMap.put("keyword", keyword);
+			PagerModel<MemberBasicInfo> member = memberService.findKeyword(hashMap);
+			
 			map.put("data", member);
 			map.put("msg", "成功");
 			map.put("code", "200");
@@ -814,6 +953,70 @@ System.out.println("可以为空");
 				map.put("code", "200");
 			}else {
 				map.put("msg", "已经签到了");
+				map.put("code", "404");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * openId是否唯一
+	 */
+	@ApiOperation(value = "openId是否唯一",notes = "openId是否唯一")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "openId", value = "openId",
+        required = true, dataType = "String", paramType = "query"),
+		})
+	@RequestMapping(value = "/isuniqueopenid", method = RequestMethod.POST)
+	public Map<String, Object> isUniqueOpenId(HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		try {
+			String openId = json.getString("openId");
+			boolean isUnique = memberService.check(new TransactionMember(openId));
+			if(isUnique) {
+				map.put("msg", "不存在");
+				map.put("code", "200");
+			}else {
+				map.put("msg", "已经存在了");
+				map.put("code", "404");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 企业证件号是否唯一
+	 */
+	@ApiOperation(value = "企业证件号是否唯一",notes = "企业证件号是否唯一")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "enterpriseCardId", value = "企业证件号",
+        required = true, dataType = "String", paramType = "query"),
+		})
+	@RequestMapping(value = "/isuniqueentercard", method = RequestMethod.POST)
+	public Map<String, Object> isUniqueEnterCard(HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
+		try {
+			String enterpriseCardId = json.getString("enterpriseCardId");
+			boolean isUnique = enterpriseService.isUniqueEnterCard(new SqlGeneralInfo(enterpriseCardId));
+			if(isUnique) {
+				map.put("msg", "不存在");
+				map.put("code", "200");
+			}else {
+				map.put("msg", "已经存在了");
 				map.put("code", "404");
 			}
 			

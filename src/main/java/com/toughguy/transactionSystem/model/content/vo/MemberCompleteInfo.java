@@ -74,42 +74,6 @@ public class MemberCompleteInfo {
 		this.memberId = memberId;
 		this.enterpriseName = enterpriseName;
 	}
-	
-	public MemberCompleteInfo(int memberId, String memberName, String memberTel, String memberCard, int memberIntegral,
-			int memberRank, int memberOnlineTimes, Date memberDate, String enterpriseName, String enterpriseCardType,
-			String enterpriseCardId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,
-			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
-			Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-			String enterpriseLegalPersonCard, String auditStatusType, String tradeType, String enterpriseType,
-			String enterpriseStatus, String enterpriseArea, String addressName) {
-		super();
-		this.memberId = memberId;
-		this.memberName = memberName;
-		this.memberTel = memberTel;
-		this.memberCard = memberCard;
-		this.memberIntegral = memberIntegral;
-		this.memberRank = memberRank;
-		this.memberOnlineTimes = memberOnlineTimes;
-		this.memberDate = memberDate;
-		this.enterpriseName = enterpriseName;
-		this.enterpriseCardType = enterpriseCardType;
-		this.enterpriseCardId = enterpriseCardId;
-		this.enterpriseTaxpayer = enterpriseTaxpayer;
-		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
-		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
-		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
-		this.enterpriseRegAddress = enterpriseRegAddress;
-		this.enterpriseRegDate = enterpriseRegDate;
-		this.enterpriseRegMoney = enterpriseRegMoney;
-		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
-		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
-		this.auditStatusType = auditStatusType;
-		this.tradeType = tradeType;
-		this.enterpriseType = enterpriseType;
-		this.enterpriseStatus = enterpriseStatus;
-		this.enterpriseArea = enterpriseArea;
-		this.addressName = addressName;
-	}
 
 
 //	企业会员的完整资料
@@ -119,8 +83,8 @@ public class MemberCompleteInfo {
 			int enterpriseTradeId, int enterpriseAreaId, int enterpriseAddressId, String enterpriseTaxpayer,
 			Date enterpriseValidityDateStart, Date enterpriseValidityDateEnd, String enterpriseCertificationUnit,
 			String enterpriseRegAddress, int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney,
-			String enterpriseLegalPersonName, String enterpriseLegalPersonCard, int enterpriseAuditStatusId,
-			String auditStatusType, String tradeType, String enterpriseType, String enterpriseStatus,
+			String enterpriseLegalPersonName, String enterpriseLegalPersonCard, 
+			 String tradeType, String enterpriseType, String enterpriseStatus,
 			String enterpriseArea, String addressName) {
 		super();
 		this.memberId = memberId;
@@ -149,8 +113,6 @@ public class MemberCompleteInfo {
 		this.enterpriseRegMoney = enterpriseRegMoney;
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
-		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
-		this.auditStatusType = auditStatusType;
 		this.tradeType = tradeType;
 		this.enterpriseType = enterpriseType;
 		this.enterpriseStatus = enterpriseStatus;

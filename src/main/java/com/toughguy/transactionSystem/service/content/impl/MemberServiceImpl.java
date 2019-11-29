@@ -25,13 +25,15 @@ implements IMemberService{
 	@Override
 	public boolean check(TransactionMember info) {
 		// TODO Auto-generated method stub
-		return dao.check(info);
+		TransactionMember check = dao.check(info);
+		return check==null;
 	}
 
 	@Override
 	public boolean loginCheck(TransactionMember info) {
 		// TODO Auto-generated method stub
-		return dao.loginCheck(info);
+		TransactionMember loginCheck = dao.loginCheck(info);
+		return loginCheck == null;
 	}
 
 	@Override
@@ -79,7 +81,8 @@ implements IMemberService{
 	@Override
 	public boolean findTel(SqlGeneralInfo info) {
 		// TODO Auto-generated method stub
-		return dao.findTel(info);
+		TransactionMember member = dao.findTel(info);
+		return member == null;
 	}
 
 	@Override
@@ -102,9 +105,9 @@ implements IMemberService{
 	
 	
 	@Override
-	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
+	public PagerModel<MemberBasicInfo> findKeyword(Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return dao.findKeyword(sqlGeneralInfo);
+		return dao.findKeyword(params);
 	}
 
 	@Override
@@ -119,6 +122,35 @@ implements IMemberService{
 		// TODO Auto-generated method stub
 		return dao.enterpriseInfoPage(params);
 	}
+
+	@Override
+	public boolean checkTelPwd(SqlGeneralTwoString sqlGeneralTwoString) {
+		// TODO Auto-generated method stub
+		TransactionMember member = dao.checkTelPwd(sqlGeneralTwoString);
+		return member == null;
+	}
+
+	@Override
+	public void setOpenId(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		dao.setOpenId(transactionMember);
+	}
+
+	@Override
+	public boolean checkOpenIdZero(SqlGeneralTwoString sqlGeneralTwoString) {
+		// TODO Auto-generated method stub
+		TransactionMember member = dao.checkOpenIdZero(sqlGeneralTwoString);
+		return member == null;
+	}
+
+	@Override
+	public boolean checkPwd(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		TransactionMember member = dao.checkPwd(transactionMember);
+		return member == null;
+	}
+
+
 
 	
 }

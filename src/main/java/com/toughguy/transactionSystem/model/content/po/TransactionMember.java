@@ -81,6 +81,13 @@ public class TransactionMember {
 		this.memberPwd = memberPwd;
 	}
 	
+	public TransactionMember(int memberId, String memberTel, String memberPwd) {
+		super();
+		this.memberId = memberId;
+		this.memberTel = memberTel;
+		this.memberPwd = memberPwd;
+	}
+
 	public TransactionMember(int memberId, int memberIntegral, int memberRank, int memberOnlineTimes) {
 		super();
 		this.memberId = memberId;

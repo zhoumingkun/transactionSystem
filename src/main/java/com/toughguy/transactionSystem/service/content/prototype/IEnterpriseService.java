@@ -2,6 +2,7 @@ package com.toughguy.transactionSystem.service.content.prototype;
 
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.vo.MemberCompleteInfo;
+import com.toughguy.transactionSystem.model.content.vo.SqlGeneralInfo;
 import com.toughguy.transactionSystem.service.prototype.IGenericService;
 
 public interface IEnterpriseService extends IGenericService<TransactionEnterprise, Integer>{
@@ -42,5 +43,15 @@ public interface IEnterpriseService extends IGenericService<TransactionEnterpris
 	 * @return
 	 */
 	public MemberCompleteInfo findEnterpriseInfo(TransactionEnterprise transactionEnterprise);
+	
+	/**
+	 * 企业证件号是否唯一
+	 * @param sqlGeneralInfo
+	 * @return
+	 */
+	public boolean isUniqueEnterCard(SqlGeneralInfo sqlGeneralInfo);
+	
+	
+	
 	
 }

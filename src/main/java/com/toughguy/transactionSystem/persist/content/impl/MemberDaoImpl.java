@@ -20,15 +20,15 @@ extends GenericDaoImpl<TransactionMember, Integer>
 implements IMemberDao{
 
 	@Override
-	public boolean check(TransactionMember info) {
+	public TransactionMember check(TransactionMember info) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList(typeNameSpace + ".checkOpenId", info).size()==1;
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".checkOpenId", info);
 	}
 
 	@Override
-	public boolean loginCheck(TransactionMember info) {
+	public TransactionMember loginCheck(TransactionMember info) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList(typeNameSpace + ".loginCheck", info).size()==1;
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".loginCheck", info);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ implements IMemberDao{
 	@Override
 	public void updateUserTel(TransactionMember info) {
 		// TODO Auto-generated method stub
-		sqlSessionTemplate.update(typeNameSpace + ".updateUser", info);
+		sqlSessionTemplate.update(typeNameSpace + ".updateUserTel", info);
 	}
 
 	@Override
@@ -78,10 +78,9 @@ implements IMemberDao{
 	}
 
 	@Override
-	public boolean findTel(SqlGeneralInfo info) {
+	public TransactionMember findTel(SqlGeneralInfo info) {
 		// TODO Auto-generated method stub
-		TransactionMember telInfo = sqlSessionTemplate.selectOne(typeNameSpace + ".findTel", info);
-		return telInfo==null;
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".findTel", info);
 	}
 	
 	@Override
@@ -125,20 +124,57 @@ implements IMemberDao{
 	
 	
 	@Override
-	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo) {
+	public PagerModel<MemberBasicInfo> findKeyword(Map<String, Object> params) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList(typeNameSpace + ".findKeyword", sqlGeneralInfo);
+		// -- 1. 不管传或者不传参数都会追加至少两个分页参数
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<MemberBasicInfo> pm = new PagerModel<MemberBasicInfo>();
+		int total = getTotalFindKeyword(params);
+		List<MemberBasicInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findKeyword", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+		
 	}
-
+	
+	// -- 获取总的条目数 (分页查询中使用)
+	private int getTotalFindKeyword(Map<String, Object> params) {
+		int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getTotalFindKeyword", params);
+		return count;
+	}
+	
 	@Override
 	public TransactionMember findTodayOnline(TransactionMember transactionMember) {
 		// TODO Auto-generated method stub
-		System.out.println(transactionMember);
-		TransactionMember selectOne = sqlSessionTemplate.selectOne(typeNameSpace + ".findTodayOnline", transactionMember);
-		System.out.println(selectOne);
 		return sqlSessionTemplate.selectOne(typeNameSpace + ".findTodayOnline", transactionMember);
 	}
 
-	
+	@Override
+	public TransactionMember checkTelPwd(SqlGeneralTwoString sqlGeneralTwoString) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".checkTelPwd", sqlGeneralTwoString);
+	}
+
+	@Override
+	public void setOpenId(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update(typeNameSpace + ".setOpenId", transactionMember);
+	}
+
+	@Override
+	public TransactionMember checkOpenIdZero(SqlGeneralTwoString sqlGeneralTwoString) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".checkOpenIdZero", sqlGeneralTwoString);
+	}
+
+	@Override
+	public TransactionMember checkPwd(TransactionMember transactionMember) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace + ".checkPwd", transactionMember);
+	}
+
 	
 }

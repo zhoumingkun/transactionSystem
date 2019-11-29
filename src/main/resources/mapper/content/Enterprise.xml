@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionEnterprise">
+	
+		<!-- 根据企业证件号获取信息 -->
+	<select id="isUniqueEnterCard" parameterType="sqlGeneralInfo" resultType="TransactionEnterprise" >
+		select * from transaction_enterprise
+		where enterprise_card_id = #{info}
+	</select>
+	
 	<!-- 根据member_id获取信息 -->
 	<select id="find" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
 		select * from transaction_enterprise
@@ -95,7 +102,6 @@
 		enterprise.enterprise_reg_money,
 		enterprise.enterprise_legal_person_name,
 		enterprise.enterprise_legal_person_card,
-		audit_status.audit_status_type,
 		trade.trade_type,
 		type.enterprise_type,
 		enterprise_status.enterprise_status,
@@ -103,20 +109,19 @@
 		address.address_name
 		from
 		transaction_enterprise enterprise
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id = enterprise.member_id
-		join transaction_enterprise_area area
+		left join transaction_enterprise_area area
 		on enterprise.enterprise_area_id = area.enterprise_area_id
-		join transaction_enterprise_type type
+		left join transaction_enterprise_type type
 		on enterprise.enterprise_type_id = type.enterprise_type_id
-		join transaction_enterprise_trade trade
+		left join transaction_enterprise_trade trade
 		on enterprise.enterprise_trade_id= trade.trade_id
-		join transaction_enterprise_status enterprise_status
+		left join transaction_enterprise_status enterprise_status
 		on enterprise.enterprise_status_id=enterprise_status.enterprise_status_id
-		join transaction_enterprise_address address
+		left join transaction_enterprise_address address
 		on enterprise.enterprise_address_id=address.address_id
-		join transaction_enterprise_audit_status audit_status
-		on enterprise.enterprise_audit_status_id=audit_status.audit_status_id
+		
 		where enterprise.member_id=#{memberId};
 	</select>
 

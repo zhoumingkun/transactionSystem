@@ -18,14 +18,14 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * 检查openId是否已经注册
 	 * @param info
 	 */
-	public boolean check(TransactionMember info);
+	public TransactionMember check(TransactionMember info);
 	
 	/**
 	 * 登录
 	 * 检查是否存在用户名及密码
 	 * @param info
 	 */
-	public boolean loginCheck(TransactionMember info);
+	public TransactionMember loginCheck(TransactionMember info);
 	
 	/**
 	 * 更新密码
@@ -89,15 +89,12 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 */
 	public void updateIntegral(TransactionMember info);
 	
-/**
- * 查询手机号是否存在接口
- */	
 	/**
 	 * 手机号是否存在
 	 * @param info
 	 * @return
 	 */
-	public boolean findTel(SqlGeneralInfo info);
+	public TransactionMember findTel(SqlGeneralInfo info);
 	
 	/**
 	 * 查询所有个人会员的基本信息
@@ -123,7 +120,7 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * @param sqlGeneralInfo
 	 * @return
 	 */
-	public List<MemberBasicInfo> findKeyword(SqlGeneralInfo sqlGeneralInfo);
+	public PagerModel<MemberBasicInfo> findKeyword(Map<String, Object> params);
 	
 	/**
 	 * 根据memberId 和 onlinetime 查找今天签到的用户是否存在
@@ -131,4 +128,33 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * @return
 	 */
 	public TransactionMember findTodayOnline(TransactionMember transactionMember);
+	
+	/**
+	 * 根据手机号和密码查找用户
+	 * @param sqlGeneralTwoString
+	 * @return
+	 */
+	public TransactionMember checkTelPwd(SqlGeneralTwoString sqlGeneralTwoString);
+	
+	/**
+	 * 设置openId
+	 * @param transactionMember
+	 */
+	public void setOpenId(TransactionMember transactionMember);
+	
+	/**
+	 * 根据手机号和密码及 openId==0 查找用户
+	 * @param sqlGeneralTwoString
+	 * @return
+	 */
+	public TransactionMember checkOpenIdZero(SqlGeneralTwoString sqlGeneralTwoString);
+	
+	/**
+	 * 根据手机号和密码及 memberId 查找用户
+	 * @param transactionMember
+	 * @return
+	 */
+	public TransactionMember checkPwd(TransactionMember transactionMember);
+	
+	
 }
