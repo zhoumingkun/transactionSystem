@@ -13,4 +13,9 @@ public class TransactionFinancingApplyDaoImpl extends GenericDaoImpl<Transaction
 		sqlSessionTemplate.update(typeNameSpace + ".updateFinancingCompleteStatus", transactionFinancingApply);
 	}
 
+	@Override
+	public TransactionFinancingApply findFinancingApply(TransactionFinancingApply transactionFinancingApply) {
+		return sqlSessionTemplate.selectOne(typeNameSpace+".findFinancingApply",transactionFinancingApply );
+	}
+
 }

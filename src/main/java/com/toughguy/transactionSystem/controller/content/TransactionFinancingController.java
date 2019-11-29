@@ -57,17 +57,17 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingRank", value = "可报名等级", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addFinancing(HttpServletRequest request,HttpServletResponse response) {
-		JSONObject json = requestJSONUtil.request(request, response);
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionFinancing transactionFinancing = new TransactionFinancing();
-		transactionFinancing.setFinancingName(json.getString("financingName"));
-		transactionFinancing.setFinancingPeople(json.getString("financingPeople"));
-		transactionFinancing.setFinancingContent(json.getString("financingContent"));
-		transactionFinancing.setFinancingImg(json.getString("financingImg"));
-		transactionFinancing.setFinancingStart(json.getDate("financingStart"));
-		transactionFinancing.setFinancingEnd(json.getDate("financingEnd"));
-		transactionFinancing.setFinancingRank(json.getInteger("financingRank"));
 		try {
+			JSONObject json = requestJSONUtil.request(request, response);
+			TransactionFinancing transactionFinancing = new TransactionFinancing();
+			transactionFinancing.setFinancingName(json.getString("financingName"));
+			transactionFinancing.setFinancingPeople(json.getString("financingPeople"));
+			transactionFinancing.setFinancingContent(json.getString("financingContent"));
+			transactionFinancing.setFinancingImg(json.getString("financingImg"));
+			transactionFinancing.setFinancingStart(json.getDate("financingStart"));
+			transactionFinancing.setFinancingEnd(json.getDate("financingEnd"));
+			transactionFinancing.setFinancingRank(json.getInteger("financingRank"));
 			int rootId =  json.getInteger("rootId");
 			transactionFinancingService.save(transactionFinancing);
 			logService.insert("发布 "+json.getString("financingName")+"融资活动", rootId);
@@ -198,7 +198,7 @@ public class TransactionFinancingController {
 	}
 	
 	// 查看某一个融资活动中结束的融资
-	@ApiOperation(value = "查看某一个融资活动中结束行的融资", notes = "默认查全部结束的融资活动，可以传参page和rows进行分页查找，financingId进行查找")
+	@ApiOperation(value = "查看某一个融资活动中结束的融资", notes = "默认查全部结束的融资活动，可以传参page和rows进行分页查找，financingId进行查找")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
 			@ApiImplicitParam(name = "rows", value = "页大小", required = false, dataType = "int", paramType = "query"),
@@ -228,9 +228,9 @@ public class TransactionFinancingController {
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
 	public String delFinancing(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int rootId = Integer.parseInt(request.getParameter("rootId"));
-		int financingId = Integer.parseInt(request.getParameter("financingId"));
 		try {
+			int rootId = Integer.parseInt(request.getParameter("rootId"));
+			int financingId = Integer.parseInt(request.getParameter("financingId"));
 			transactionFinancingService.delete(financingId);
 			TransactionFinancing find = transactionFinancingService.find(financingId);
 			logService.insert("删除了 "+find.getFinancingName()+"融资活动", rootId);
@@ -251,8 +251,8 @@ public class TransactionFinancingController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyFinancing(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int financingId = Integer.parseInt(request.getParameter("financingId"));
 		try {
+			int financingId = Integer.parseInt(request.getParameter("financingId"));
 			TransactionFinancing transactionFinancing = new TransactionFinancing();
 			transactionFinancing.setFinancingId(financingId);
 			transactionFinancingService.update(transactionFinancing);

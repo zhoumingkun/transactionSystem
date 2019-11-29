@@ -48,22 +48,22 @@ public class TransactionRepaymentplanController {
 	})
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addRepaymentplan(HttpServletRequest request, HttpServletResponse response) {
-		JSONObject json = requestJSONUtil.request(request, response);
-		Integer applyId = json.getInteger("applyId");
-		Date repaymentplanStart = json.getDate("repaymentplanStart");
-		Date repaymentplanEnd = json.getDate("repaymentplanEnd");
-		Double repaymentplanMoneyall = json.getDouble("repaymentplanMoneyall");
-		Integer repaymentplanPeriod = json.getInteger("repaymentplanPeriod");
-		Double repaymentplanPeriodMoney = json.getDouble("repaymentplanPeriodMoney");
-		TransactionRepaymentplan transactionRepaymentplan = new TransactionRepaymentplan();
-		transactionRepaymentplan.setApplyId(applyId);
-		transactionRepaymentplan.setRepaymentplanStart(repaymentplanStart);
-		transactionRepaymentplan.setRepaymentplanEnd(repaymentplanEnd);
-		transactionRepaymentplan.setRepaymentplanMoneyall(repaymentplanMoneyall);
-		transactionRepaymentplan.setRepaymentplanPeriod(repaymentplanPeriod);
-		transactionRepaymentplan.setRepaymentplanPeriodMoney(repaymentplanPeriodMoney);
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			JSONObject json = requestJSONUtil.request(request, response);
+			Integer applyId = json.getInteger("applyId");
+			Date repaymentplanStart = json.getDate("repaymentplanStart");
+			Date repaymentplanEnd = json.getDate("repaymentplanEnd");
+			Double repaymentplanMoneyall = json.getDouble("repaymentplanMoneyall");
+			Integer repaymentplanPeriod = json.getInteger("repaymentplanPeriod");
+			Double repaymentplanPeriodMoney = json.getDouble("repaymentplanPeriodMoney");
+			TransactionRepaymentplan transactionRepaymentplan = new TransactionRepaymentplan();
+			transactionRepaymentplan.setApplyId(applyId);
+			transactionRepaymentplan.setRepaymentplanStart(repaymentplanStart);
+			transactionRepaymentplan.setRepaymentplanEnd(repaymentplanEnd);
+			transactionRepaymentplan.setRepaymentplanMoneyall(repaymentplanMoneyall);
+			transactionRepaymentplan.setRepaymentplanPeriod(repaymentplanPeriod);
+			transactionRepaymentplan.setRepaymentplanPeriodMoney(repaymentplanPeriodMoney);
 			transactionRepaymentplanService.save(transactionRepaymentplan);
 			map.put("code", "200");
 			map.put("msg", "新建成功");
@@ -85,22 +85,22 @@ public class TransactionRepaymentplanController {
 			@ApiImplicitParam(name = "repaymentplanPeriodMoney", value = "还款周期金额", required = true, dataType = "double", paramType = "query"), })
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String updateRepaymentplan(HttpServletRequest request, HttpServletResponse response) {
-		JSONObject json = requestJSONUtil.request(request, response);
-		Integer repaymentplanId = json.getInteger("repaymentplanId");
-		Date repaymentplanStart = json.getDate("repaymentplanStart");
-		Date repaymentplanEnd = json.getDate("repaymentplanEnd");
-		Double repaymentplanMoneyall = json.getDouble("repaymentplanMoneyall");
-		Integer repaymentplanPeriod = json.getInteger("repaymentplanPeriod");
-		Double repaymentplanPeriodMoney = json.getDouble("repaymentplanPeriodMoney");
-		TransactionRepaymentplan transactionRepaymentplan = new TransactionRepaymentplan();
-		transactionRepaymentplan.setRepaymentplanId(repaymentplanId);
-		transactionRepaymentplan.setRepaymentplanStart(repaymentplanStart);
-		transactionRepaymentplan.setRepaymentplanEnd(repaymentplanEnd);
-		transactionRepaymentplan.setRepaymentplanMoneyall(repaymentplanMoneyall);
-		transactionRepaymentplan.setRepaymentplanPeriod(repaymentplanPeriod);
-		transactionRepaymentplan.setRepaymentplanPeriodMoney(repaymentplanPeriodMoney);
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			JSONObject json = requestJSONUtil.request(request, response);
+			Integer repaymentplanId = json.getInteger("repaymentplanId");
+			Date repaymentplanStart = json.getDate("repaymentplanStart");
+			Date repaymentplanEnd = json.getDate("repaymentplanEnd");
+			Double repaymentplanMoneyall = json.getDouble("repaymentplanMoneyall");
+			Integer repaymentplanPeriod = json.getInteger("repaymentplanPeriod");
+			Double repaymentplanPeriodMoney = json.getDouble("repaymentplanPeriodMoney");
+			TransactionRepaymentplan transactionRepaymentplan = new TransactionRepaymentplan();
+			transactionRepaymentplan.setRepaymentplanId(repaymentplanId);
+			transactionRepaymentplan.setRepaymentplanStart(repaymentplanStart);
+			transactionRepaymentplan.setRepaymentplanEnd(repaymentplanEnd);
+			transactionRepaymentplan.setRepaymentplanMoneyall(repaymentplanMoneyall);
+			transactionRepaymentplan.setRepaymentplanPeriod(repaymentplanPeriod);
+			transactionRepaymentplan.setRepaymentplanPeriodMoney(repaymentplanPeriodMoney);
 			transactionRepaymentplanService.update(transactionRepaymentplan);
 			map.put("code", "200");
 			map.put("msg", "修改成功");

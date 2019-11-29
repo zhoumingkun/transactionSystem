@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.vo.TransactionFinancingApplyRepaymentplanInfo">
+	
+	<!--提示还款计划的数据列表  -->
+	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancingApplyRepaymentplanInfo">
+		select financing.*,apply.*,plan.*
+		from transaction_financing financing
+		join transaction_financing_apply apply
+		on apply.financing_id=financing.financing_id
+		join transaction_repaymentplan plan
+		on plan.apply_id=apply.apply_id
+		where apply.member_id=#{memberId}
+		limit #{offset}, #{limit}
+	</select>
+	
+	<!-- 报名 ：查看未开始的活动的总条数-->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*)
+		from transaction_financing financing
+		join transaction_financing_apply apply
+		on apply.financing_id=financing.financing_id
+		join transaction_repaymentplan plan
+		on plan.apply_id=apply.apply_id
+		where apply.member_id=#{memberId}
+	</select>
+	
+	
+</mapper>

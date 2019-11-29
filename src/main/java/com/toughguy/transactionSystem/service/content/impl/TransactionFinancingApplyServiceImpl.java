@@ -15,5 +15,9 @@ public class TransactionFinancingApplyServiceImpl extends GenericServiceImpl<Tra
 	public void updateFinancingCompleteStatus(TransactionFinancingApply transactionFinancingApply) {
 		transactionFinancingApplyDao.updateFinancingCompleteStatus(transactionFinancingApply);
 	}
+	@Override
+	public TransactionFinancingApply judgeFinancingApply(TransactionFinancingApply transactionFinancingApply) {
+		return transactionFinancingApplyDao.findFinancingApply(transactionFinancingApply);
+	}
 
 }

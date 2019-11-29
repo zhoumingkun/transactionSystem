@@ -21,10 +21,10 @@
 			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 		</if>
 		<if test="tradeId != null and tradeId != '' ">
-			 and trade_id = #{tradeId}
+			 and trade.trade_id = #{tradeId}
 		</if>
 		<if test="addressId != null and addressId != '' ">
-			 and address_id = #{addressId}
+			 and address.address_id = #{addressId}
 		</if>
 		limit #{offset}, #{limit}
 	</select>
@@ -43,10 +43,10 @@
 			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 		</if>
 		<if test="tradeId != null and tradeId != '' ">
-			 and trade_id = #{tradeId}
+			 and trade.trade_id = #{tradeId}
 		</if>
 		<if test="addressId != null and addressId != '' ">
-			 and address_id = #{addressId}
+			 and address.address_id = #{addressId}
 		</if>
 	</select>
 	

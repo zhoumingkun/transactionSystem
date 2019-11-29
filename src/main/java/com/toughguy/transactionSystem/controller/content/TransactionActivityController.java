@@ -176,9 +176,9 @@ public class TransactionActivityController {
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
 	public String delActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int rootId = Integer.parseInt(request.getParameter("rootId"));
-		int activityId = Integer.parseInt(request.getParameter("activityId"));
 		try {
+			int rootId = Integer.parseInt(request.getParameter("rootId"));
+			int activityId = Integer.parseInt(request.getParameter("activityId"));
 			transactionActivityService.delete(activityId);
 			transactionSignupService.delete(activityId);
 			TransactionActivity find = transactionActivityService.find(activityId);
@@ -200,8 +200,8 @@ public class TransactionActivityController {
 	@RequestMapping(value = "/lookActivity", method = RequestMethod.GET)
 	public String lookActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int activityId = Integer.parseInt(request.getParameter("activityId"));
 		try {
+			int activityId = Integer.parseInt(request.getParameter("activityId"));
 			TransactionActivity find = transactionActivityService.find(activityId);
 			map.put("code", "200");
 			map.put("msg", "查找成功");

@@ -18,4 +18,9 @@
 		update transaction_financing_apply set financing_complete_status=1 where apply_id=#{applyId}
 	</update>
 	
+	<!-- 查看是否重复报融资申请-->
+	<select id="findFinancingApply" parameterType="TransactionFinancingApply" resultType="TransactionFinancingApply">
+		select * from transaction_financing_apply where financing_id=#{financingId} and member_id=#{memberId}
+	</select>
+	
 </mapper>

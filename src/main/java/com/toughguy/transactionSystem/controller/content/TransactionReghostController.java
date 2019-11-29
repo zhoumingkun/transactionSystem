@@ -172,8 +172,8 @@ public class TransactionReghostController {
 	@RequestMapping(value = "/lookOneReghost", method = RequestMethod.GET)
 	public String lookOneReghost(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 		try {
+			int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 			ReghostServiceMemberEnterpriseInfo find = reghostServiceMemberEnterpriseInfo.find(reghostId);
 			map.put("code", "200");
 			map.put("msg", "查找成功");
@@ -192,8 +192,8 @@ public class TransactionReghostController {
 	@RequestMapping(value = "/del", method = RequestMethod.GET)
 	public String delReghost(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 		try {
+			int reghostId = Integer.parseInt(request.getParameter("reghostId"));
 			transactionReghostService.delete(reghostId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");

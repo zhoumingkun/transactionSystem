@@ -90,7 +90,7 @@
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
-		where now() &lt; activity_start and signup.member_id=#{memberId}
+		where now() &lt; activity_start and signup.member_id=#{memberId} and signup.signup_status=0
 		limit #{offset}, #{limit}
 	</select> 
 	<!-- 会员待参加的活动的总条数-->
@@ -99,7 +99,7 @@
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
-		where now() &lt; activity_start and signup.member_id=#{memberId}
+		where now() &lt; activity_start and signup.member_id=#{memberId} and signup.signup_status=0
 	</select>
 	
 	<!-- 会员已参加的活动 -->
@@ -108,7 +108,7 @@
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
-		where now() &gt; activity_start and signup.member_id=#{memberId}
+		where now() &gt; activity_start and signup.member_id=#{memberId} and signup.signup_status=1
 		limit #{offset}, #{limit}
 	</select> 
 	<!-- 会员已参加的活动的总条数-->
@@ -117,6 +117,6 @@
 		from transaction_activity activity
 		JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
-		where now() &gt; activity_start and signup.member_id=#{memberId}
+		where now() &gt; activity_start and signup.member_id=#{memberId} and signup.signup_status=1
 	</select>
 </mapper>

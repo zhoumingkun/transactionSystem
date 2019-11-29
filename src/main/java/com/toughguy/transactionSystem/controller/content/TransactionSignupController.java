@@ -186,9 +186,9 @@ public class TransactionSignupController {
 	@RequestMapping(value="/modify",method=RequestMethod.GET)
 	public String modifySignup(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int activityId = Integer.parseInt(request.getParameter("activityId"));
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
 		try {
+			int activityId = Integer.parseInt(request.getParameter("activityId"));
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
 			TransactionSignup signup = new TransactionSignup();
 			signup.setActivityId(activityId);
 			signup.setMemberId(memberId);
@@ -271,17 +271,17 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value = "/exportSignupEnterprise", method = RequestMethod.POST)
 	public String exportSignupEnterprise(HttpServletResponse resp,HttpServletRequest request) {
-		JSONObject json = requestJSONUtil.request(request, resp);
-		String primaryTitle = json.getString("primaryTitle");
-		int activityId = json.getInteger("activityId");
-		List<String> titles=new ArrayList<String>();
-		titles.add("企业名称");
-		titles.add("报名时间");
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("activityId", activityId);
-		PagerModel<EnterpriseSignupInfo> findPaginated = enterpriseSignupInfoService.findPaginated(param);
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			JSONObject json = requestJSONUtil.request(request, resp);
+			String primaryTitle = json.getString("primaryTitle");
+			int activityId = json.getInteger("activityId");
+			List<String> titles=new ArrayList<String>();
+			titles.add("企业名称");
+			titles.add("报名时间");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("activityId", activityId);
+			PagerModel<EnterpriseSignupInfo> findPaginated = enterpriseSignupInfoService.findPaginated(param);
 			ExcelUtil.exportExcel(resp, primaryTitle, findPaginated.getData(), titles, primaryTitle);
 			map.put("code", "200");
 			map.put("msg", "导出成功");
@@ -292,5 +292,8 @@ public class TransactionSignupController {
 		}
 		return JsonUtil.objectToJson(map);
 	}
+	
+
+	
 	
 }

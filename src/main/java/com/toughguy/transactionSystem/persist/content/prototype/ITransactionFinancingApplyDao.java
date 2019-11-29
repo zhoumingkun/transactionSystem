@@ -12,4 +12,10 @@ public interface ITransactionFinancingApplyDao extends IGenericDao<TransactionFi
 	 * 修改还款的状态
 	 */
 	public void updateFinancingCompleteStatus(TransactionFinancingApply transactionFinancingApply);
+	/**
+	 * 查找融资活动
+	 * @return
+	 */
+	public TransactionFinancingApply findFinancingApply(TransactionFinancingApply transactionFinancingApply);
+	
 }
