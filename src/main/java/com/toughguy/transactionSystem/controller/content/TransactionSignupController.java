@@ -1,6 +1,7 @@
 package com.toughguy.transactionSystem.controller.content;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.toughguy.transactionSystem.model.content.po.TransactionActivity;
 import com.toughguy.transactionSystem.model.content.po.TransactionSignup;
 import com.toughguy.transactionSystem.model.content.vo.ActivitySignupInfo;
 import com.toughguy.transactionSystem.model.content.vo.EnterpriseSignupInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IActivitySignupInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseSignupInfoService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionActivityService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionSignupService;
 import com.toughguy.transactionSystem.util.ExcelUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
@@ -50,6 +53,8 @@ public class TransactionSignupController {
 	//企业表和报名表联系的service
 	@Autowired
 	private IEnterpriseSignupInfoService enterpriseSignupInfoService;
+	@Autowired
+	private ITransactionActivityService transactionActivityService;
 	
 	//会员报名成功后查看某一个活动的详情
 	@ApiOperation(value = "会员报名成功后查看某一个活动的详情",notes = "通过活动id和会员id进行查询")
@@ -106,28 +111,39 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addSignup(HttpServletRequest request,HttpServletResponse response) {
-		JSONObject json = requestJSONUtil.request(request, response);
-		int activityId = json.getInteger("activityId");
-		int memberId = json.getInteger("memberId");
-		TransactionSignup signup = new TransactionSignup();
-		signup.setActivityId(activityId);
-		signup.setMemberId(memberId);
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
-		if(judgeSignup!=null) {
-			map.put("code", "500");
-	        map.put("msg", "已报名");
-		}else {
-			String signupCode = json.getString("signupCode");
-			signup.setSignupCode(signupCode);
-			try {
-				transactionSignupService.save(signup);
-				map.put("code", "200");
-		        map.put("msg", "报名成功");
-			}catch (Exception e) {
+		try {
+			JSONObject json = requestJSONUtil.request(request, response);
+			int activityId = json.getInteger("activityId");
+			int memberId = json.getInteger("memberId");
+			TransactionSignup signup = new TransactionSignup();
+			signup.setActivityId(activityId);
+			signup.setMemberId(memberId);
+			TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
+			if(judgeSignup!=null) {
 				map.put("code", "500");
-		        map.put("msg", "服务器错误");
+		        map.put("msg", "已报名");
+			}else {
+				TransactionActivity find = transactionActivityService.find(activityId);
+				Date now = new Date();
+				if((now.compareTo(find.getActivitySignupStart())==0||now.compareTo(find.getActivitySignupStart())==1)&&(now.compareTo(find.getActivitySignupEnd())==0||now.compareTo(find.getActivitySignupEnd())==-1)) {
+					String signupCode = json.getString("signupCode");
+					signup.setSignupCode(signupCode);
+					try {
+						transactionSignupService.save(signup);
+						map.put("code", "200");
+				        map.put("msg", "报名成功");
+					}catch (Exception e) {
+						map.put("code", "500");
+				        map.put("msg", "服务器错误");
+					}
+				}else {
+					map.put("code", "500");
+			        map.put("msg", "请在报名时间内报名");
+				}
 			}
+		} catch (Exception e) {
+			
 		}
 		return JsonUtil.objectToJson(map);
 	}
