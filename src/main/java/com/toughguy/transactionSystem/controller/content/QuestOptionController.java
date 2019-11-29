@@ -156,6 +156,7 @@ public class QuestOptionController {
 	 * 
 	 * @param request
 	 */
+	@SuppressWarnings("unchecked")
 	@ApiOperation(value = "投票统计",notes = "查询某个问卷的所有的问题以及选项")
 	@ApiImplicitParam(name = "json", value = "多个问题id和选项id,问卷id以及会员id",
             required = true, dataType = "json", paramType = "query")
@@ -169,7 +170,10 @@ public class QuestOptionController {
 			JSONArray array = json.getJSONArray("data");
 			int copiesId = json.getInteger("copiesId");
 			int memberId = json.getInteger("memberId");
-			for (int i = 0; i < array.size(); i++) {
+			System.out.println(array.toJSONString());
+			System.out.println(copiesId);
+			System.out.println(memberId);
+		/*	for (int i = 0; i < array.size(); i++) {
 				TransactionOption options =(TransactionOption)array.get(i);
 				TransactionOption option = new TransactionOption();
 				List<Integer> optionIds = options.getOptionIds();
@@ -180,9 +184,42 @@ public class QuestOptionController {
 					
 				}	
 				statisticsService.save(new TransactionStatistics(copiesId, memberId));
+			}*/
+			List list  =  (List<Object>)array;
+			List list1 = (List<Object>)list.get(0);
+			List list2 = (List<Object>)list.get(1);
+			if(list1!=null) {
+				for (int i = 0; i <list1.size(); i++) {
+					if(list1.get(i)==null) {
+						continue;
+					}
+					JSONObject map2 = (JSONObject) JSON.toJSON(list1.get(i));
+					TransactionOption option = new TransactionOption();
+					option.setQuestId(Integer.parseInt((String) map2.getString("questId")));
+					option.setOptionId(Integer.parseInt((String) map2.getString("optionId")));
+					optionService.updateCount(option);					
+				}
+			}
+			
+			if(list2!=null) {
+				for (int i = 0; i <list2.size(); i++) {
+					if(list2.get(i)==null) {
+						System.out.println("跳跳");
+						continue;
+					}
+					JSONObject map2 = (JSONObject) JSON.toJSON(list2.get(i));
+					TransactionOption option = new TransactionOption();
+					option.setQuestId(Integer.parseInt((String) map2.getString("questId")));
+					List list3 = (List)map2.getJSONArray("optionId");
+					for (int j = 0; j < list3.size(); j++) {
+						System.out.println(list3.size());
+						option.setOptionId(Integer.parseInt(list3.get(j).toString()));
+						optionService.updateCount(option);			
+					}				
+				}
 			}
 		
-			
+			statisticsService.save(new TransactionStatistics(copiesId, memberId));
 		} catch (NumberFormatException e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");

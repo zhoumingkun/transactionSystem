@@ -8,7 +8,7 @@
 
 	
 	<insert id="save" parameterType="TransactionStatistics">
-		insert into transaction_enterprise_area(copiesId,member_id)
+		insert into transaction_statistics(copies_id,member_id)
 		values(#{copiesId},#{memberId});	
 	</insert>
 	

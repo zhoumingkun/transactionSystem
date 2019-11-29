@@ -208,10 +208,13 @@ public class TransactionPolicyController {
 	}) 
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
 	public String getAdd(HttpServletRequest request,HttpServletResponse response) {
-		/*try {*/
+		System.out.println("aaa");
+		try {
 	
 			JSONObject json = requestJSONUtil.request(request, response);
+			System.out.println(json);
 			int enterpriseAreaId = json.getInteger("enterpriseAreaId");
+			System.out.println(enterpriseAreaId);
 			int enterpriseTradeId = json.getInteger("enterpriseTradeId");
 			String policyName = json.getString("policyName");
 			String policyUnit = json.getString("policyUnit");
@@ -220,7 +223,7 @@ public class TransactionPolicyController {
 			String policyTime = json.getString("policyTime");
 			int enterpriseAddressId = json.getInteger("enterpriseAddressId");
 			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
-			String policMoney = request.getParameter("policMoney");
+			String policMoney = json.getString("policMoney");
 			TransactionPolicy policy  = new TransactionPolicy(
 					enterpriseAreaId,enterpriseTradeId,
 					policyName,policyUnit,policyContent,DateUtil.getDate(policyTime),
@@ -228,10 +231,11 @@ public class TransactionPolicyController {
 					);
 			policyService.save(policy);
 			logService.insert("发布 "+policyName+"政策", rootId);
-			return "{msg:succer,code:200}";
-	/*	} catch (Exception e) {
-			return "{msg:服务器错误,code:500}";
-		}*/
+			return "{'msg':'succer','code':200}";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{'msg':'服务器错误',code:500}";
+		}
 	}
 	
 	
