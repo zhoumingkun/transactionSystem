@@ -53,7 +53,8 @@ public class TransactionEnterprise {
 	//完善资料
 	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
 			String enterpriseCardId, int enterpriseTypeId, int enterpriseTradeId, int enterpriseAreaId,
-			int enterpriseAddressId, String enterpriseTaxpayer, Date enterpriseValidityDateStart,
+			int enterpriseAddressId, String enterpriseTaxpayer,
+			/* Date enterpriseValidityDateStart, */
 			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
 			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
 			String enterpriseLegalPersonCard) {
@@ -67,7 +68,7 @@ public class TransactionEnterprise {
 		this.enterpriseAreaId = enterpriseAreaId;
 		this.enterpriseAddressId = enterpriseAddressId;
 		this.enterpriseTaxpayer = enterpriseTaxpayer;
-		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
+//		this.enterpriseValidityDateStart = enterpriseValidityDateStart;
 		this.enterpriseValidityDateEnd = enterpriseValidityDateEnd;
 		this.enterpriseCertificationUnit = enterpriseCertificationUnit;
 		this.enterpriseRegAddress = enterpriseRegAddress;

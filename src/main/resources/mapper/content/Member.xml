@@ -113,7 +113,7 @@
 		<!-- where e.enterprise_audit_status_id = 1 and e.member_id=m.member_id; --> 
 	</select>
 	<!-- 分页 -->
-	<select id="enterpriseInfoPage" parameterType="Map" resultType="map">
+	<select id="enterpriseInfoPage" parameterType="Map" resultType="MemberBasicInfo">
 		select 
 		member.member_id,
 		enterprise.enterprise_name,

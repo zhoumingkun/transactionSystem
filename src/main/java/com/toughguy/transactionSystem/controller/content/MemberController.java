@@ -569,8 +569,8 @@ System.out.println("可以为空");
         required = true, dataType = "int", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseTaxpayer", value = "纳税人识别号",
         required = true, dataType = "String", paramType = "query"),
-		@ApiImplicitParam(name = "enterpriseValidityDateStart", value = "证件有效开始时间",
-        required = true, dataType = "Date", paramType = "query"),
+//		@ApiImplicitParam(name = "enterpriseValidityDateStart", value = "证件有效开始时间",
+//        required = true, dataType = "Date", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseValidityDateEnd", value = "证件有效结束时间",
         required = true, dataType = "Date", paramType = "query"),
 		@ApiImplicitParam(name = "enterpriseCertificationUnit", value = "发证单位",
@@ -602,8 +602,8 @@ System.out.println("可以为空");
 			int enterpriseAreaId = json.getInteger("enterpriseTradeId");
 			int enterpriseAddressId = json.getInteger("enterpriseTradeId");
 			String enterpriseTaxpayer = json.getString("enterpriseTaxpayer");
-			Date enterpriseValidityDateStart = DateUtil.getDate(
-					json.getString("enterpriseValidityDateStart"), "yyyy-MM-dd");
+//			Date enterpriseValidityDateStart = DateUtil.getDate(
+//					json.getString("enterpriseValidityDateStart"), "yyyy-MM-dd");
 			Date enterpriseValidityDateEnd = DateUtil.getDate(json.getString("enterpriseValidityDateEnd"),"yyyy-MM-dd");
 			String enterpriseCertificationUnit = json.getString("enterpriseCertificationUnit");
 			String enterpriseRegAddress = json.getString("enterpriseRegAddress");
@@ -628,7 +628,7 @@ System.out.println("可以为空");
 							enterpriseCardType, enterpriseCardId,
 							enterpriseTypeId, enterpriseTradeId,
 							enterpriseAreaId, enterpriseAddressId,
-							enterpriseTaxpayer, enterpriseValidityDateStart,
+							enterpriseTaxpayer, /* enterpriseValidityDateStart, */
 							enterpriseValidityDateEnd, 
 							enterpriseCertificationUnit, 
 							enterpriseRegAddress, enterpriseStatusId,

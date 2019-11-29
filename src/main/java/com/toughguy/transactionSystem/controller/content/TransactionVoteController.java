@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteContent;
 import com.toughguy.transactionSystem.model.content.po.TransactionVoteCount;
 import com.toughguy.transactionSystem.pagination.PagerModel;
@@ -19,6 +21,7 @@ import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogS
 import com.toughguy.transactionSystem.service.content.prototype.IVoteContentService;
 import com.toughguy.transactionSystem.service.content.prototype.IVoteCountService;
 import com.toughguy.transactionSystem.util.DateUtil;
+import com.toughguy.transactionSystem.util.requestJSONUtil;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -96,10 +99,11 @@ public class TransactionVoteController {
     @ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
     required = true, dataType = "int", paramType = "query")
 	@RequestMapping(value = "/voteoptionmsg", method = RequestMethod.POST)
-	public Map<String,Object> voteOptionMsg(HttpServletRequest request) {
+	public Map<String,Object> voteOptionMsg(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
 		try {
-			int voteContentId = Integer.parseInt(request.getParameter("voteContentId"));
+			int voteContentId = json.getInteger("voteContentId");
 			TransactionVoteContent voteContent = contentService.find(voteContentId);
 			map.put("code", "200");
 			map.put("data", voteContent);
@@ -162,8 +166,6 @@ public class TransactionVoteController {
 	 */
 	@ApiOperation(value = "投票接口",notes = "更新投票信息")
     @ApiImplicitParams({
-    		@ApiImplicitParam(name = "rootId", value = "管理员id",
-    	    required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "memberId", value = "会员ID",
             required = true, dataType = "int", paramType = "query"),
     		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
@@ -173,13 +175,15 @@ public class TransactionVoteController {
     		})
             
 	@RequestMapping(value = "/voteoptionupdate", method = RequestMethod.POST)
-	public Map<String,Object> voteOptionUpdate(HttpServletRequest request) {
+	public Map<String,Object> voteOptionUpdate(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = new HashMap<>();
-		
+		JSONObject json = requestJSONUtil.request(request, response);
 		try {
-			int memberId = Integer.parseInt(request.getParameter("memberId"));
-			int voteContentId = Integer.parseInt(request.getParameter("voteContentId"));
-			int optionValue = Integer.parseInt(request.getParameter("optionValue"));
+			int memberId = json.getInteger("memberId");
+			int voteContentId = json.getInteger("voteContentId");
+			
+			
+			int optionValue = json.getInteger("optionValue");
 			if(optionValue == 1) {
 				//sql语句+1
 				contentService.updateVoteOptionOne(new TransactionVoteContent(voteContentId));
@@ -212,12 +216,12 @@ public class TransactionVoteController {
 	})
             
 	@RequestMapping(value = "/votecheck", method = RequestMethod.POST)
-	public Map<String,Object> voteCheck(HttpServletRequest request) {
+	public Map<String,Object> voteCheck(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = new HashMap<>();
-		
+		JSONObject json = requestJSONUtil.request(request, response);
 		try {
-			int memberId = Integer.parseInt(request.getParameter("memberId"));
-			int voteContentId = Integer.parseInt(request.getParameter("voteContentId"));
+			int memberId = json.getInteger("memberId");
+			int voteContentId = json.getInteger("voteContentId");
 			
 			boolean check = countService.check(new TransactionVoteCount(memberId, voteContentId));
 			if(check) {
@@ -245,7 +249,7 @@ public class TransactionVoteController {
     	@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
 	    required = true, dataType = "int", paramType = "query")
     })
-	@RequestMapping(value = "/votedel", method = RequestMethod.POST)
+	@RequestMapping(value = "/votedel", method = RequestMethod.GET)
 	public Map<String,Object> voteDelete(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<>();
 		try {
@@ -268,5 +272,43 @@ public class TransactionVoteController {
 		}
 		return map;
 	}
+	
+	
+	/**
+	 * 会员的 投票查看
+	 */
+//	@ApiOperation(value = "会员的 投票查看",notes = "会员的 投票查看")
+//    @ApiImplicitParams({
+//    	@ApiImplicitParam(name = "memberId", value = "会员ID",
+//        required = true, dataType = "int", paramType = "query"),
+//		@ApiImplicitParam(name = "voteContentId", value = "投票内容ID",
+//        required = true, dataType = "int", paramType = "query")
+//	})
+//            
+//	@RequestMapping(value = "/votecmemberview", method = RequestMethod.POST)
+//	public Map<String,Object> voteMemberView(HttpServletRequest request, HttpServletResponse response) {
+//		Map<String,Object> map = new HashMap<>();
+//		JSONObject json = requestJSONUtil.request(request, response);
+//		try {
+//			int memberId = json.getInteger("memberId");
+//			int voteContentId = json.getInteger("voteContentId");
+//			
+//			boolean check = countService.memberView(new TransactionVoteCount(memberId, voteContentId));
+//			if(check) {
+//				map.put("code", "200");
+//				map.put("msg", "可以投票");
+//			}else{
+//				map.put("code", "404");
+//				map.put("msg", "已经投过票了");
+//			}
+//			
+//		}catch(Exception e) {
+//			map.put("code", "500");
+//			map.put("msg", "服务器异常");
+//		}
+//		return map;
+//	}
+//	
+	
 	
 }

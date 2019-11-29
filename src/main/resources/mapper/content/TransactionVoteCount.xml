@@ -14,7 +14,7 @@
 	
 	
 	<insert id="save" parameterType="TransactionVoteCount">
-		insert into transaction_vote_option(member_id,vote_content_id)
+		insert into transaction_vote_count(member_id,vote_content_id)
 		values(#{memberId},#{voteContentId});	
 	</insert>
 	

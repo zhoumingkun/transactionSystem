@@ -67,7 +67,7 @@ public class DictionaryManagementController {
 	 * 查找企业领域的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业领域",notes = "查找企业领域的所有信息")
+	@ApiOperation(value = "企业领域--查找",notes = "查找企业领域的所有信息")
 	@RequestMapping(value = "areamsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -87,7 +87,7 @@ public class DictionaryManagementController {
 	 * 查找企业领域的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "企业领域",notes = "查找企业领域的所有信息")
+	@ApiOperation(value = "企业领域---查找企业领域的所有信息(状态为1)",notes = "查找企业领域的所有信息(状态为1)")
 	@RequestMapping(value = "/areastatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAreaStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -107,7 +107,7 @@ public class DictionaryManagementController {
 	 * 添加企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业领域",notes = "添加企业领域的信息")
+	@ApiOperation(value = "企业领域--添加",notes = "添加企业领域的信息")
     @ApiImplicitParams({
     		@ApiImplicitParam(name = "enterpriseArea", value = "企业领域",
             required = true, dataType = "String", paramType = "query"),
@@ -139,7 +139,7 @@ public class DictionaryManagementController {
 	 * 删除企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业领域",notes = "删除企业领域的信息")
+	@ApiOperation(value = "企业领域--删除",notes = "删除企业领域的信息")
     
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
@@ -173,7 +173,7 @@ public class DictionaryManagementController {
 	 * 修改企业领域的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业领域",notes = "修改企业领域的信息")
+	@ApiOperation(value = "企业领域--修改",notes = "修改企业领域的信息")
     @ApiImplicitParams({
     		@ApiImplicitParam(name = "enterpriseAreaId", value = "企业领域ID",
             required = true, dataType = "int", paramType = "query"),
@@ -212,7 +212,7 @@ public class DictionaryManagementController {
 	 * 查找企业状态的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业状态",notes = "查找企业状态的所有信息")
+	@ApiOperation(value = "企业状态--查找",notes = "查找企业状态的所有信息")
 	@RequestMapping(value = "/statusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -231,7 +231,7 @@ public class DictionaryManagementController {
 	 * 查找企业状态的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "企业状态",notes = "查找企业状态的所有信息")
+	@ApiOperation(value = "查找企业状态的所有信息(状态为1)",notes = "查找企业状态的所有信息")
 	@RequestMapping(value = "/statusstatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseStatusStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -252,7 +252,7 @@ public class DictionaryManagementController {
 	 * 添加企业状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业状态",notes = "添加企业状态的信息")
+	@ApiOperation(value = "企业状态--添加",notes = "添加企业状态的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "enterpriseStatus", value = "企业状态",
 	    required = true, dataType = "String", paramType = "query"),
@@ -287,7 +287,7 @@ public class DictionaryManagementController {
 	 * 删除企业状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业状态",notes = "删除企业状态的信息")
+	@ApiOperation(value = "企业状态--删除",notes = "删除企业状态的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -322,7 +322,7 @@ public class DictionaryManagementController {
 	 * 修改企业状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业状态",notes = "修改企业状态的信息")
+	@ApiOperation(value = "企业状态--修改",notes = "修改企业状态的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -359,7 +359,7 @@ public class DictionaryManagementController {
 	 * 查找企业类型的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业类型",notes = "查找企业类型的所有信息")
+	@ApiOperation(value = "企业类型--查找",notes = "查找企业类型的所有信息")
 	@RequestMapping(value = "/typemsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTypeMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -378,7 +378,7 @@ public class DictionaryManagementController {
 	 * 查找企业类型的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "企业类型",notes = "查找企业类型的所有信息")
+	@ApiOperation(value = "查找企业类型的所有信息(状态为1)",notes = "查找企业类型的所有信息")
 	@RequestMapping(value = "/typestatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTypeStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -398,7 +398,7 @@ public class DictionaryManagementController {
 	 * 添加企业类型的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业类型",notes = "添加企业类型的信息")
+	@ApiOperation(value = "企业类型--添加",notes = "添加企业类型的信息")
     
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
@@ -433,7 +433,7 @@ public class DictionaryManagementController {
 	 * 删除企业类型的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业类型",notes = "删除企业类型的信息")
+	@ApiOperation(value = "企业类型--删除",notes = "删除企业类型的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -467,7 +467,7 @@ public class DictionaryManagementController {
 	 * 修改企业类型的信息
 	 * @return
 	 */
-	@ApiOperation(value = "企业类型",notes = "修改企业类型")
+	@ApiOperation(value = "企业类型--修改",notes = "修改企业类型")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -504,7 +504,7 @@ public class DictionaryManagementController {
 	 * 查找审核状态的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "审核状态",notes = "查找审核状态的所有信息")
+	@ApiOperation(value = "审核状态--查找",notes = "查找审核状态的所有信息")
 	@RequestMapping(value = "/auditmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAuditStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -524,7 +524,7 @@ public class DictionaryManagementController {
 	 * 查找审核状态的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "审核状态",notes = "查找审核状态的所有信息")
+	@ApiOperation(value = "查找审核状态的所有信息(状态为1)",notes = "查找审核状态的所有信息")
 	@RequestMapping(value = "/auditstatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAuditStatusStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -543,7 +543,7 @@ public class DictionaryManagementController {
 	 * 添加审核状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "审核状态",notes = "添加审核状态的信息")
+	@ApiOperation(value = "审核状态--添加",notes = "添加审核状态的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -576,7 +576,7 @@ public class DictionaryManagementController {
 	 * 删除审核状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "审核状态",notes = "删除审核状态的信息")
+	@ApiOperation(value = "审核状态--删除",notes = "删除审核状态的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -610,7 +610,7 @@ public class DictionaryManagementController {
 	 * 修改审核状态的信息
 	 * @return
 	 */
-	@ApiOperation(value = "审核状态",notes = "修改审核状态")
+	@ApiOperation(value = "审核状态--修改",notes = "修改审核状态")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -648,7 +648,7 @@ public class DictionaryManagementController {
 	 * 查找地址的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "地址",notes = "查找地址的所有信息")
+	@ApiOperation(value = "地址--查找",notes = "查找地址的所有信息")
 	@RequestMapping(value = "/addressmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAddressMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -667,7 +667,7 @@ public class DictionaryManagementController {
 	 * 查找地址的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "地址",notes = "查找地址的所有信息")
+	@ApiOperation(value = "查找地址的所有信息(状态为1)",notes = "查找地址的所有信息")
 	@RequestMapping(value = "/addressstatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseAddressStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -686,7 +686,7 @@ public class DictionaryManagementController {
 	 * 添加地址的信息
 	 * @return
 	 */
-	@ApiOperation(value = "地址",notes = "添加地址的信息")
+	@ApiOperation(value = "地址--添加",notes = "添加地址的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -719,7 +719,7 @@ public class DictionaryManagementController {
 	 * 删除地址的信息
 	 * @return
 	 */
-	@ApiOperation(value = "地址",notes = "删除地址的信息")
+	@ApiOperation(value = "地址--删除",notes = "删除地址的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -753,7 +753,7 @@ public class DictionaryManagementController {
 	 * 修改地址的信息
 	 * @return
 	 */
-	@ApiOperation(value = "地址",notes = "修改地址的信息")
+	@ApiOperation(value = "地址--修改",notes = "修改地址的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -790,7 +790,7 @@ public class DictionaryManagementController {
 	 * 查找行业的所有信息(状态为1)
 	 * @return
 	 */
-	@ApiOperation(value = "行业",notes = "查找行业的所有信息")
+	@ApiOperation(value = "查找行业的所有信息(状态为1)",notes = "查找行业的所有信息")
 	@RequestMapping(value = "/tradestatusmsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTradeStatusMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -810,7 +810,7 @@ public class DictionaryManagementController {
 	 * 查找行业的所有信息
 	 * @return
 	 */
-	@ApiOperation(value = "行业",notes = "查找行业的所有信息")
+	@ApiOperation(value = "查找行业的所有信息",notes = "查找行业的所有信息")
 	@RequestMapping(value = "/trademsg", method = RequestMethod.GET)
 	public Map<String,Object> enterpriseTradeMsg() {
 		Map<String,Object> map = new HashMap<>();
@@ -830,7 +830,7 @@ public class DictionaryManagementController {
 	 * 添加行业的信息
 	 * @return
 	 */
-	@ApiOperation(value = "行业",notes = "添加行业的信息")
+	@ApiOperation(value = "行业-添加",notes = "添加行业的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -863,7 +863,7 @@ public class DictionaryManagementController {
 	 * 删除行业的信息
 	 * @return
 	 */
-	@ApiOperation(value = "行业",notes = "删除行业的信息")
+	@ApiOperation(value = "行业--删除",notes = "删除行业的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),
@@ -896,7 +896,7 @@ public class DictionaryManagementController {
 	 * 修改行业的信息
 	 * @return
 	 */
-	@ApiOperation(value = "行业",notes = "修改行业的信息")
+	@ApiOperation(value = "行业--修改",notes = "修改行业的信息")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "rootId", value = "管理员id",
         required = true, dataType = "int", paramType = "query"),

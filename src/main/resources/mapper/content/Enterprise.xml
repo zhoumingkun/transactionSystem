@@ -43,7 +43,7 @@
 		enterprise_area_id=#{enterpriseAreaId},
 		enterprise_address_id=#{enterpriseAddressId},
 		enterprise_taxpayer=#{enterpriseTaxpayer},
-		enterprise_validity_date_start=#{enterpriseValidityDateStart},
+		<!-- enterprise_validity_date_start=#{enterpriseValidityDateStart}, -->
 		enterprise_validity_date_end=#{enterpriseValidityDateEnd},
 		enterprise_certification_unit=#{enterpriseCertificationUnit},
 		enterprise_reg_address=#{enterpriseRegAddress},
@@ -67,7 +67,7 @@
 		enterprise_area_id is not null and
 		enterprise_address_id is not null and
 		enterprise_taxpayer is not null and
-		enterprise_validity_date_start is not null and
+	<!-- 	enterprise_validity_date_start is not null and -->
 		enterprise_validity_date_end is not null and
 		enterprise_certification_unit is not null and
 		enterprise_reg_address is not null and
@@ -94,7 +94,7 @@
 		enterprise.enterprise_card_type,
 		enterprise.enterprise_card_id,
 		enterprise.enterprise_taxpayer,
-		enterprise.enterprise_validity_date_start,
+		<!-- enterprise.enterprise_validity_date_start, -->
 		enterprise.enterprise_validity_date_end,
 		enterprise.enterprise_certification_unit,
 		enterprise.enterprise_reg_address,
