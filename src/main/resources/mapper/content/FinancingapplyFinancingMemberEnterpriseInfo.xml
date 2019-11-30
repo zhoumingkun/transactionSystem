@@ -5,11 +5,11 @@
 	<select id="findPaginated" parameterType="Map" resultType="FinancingapplyFinancingMemberEnterpriseInfo">
 		select financing.*,apply.*,enterprise.*,member.*
 		FROM transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id=apply.member_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=apply.member_id
 		where apply.member_id=#{memberId} and apply.apply_status=1
 		limit #{offset}, #{limit}
@@ -26,11 +26,11 @@
 	<select id="findStartFinancingList" parameterType="Map" resultType="FinancingapplyFinancingMemberEnterpriseInfo">
 		select financing.*,apply.*,enterprise.*,member.*
 		FROM transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id=apply.member_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=apply.member_id
 		where apply.financing_id=#{financingId} and apply.apply_status=0 
 		limit #{offset}, #{limit}
@@ -46,11 +46,11 @@
 	<select id="findRunFinancingList" parameterType="Map" resultType="FinancingapplyFinancingMemberEnterpriseInfo">
 		select financing.*,apply.*,enterprise.*,member.*
 		FROM transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id=apply.member_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=apply.member_id
 		where apply.financing_id=#{financingId} and apply.apply_status=1 and apply.financing_complete_status=0
 		limit #{offset}, #{limit}
@@ -66,11 +66,11 @@
 	<select id="findEndFinancingList" parameterType="Map" resultType="FinancingapplyFinancingMemberEnterpriseInfo">
 		select financing.*,apply.*,enterprise.*,member.*
 		FROM transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id=apply.member_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=apply.member_id
 		where apply.financing_id=#{financingId} and apply.apply_status=1 and apply.financing_complete_status=1
 		limit #{offset}, #{limit}

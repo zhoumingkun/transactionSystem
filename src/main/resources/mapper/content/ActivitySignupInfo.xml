@@ -79,7 +79,7 @@
 	<select id="findSignup" parameterType="ActivitySignupInfo" resultType="ActivitySignupInfo">
 		select activity.*,signup.* 
 		from transaction_signup signup
-		JOIN transaction_activity activity
+		left JOIN transaction_activity activity
 		on activity.activity_id=signup.activity_id
 		where signup.activity_id=#{activityId} and signup.member_id=#{memberId}
 	</select>
@@ -88,7 +88,7 @@
 	<select id="findStayAttendActivityList" parameterType="Map" resultType="ActivitySignupInfo">
 		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
 		from transaction_activity activity
-		JOIN transaction_signup signup
+		right JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &lt; activity_start and signup.member_id=#{memberId} and signup.signup_status=0
 		limit #{offset}, #{limit}
@@ -97,7 +97,7 @@
 	<select id="getTotalStayAttendActivity" parameterType="Map" resultType="int">
 		SELECT count(*)
 		from transaction_activity activity
-		JOIN transaction_signup signup
+		right JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &lt; activity_start and signup.member_id=#{memberId} and signup.signup_status=0
 	</select>
@@ -106,7 +106,7 @@
 	<select id="findEndAttendActivityList" parameterType="Map" resultType="ActivitySignupInfo">
 		SELECT activity.activity_id as activityId,activity.activity_name,activity.activity_content,activity_start,activity_address,activity_img
 		from transaction_activity activity
-		JOIN transaction_signup signup
+		right JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &gt; activity_start and signup.member_id=#{memberId} and signup.signup_status=1
 		limit #{offset}, #{limit}
@@ -115,7 +115,7 @@
 	<select id="getTotalEndAttendActivity" parameterType="Map" resultType="int">
 		SELECT count(*)
 		from transaction_activity activity
-		JOIN transaction_signup signup
+		right JOIN transaction_signup signup
 		on activity.activity_id=signup.activity_id
 		where now() &gt; activity_start and signup.member_id=#{memberId} and signup.signup_status=1
 	</select>

@@ -19,10 +19,27 @@ public class TransactionFinancing {
 	private int financingPv;					//访问量
 	private Date financingReleaseDate;			//发布时间
 	private int addressId;						//区域id
-	private	int tradeId;						//企业类型	
+	private	int enterpriseTypeId;						//企业类型	
+	public TransactionFinancing(String financingName, String financingPeople, String financingContent,
+			String financingImg, Date financingStart, Date financingEnd, int financingRank, int financingPv,
+			Date financingReleaseDate, int addressId, int enterpriseTypeId) {
+		super();
+		this.financingName = financingName;
+		this.financingPeople = financingPeople;
+		this.financingContent = financingContent;
+		this.financingImg = financingImg;
+		this.financingStart = financingStart;
+		this.financingEnd = financingEnd;
+		this.financingRank = financingRank;
+		this.financingPv = financingPv;
+		this.financingReleaseDate = financingReleaseDate;
+		this.addressId = addressId;
+		this.enterpriseTypeId = enterpriseTypeId;
+	}
+
 	public TransactionFinancing(int financingId, String financingName, String financingPeople, String financingContent,
 			String financingImg, Date financingStart, Date financingEnd, int financingRank, int financingPv,
-			Date financingReleaseDate, int addressId, int tradeId) {
+			Date financingReleaseDate, int addressId, int enterpriseTypeId) {
 		super();
 		this.financingId = financingId;
 		this.financingName = financingName;
@@ -35,24 +52,9 @@ public class TransactionFinancing {
 		this.financingPv = financingPv;
 		this.financingReleaseDate = financingReleaseDate;
 		this.addressId = addressId;
-		this.tradeId = tradeId;
+		this.enterpriseTypeId = enterpriseTypeId;
 	}
-	public TransactionFinancing(String financingName, String financingPeople, String financingContent,
-			String financingImg, Date financingStart, Date financingEnd, int financingRank, int financingPv,
-			Date financingReleaseDate, int addressId, int tradeId) {
-		super();
-		this.financingName = financingName;
-		this.financingPeople = financingPeople;
-		this.financingContent = financingContent;
-		this.financingImg = financingImg;
-		this.financingStart = financingStart;
-		this.financingEnd = financingEnd;
-		this.financingRank = financingRank;
-		this.financingPv = financingPv;
-		this.financingReleaseDate = financingReleaseDate;
-		this.addressId = addressId;
-		this.tradeId = tradeId;
-	}
+
 	public TransactionFinancing() {
 		super();
 	}
@@ -122,17 +124,18 @@ public class TransactionFinancing {
 	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
-	public int getTradeId() {
-		return tradeId;
+	public int getEnterpriseTypeId() {
+		return enterpriseTypeId;
 	}
-	public void setTradeId(int tradeId) {
-		this.tradeId = tradeId;
+	public void setEnterpriseTypeId(int enterpriseTypeId) {
+		this.enterpriseTypeId = enterpriseTypeId;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + addressId;
+		result = prime * result + enterpriseTypeId;
 		result = prime * result + ((financingContent == null) ? 0 : financingContent.hashCode());
 		result = prime * result + ((financingEnd == null) ? 0 : financingEnd.hashCode());
 		result = prime * result + financingId;
@@ -143,7 +146,6 @@ public class TransactionFinancing {
 		result = prime * result + financingRank;
 		result = prime * result + ((financingReleaseDate == null) ? 0 : financingReleaseDate.hashCode());
 		result = prime * result + ((financingStart == null) ? 0 : financingStart.hashCode());
-		result = prime * result + tradeId;
 		return result;
 	}
 	@Override
@@ -156,6 +158,8 @@ public class TransactionFinancing {
 			return false;
 		TransactionFinancing other = (TransactionFinancing) obj;
 		if (addressId != other.addressId)
+			return false;
+		if (enterpriseTypeId != other.enterpriseTypeId)
 			return false;
 		if (financingContent == null) {
 			if (other.financingContent != null)
@@ -198,8 +202,6 @@ public class TransactionFinancing {
 				return false;
 		} else if (!financingStart.equals(other.financingStart))
 			return false;
-		if (tradeId != other.tradeId)
-			return false;
 		return true;
 	}
 	@Override
@@ -208,8 +210,9 @@ public class TransactionFinancing {
 				+ ", financingPeople=" + financingPeople + ", financingContent=" + financingContent + ", financingImg="
 				+ financingImg + ", financingStart=" + financingStart + ", financingEnd=" + financingEnd
 				+ ", financingRank=" + financingRank + ", financingPv=" + financingPv + ", financingReleaseDate="
-				+ financingReleaseDate + ", addressId=" + addressId + ", tradeId=" + tradeId + "]";
+				+ financingReleaseDate + ", addressId=" + addressId + ", enterpriseTypeId=" + enterpriseTypeId + "]";
 	}
-
+	
+	
 	
 }	

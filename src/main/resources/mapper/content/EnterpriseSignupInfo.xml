@@ -5,7 +5,7 @@
 	<select id="findPaginated" parameterType="Map" resultType="com.toughguy.transactionSystem.model.content.vo.EnterpriseSignupTwoInfo">
 		select enterprise.enterprise_name,signup.signup_date
 		from transaction_signup signup
-		JOIN transaction_enterprise enterprise
+		left JOIN transaction_enterprise enterprise
 		on enterprise.member_id=signup.member_id
 		where signup.activity_id=#{activityId}
 		limit #{offset}, #{limit}

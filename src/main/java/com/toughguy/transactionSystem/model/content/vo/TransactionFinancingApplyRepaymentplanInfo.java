@@ -19,7 +19,7 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 	private int financingPv;					//访问量
 	private Date financingReleaseDate;			//发布时间
 	private int addressId;						//区域id
-	private	int tradeId;						//企业类型
+	private	int enterpriseTypeId;						//企业类型
 	private int applyId;							//申请id
 	private int memberId;						    //会员id
 	private Date applyDate;							//申请时间
@@ -35,7 +35,7 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 	private Date promptDay;					//还款的提示日期
 	public TransactionFinancingApplyRepaymentplanInfo(int financingId, String financingName, String financingPeople,
 			String financingContent, String financingImg, Date financingStart, Date financingEnd, int financingRank,
-			int financingPv, Date financingReleaseDate, int addressId, int tradeId, int applyId, int memberId,
+			int financingPv, Date financingReleaseDate, int addressId, int enterpriseTypeId, int applyId, int memberId,
 			Date applyDate, Boolean applyStatus, Boolean financingCompleteStatus, int repaymentplanId,
 			Date repaymentplanStart, Date repaymentplanEnd, double repaymentplanMoneyall, int repaymentplanPeriod,
 			double repaymentplanPeriodMoney, Date repaymentplanDay, Date promptDay) {
@@ -51,7 +51,7 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 		this.financingPv = financingPv;
 		this.financingReleaseDate = financingReleaseDate;
 		this.addressId = addressId;
-		this.tradeId = tradeId;
+		this.enterpriseTypeId = enterpriseTypeId;
 		this.applyId = applyId;
 		this.memberId = memberId;
 		this.applyDate = applyDate;
@@ -135,11 +135,11 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
-	public int getTradeId() {
-		return tradeId;
+	public int getEnterpriseTypeId() {
+		return enterpriseTypeId;
 	}
-	public void setTradeId(int tradeId) {
-		this.tradeId = tradeId;
+	public void setEnterpriseTypeId(int enterpriseTypeId) {
+		this.enterpriseTypeId = enterpriseTypeId;
 	}
 	public int getApplyId() {
 		return applyId;
@@ -227,6 +227,7 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 		result = prime * result + ((applyDate == null) ? 0 : applyDate.hashCode());
 		result = prime * result + applyId;
 		result = prime * result + ((applyStatus == null) ? 0 : applyStatus.hashCode());
+		result = prime * result + enterpriseTypeId;
 		result = prime * result + ((financingCompleteStatus == null) ? 0 : financingCompleteStatus.hashCode());
 		result = prime * result + ((financingContent == null) ? 0 : financingContent.hashCode());
 		result = prime * result + ((financingEnd == null) ? 0 : financingEnd.hashCode());
@@ -250,7 +251,6 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 		temp = Double.doubleToLongBits(repaymentplanPeriodMoney);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((repaymentplanStart == null) ? 0 : repaymentplanStart.hashCode());
-		result = prime * result + tradeId;
 		return result;
 	}
 	@Override
@@ -275,6 +275,8 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 			if (other.applyStatus != null)
 				return false;
 		} else if (!applyStatus.equals(other.applyStatus))
+			return false;
+		if (enterpriseTypeId != other.enterpriseTypeId)
 			return false;
 		if (financingCompleteStatus == null) {
 			if (other.financingCompleteStatus != null)
@@ -353,8 +355,6 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 				return false;
 		} else if (!repaymentplanStart.equals(other.repaymentplanStart))
 			return false;
-		if (tradeId != other.tradeId)
-			return false;
 		return true;
 	}
 	@Override
@@ -363,12 +363,14 @@ public class TransactionFinancingApplyRepaymentplanInfo {
 				+ financingName + ", financingPeople=" + financingPeople + ", financingContent=" + financingContent
 				+ ", financingImg=" + financingImg + ", financingStart=" + financingStart + ", financingEnd="
 				+ financingEnd + ", financingRank=" + financingRank + ", financingPv=" + financingPv
-				+ ", financingReleaseDate=" + financingReleaseDate + ", addressId=" + addressId + ", tradeId=" + tradeId
-				+ ", applyId=" + applyId + ", memberId=" + memberId + ", applyDate=" + applyDate + ", applyStatus="
-				+ applyStatus + ", financingCompleteStatus=" + financingCompleteStatus + ", repaymentplanId="
-				+ repaymentplanId + ", repaymentplanStart=" + repaymentplanStart + ", repaymentplanEnd="
-				+ repaymentplanEnd + ", repaymentplanMoneyall=" + repaymentplanMoneyall + ", repaymentplanPeriod="
-				+ repaymentplanPeriod + ", repaymentplanPeriodMoney=" + repaymentplanPeriodMoney + ", repaymentplanDay="
-				+ repaymentplanDay + ", promptDay=" + promptDay + "]";
+				+ ", financingReleaseDate=" + financingReleaseDate + ", addressId=" + addressId + ", enterpriseTypeId="
+				+ enterpriseTypeId + ", applyId=" + applyId + ", memberId=" + memberId + ", applyDate=" + applyDate
+				+ ", applyStatus=" + applyStatus + ", financingCompleteStatus=" + financingCompleteStatus
+				+ ", repaymentplanId=" + repaymentplanId + ", repaymentplanStart=" + repaymentplanStart
+				+ ", repaymentplanEnd=" + repaymentplanEnd + ", repaymentplanMoneyall=" + repaymentplanMoneyall
+				+ ", repaymentplanPeriod=" + repaymentplanPeriod + ", repaymentplanPeriodMoney="
+				+ repaymentplanPeriodMoney + ", repaymentplanDay=" + repaymentplanDay + ", promptDay=" + promptDay
+				+ "]";
 	}
+	
 }

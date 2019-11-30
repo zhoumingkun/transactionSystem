@@ -3,25 +3,25 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancing">
 	<!-- 新增融资信息发布 -->
 	<insert id="save" parameterType="TransactionFinancing">
-		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank,financing_release_date,address_id,trade_id) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank},now(),#{addressId},#{tradeId}) 
+		insert into transaction_financing(financing_name,financing_people,financing_content,financing_img,financing_start,financing_end,financing_rank,financing_release_date,address_id,enterprise_type_id) values(#{financingName},#{financingPeople},#{financingContent},#{financingImg},#{financingStart},#{financingEnd},#{financingRank},now(),#{addressId},#{enterpriseTypeId}) 
 	</insert>
 	
 	<!-- 查看未开始的融资活动 连微信的搜索框-->
 	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancing">
 		select financing.*
 		from transaction_financing financing
-		join transaction_enterprise_trade trade
-		on trade.trade_id=financing.trade_id
-		join transaction_enterprise_address address
+		left join transaction_enterprise_type type
+		on type.enterprise_type_id=financing.enterprise_type_id
+		left join transaction_enterprise_address address
 		on address.address_id=financing.address_id
 		where now() &lt; financing_end
 		<if test="financingName != null and financingName != '' ">
 			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 			 or address_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
-			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or enterprise_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 		</if>
-		<if test="tradeId != null and tradeId != '' ">
-			 and trade.trade_id = #{tradeId}
+		<if test="enterpriseTypeId != null and enterpriseTypeId != '' ">
+			 and type.enterprise_type_id = #{enterpriseTypeId}
 		</if>
 		<if test="addressId != null and addressId != '' ">
 			 and address.address_id = #{addressId}
@@ -32,18 +32,18 @@
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) 
 		from transaction_financing financing
-		join transaction_enterprise_trade trade
-		on trade.trade_id=financing.trade_id
-		join transaction_enterprise_address address
+		left join transaction_enterprise_type type
+		on type.enterprise_type_id=financing.enterprise_type_id
+		left join transaction_enterprise_address address
 		on address.address_id=financing.address_id
 		where now() &lt; financing_end
 		<if test="financingName != null and financingName != '' ">
 			 and financing_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 			 or address_name like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
-			 or trade_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
+			 or enterprise_type like concat(concat('%', #{financingName, jdbcType=VARCHAR}),'%')
 		</if>
-		<if test="tradeId != null and tradeId != '' ">
-			 and trade.trade_id = #{tradeId}
+		<if test="enterpriseTypeId != null and enterpriseTypeId != '' ">
+			 and type.enterprise_type_id = #{enterpriseTypeId}
 		</if>
 		<if test="addressId != null and addressId != '' ">
 			 and address.address_id = #{addressId}
@@ -88,11 +88,10 @@
 	<select id="findHostFinancing" parameterType="Map" resultType="TransactionFinancing">
 		SELECT *
 		FROM transaction_financing
-		<where>
-			<if test="financingPv != null and financingPv != '' ">
-			 	financing_pv &gt;= #{financingPv}
-		     </if>
-	     </where>
+		where now() &lt; financing_end
+		<if test="financingPv != null and financingPv != '' ">
+		 	and financing_pv &gt;= #{financingPv}
+	     </if>
 		ORDER BY financing_pv desc
 		limit #{offset}, #{limit}
 	</select>
@@ -100,11 +99,10 @@
 	<select id="getTotalHostFinancing" parameterType="Map" resultType="int">
 		SELECT count(*)
 		FROM transaction_financing
-		<where>
-			<if test="financingPv != null and financingPv != '' ">
-			 	financing_pv &gt;= #{financingPv}
-		     </if>
-	     </where>
+		where now() &lt; financing_end
+		<if test="financingPv != null and financingPv != '' ">
+		 	and financing_pv &gt;= #{financingPv}
+	     </if>
 	</select>
 	
 	

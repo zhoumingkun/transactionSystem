@@ -86,7 +86,7 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
 			@ApiImplicitParam(name = "rows", value = "页大小", required = false, dataType = "int", paramType = "query"),
 			@ApiImplicitParam(name = "financingName", value = "融资项目名称", required = false, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "tradeId", value = "企业分类", required = false, dataType = "int", paramType = "query"), 
+			@ApiImplicitParam(name = "enterpriseTypeId", value = "企业分类", required = false, dataType = "int", paramType = "query"), 
 			@ApiImplicitParam(name = "addressId", value = "所在区域", required = false, dataType = "int", paramType = "query"), 
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
@@ -95,10 +95,10 @@ public class TransactionFinancingController {
 		try {
 			Map<String, Object> params1 = new HashMap<String, Object>();
 			String financingName = request.getParameter("financingName");
-			String tradeId = request.getParameter("tradeId");
+			String enterpriseTypeId = request.getParameter("enterpriseTypeId");
 			String addressId = request.getParameter("addressId");
 			params1.put("financingName", financingName);
-			params1.put("tradeId", tradeId);
+			params1.put("enterpriseTypeId", enterpriseTypeId);
 			params1.put("addressId", addressId);
 			PagerModel<TransactionFinancing> findPaginated = transactionFinancingService.findPaginated(params1);
 			List<TransactionFinancing> data = findPaginated.getData();

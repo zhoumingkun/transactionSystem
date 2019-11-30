@@ -48,7 +48,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 	private int financingPv;					//访问量
 	private Date financingReleaseDate;			//发布时间
 	private int addressId;						//区域id
-	private	int tradeId;						//企业类型	
 	private int applyId;							//申请id
 	private Date applyDate;							//申请时间
 	private Boolean applyStatus;					//申请状态
@@ -62,8 +61,8 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 			Date memberDate, String memberName, String memberCard, int memberIntegral, int memberRank,
 			int memberOnlineTimes, Date memberOnlineTime, int financingId, String financingName, String financingPeople,
 			String financingContent, String financingImg, Date financingStart, Date financingEnd, int financingRank,
-			int financingPv, Date financingReleaseDate, int addressId, int tradeId, int applyId, Date applyDate,
-			Boolean applyStatus, Boolean financingCompleteStatus) {
+			int financingPv, Date financingReleaseDate, int addressId, int applyId, Date applyDate, Boolean applyStatus,
+			Boolean financingCompleteStatus) {
 		super();
 		this.enterpriseId = enterpriseId;
 		this.memberId = memberId;
@@ -105,7 +104,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 		this.financingPv = financingPv;
 		this.financingReleaseDate = financingReleaseDate;
 		this.addressId = addressId;
-		this.tradeId = tradeId;
 		this.applyId = applyId;
 		this.applyDate = applyDate;
 		this.applyStatus = applyStatus;
@@ -354,12 +352,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
-	public int getTradeId() {
-		return tradeId;
-	}
-	public void setTradeId(int tradeId) {
-		this.tradeId = tradeId;
-	}
 	public int getApplyId() {
 		return applyId;
 	}
@@ -434,7 +426,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 		result = prime * result + ((memberPwd == null) ? 0 : memberPwd.hashCode());
 		result = prime * result + memberRank;
 		result = prime * result + ((memberTel == null) ? 0 : memberTel.hashCode());
-		result = prime * result + tradeId;
 		return result;
 	}
 	@Override
@@ -615,8 +606,6 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 				return false;
 		} else if (!memberTel.equals(other.memberTel))
 			return false;
-		if (tradeId != other.tradeId)
-			return false;
 		return true;
 	}
 	@Override
@@ -639,9 +628,8 @@ public class FinancingapplyFinancingMemberEnterpriseInfo {
 				+ financingPeople + ", financingContent=" + financingContent + ", financingImg=" + financingImg
 				+ ", financingStart=" + financingStart + ", financingEnd=" + financingEnd + ", financingRank="
 				+ financingRank + ", financingPv=" + financingPv + ", financingReleaseDate=" + financingReleaseDate
-				+ ", addressId=" + addressId + ", tradeId=" + tradeId + ", applyId=" + applyId + ", applyDate="
-				+ applyDate + ", applyStatus=" + applyStatus + ", financingCompleteStatus=" + financingCompleteStatus
-				+ "]";
+				+ ", addressId=" + addressId + ", applyId=" + applyId + ", applyDate=" + applyDate + ", applyStatus="
+				+ applyStatus + ", financingCompleteStatus=" + financingCompleteStatus + "]";
 	}
 	
 }

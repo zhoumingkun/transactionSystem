@@ -6,9 +6,9 @@
 	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancingApplyRepaymentplanInfo">
 		select financing.*,apply.*,plan.*
 		from transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_repaymentplan plan
+		right join transaction_repaymentplan plan
 		on plan.apply_id=apply.apply_id
 		where apply.member_id=#{memberId}
 		limit #{offset}, #{limit}
@@ -18,9 +18,9 @@
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*)
 		from transaction_financing financing
-		join transaction_financing_apply apply
+		right join transaction_financing_apply apply
 		on apply.financing_id=financing.financing_id
-		join transaction_repaymentplan plan
+		right join transaction_repaymentplan plan
 		on plan.apply_id=apply.apply_id
 		where apply.member_id=#{memberId}
 	</select>

@@ -5,11 +5,11 @@
 	<select id="findPaginated" parameterType="Map" resultType="ReghostServiceMemberEnterpriseInfo">
 		select reghost.* ,service.*,enterprise.*,member.*
 		from transaction_reghost reghost
-		join transaction_service service
+		left join transaction_service service
 		on reghost.service_id=service.service_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=reghost.member_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id = member.member_id
 		<where>
 			<if test="enterpriseName != null and enterpriseName != null">
@@ -21,11 +21,11 @@
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*)
 		from transaction_reghost reghost
-		join transaction_service service
+		left join transaction_service service
 		on reghost.service_id=service.service_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=reghost.member_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id = member.member_id
 		<where>
 			<if test="enterpriseName != null and enterpriseName != null">
@@ -38,11 +38,11 @@
 	<select id="find" parameterType="int" resultType="ReghostServiceMemberEnterpriseInfo">
 		select reghost.* ,service.*,enterprise.*,member.*
 		from transaction_reghost reghost
-		join transaction_service service
+		left join transaction_service service
 		on reghost.service_id=service.service_id
-		join transaction_member member
+		left join transaction_member member
 		on member.member_id=reghost.member_id
-		join transaction_enterprise enterprise
+		left join transaction_enterprise enterprise
 		on enterprise.member_id = member.member_id
 		where reghost.reghost_id=#{reghostId}
 	</select>
