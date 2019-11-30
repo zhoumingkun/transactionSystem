@@ -12,7 +12,15 @@ public class TransactionLog {
 	private int logId;				// -日志Id
 	private String logContent;		// -日志内容
 	private Date logTime;			// -日志发表时间
-	private int rootId;		// -发表人
+	private int rootId;				// -发表人id
+	private String userName;		// -发表人名字
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getLogId() {
 		return logId;
 	}

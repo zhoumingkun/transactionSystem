@@ -26,8 +26,8 @@ public class QuestOptionInfoServiceImpl
 	}
 
 	@Override
-	public void insertInfo(QuestOptionInfo info) {
-		infoDao.insertOneInfo(info);
+	public QuestOptionInfo insertInfo(QuestOptionInfo info) {
+		return infoDao.insertOneInfo(info);
 	}
 
 /*	@Override
@@ -38,6 +38,13 @@ public class QuestOptionInfoServiceImpl
 
 	public PagerModel<QuestOptionInfo> selectNoEnd(Map<String, Object> params) {
 		return infoDao.selectNoEnd(params);
+	}
+
+
+
+	@Override
+	public QuestOptionInfo insertQuest(QuestOptionInfo info) {
+		return infoDao.insertQuest(info);
 	}
 
 

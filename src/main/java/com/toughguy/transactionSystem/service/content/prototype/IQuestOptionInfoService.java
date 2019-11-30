@@ -24,7 +24,13 @@ public interface IQuestOptionInfoService extends IGenericService<QuestOptionInfo
 	 * 	新增一份卷子
 	 * @param info
 	 */
-	void insertInfo(QuestOptionInfo info);
+	QuestOptionInfo insertInfo(QuestOptionInfo info);
+	/***
+	 * 	新增问题
+	 * @param info
+	 * @return
+	 */
+	QuestOptionInfo insertQuest(QuestOptionInfo info);
 /*	*//**
 	 * 
 	 * 查询所有已结束的问卷调差

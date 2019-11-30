@@ -23,9 +23,9 @@ public class QuestOptionInfoDaoImpl
 	}
 
 	@Override
-	public void insertOneInfo(QuestOptionInfo info) {
+	public QuestOptionInfo insertOneInfo(QuestOptionInfo info) {
 		sqlSessionTemplate.insert(typeNameSpace + ".insertOneInfo", info);
-		sqlSessionTemplate.insert(typeNameSpace + ".insertOneInfo2", info);
+		return info;
 	}
 
 	
@@ -75,6 +75,13 @@ public class QuestOptionInfoDaoImpl
 		private int getTotalNumOfItemss(Map<String, Object> params) {
 			int count = (Integer) sqlSessionTemplate.selectOne(typeNameSpace + ".getSelectLike", params);
 			return count;
+		}
+
+		@Override
+		public QuestOptionInfo insertQuest(QuestOptionInfo info) {
+			sqlSessionTemplate.insert(typeNameSpace + ".insertOneInfo2", info);
+			return info;
+			
 		}
 
 }

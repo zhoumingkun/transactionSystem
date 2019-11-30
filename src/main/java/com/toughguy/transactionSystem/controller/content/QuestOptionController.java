@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ctc.wstx.util.DataUtil;
 import com.toughguy.transactionSystem.model.content.QuestOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionOption;
 import com.toughguy.transactionSystem.model.content.po.TransactionQuest;
@@ -27,6 +28,7 @@ import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogS
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionOptionService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionQuestService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionStatisticsService;
+import com.toughguy.transactionSystem.util.DateUtil;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
 
@@ -238,22 +240,67 @@ public class QuestOptionController {
 	 */
 	@ApiImplicitParam(name = "rootId", value = "管理员id",
 	        required = true, dataType = "int", paramType = "query")
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String insert(HttpServletRequest request) {
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public String insert(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-			QuestOptionInfo info = new QuestOptionInfo();
+			JSONObject  json = requestJSONUtil.request(request, response);
+			System.out.println(json);
+			/*QuestOptionInfo info = new QuestOptionInfo();
 			info.setCopiesTitle("关于****，你知道多少");
 			info.setQuestContent("关于股票，你了解的多么");
 			infoService.insertInfo(info);
 
 			TransactionOption option = new TransactionOption();
 			option.setQuestId(info.getQuestId());
-			option.setOptionContent("多，不多");
-			int a  = 0;
+			option.setOptionContent("多，不多");*/
+			/*int a  = 0;
 			int rootId =  Integer.parseInt(request.getParameter("rootId"));
-			logService.insert("新增"+a+"调查问卷", rootId);
+			logService.insert("新增"+a+"调查问卷", rootId);*/
 			//optionService.insertOption(option);
+			String copiesEndTime = json.getString("copiesEndTime");
+			String copiesStartTime = json.getString("copiesStartTime");
+			String copiesTitle = json.getString("copiesTitle");
+			QuestOptionInfo copies = new QuestOptionInfo();
+			
+			copies.setCopiesEndTime(DateUtil.getDate(copiesEndTime));
+			copies.setCopiesStartTime(DateUtil.getDate(copiesStartTime));
+			copies.setCopiesTitle(copiesTitle);
+			// - 新插入一份卷子
+			QuestOptionInfo questOption = infoService.insertInfo(copies);
+			System.out.println(questOption);
+			
+			List list = (List)json.getJSONArray("datas");
+			
+			for (int i = 0; i < list.size()-1; i++) {
+				
+				JSONObject json1 = (JSONObject) JSON.toJSON(list.get(i));
+				// - 获取问题的状态， 为单选还是多选个
+				int status = Integer.parseInt(json1.getString("status"));
+				// - 获取问题的内容
+				String questContent = json1.getString("questContent");
+				
+				QuestOptionInfo quest = new QuestOptionInfo();
+				quest.setQuestContent(questContent);
+				quest.setQuestStatus(status);
+				quest.setCopiesId(questOption.getCopiesId());
+				// -插入问题
+				System.out.println(quest);
+				QuestOptionInfo option = infoService.insertQuest(quest);
+				
+				List list1 = (List)json1.getJSONArray("optionContent");
+				for (int j = 0; j < list1.size(); j++) {
+					String optionContent = (String) list1.get(j);
+										
+					TransactionOption info = new TransactionOption();
+					info.setOptionContent(optionContent);
+					info.setQuestId(option.getQuestId());
+					
+					optionService.insertOption(info);
+				}
+				
+			}
+			
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");

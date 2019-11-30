@@ -27,7 +27,7 @@ public interface IQuestOptionInfoDao  extends IGenericDao<QuestOptionInfo, Integ
 	 * 	新增一份卷子
 	 * @param info
 	 */
-	void insertOneInfo(QuestOptionInfo info);
+	QuestOptionInfo insertOneInfo(QuestOptionInfo info);
 	
 /*	*//**
 	 * 	查询所有已结束的问卷调差
@@ -47,6 +47,12 @@ public interface IQuestOptionInfoDao  extends IGenericDao<QuestOptionInfo, Integ
 	 */
 	
 	public PagerModel<QuestOptionInfo> selectLike(Map<String, Object> params);
+	/**
+	 * 	新增一个问题
+	 * @param info
+	 * @return
+	 */
+	QuestOptionInfo insertQuest(QuestOptionInfo info);
 	
 }
 

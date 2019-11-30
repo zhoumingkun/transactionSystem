@@ -45,11 +45,11 @@
 	
 	<!-- 插入一个卷子 -->
 	<insert id="insertOneInfo" parameterType="QuestOptionInfo" useGeneratedKeys="true" keyProperty="copiesId">
-		insert into  transaction_copies (copies_title) value (#{copiesTitle})
+		insert into  transaction_copies (copies_title,copies_start_time,copies_end_time) value (#{copiesTitle},#{copiesStartTime},#{copiesEndTime})
 	</insert>
 	<!-- 插入一个问卷调差的问题 -->
-	<insert id="insertOneInfo2" parameterType="QuestOptionInfo">
-		insert into  transaction_quest(quest_content,copies_id，quest_status) value (#{questContent},#{copiesId},#{questStatus})
+	<insert id="insertOneInfo2" parameterType="QuestOptionInfo" useGeneratedKeys="true" keyProperty="questId">
+		insert into  transaction_quest(quest_content,copies_id,quest_status) value (#{questContent},#{copiesId},#{questStatus})
 	</insert>
 
 

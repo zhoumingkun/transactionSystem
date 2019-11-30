@@ -29,7 +29,9 @@
 	
 	<!--  分页查找全部的政策 -->
  	<select id="findPaginated" resultType="TransactionLog">
-		select * from transaction_log
+		select  a.* ,b.userName from transaction_log a 
+		left join auth_user b 
+		on a.root_id = b.id
 		limit #{offset},#{limit}
 	</select> 
 	
