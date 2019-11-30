@@ -118,12 +118,16 @@ public class TransactionRepaymentplanController {
 	})
 	@RequestMapping(value = "/lookOne", method = RequestMethod.GET)
 	public String lookOneRepaymentplan(HttpServletRequest request, HttpServletResponse response) {
-		int applyId = Integer.parseInt(request.getParameter("applyId"));
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionRepaymentplan transactionRepaymentplan = transactionRepaymentplanService.find(applyId);
-		map.put("code", "200");
-		map.put("msg", "修改成功");
-		map.put("data", transactionRepaymentplan);
+		try {
+			int applyId = Integer.parseInt(request.getParameter("applyId"));
+			TransactionRepaymentplan transactionRepaymentplan = transactionRepaymentplanService.find(applyId);
+			map.put("code", "200");
+			map.put("msg", "修改成功");
+			map.put("data", transactionRepaymentplan);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(map);
 	}
 	

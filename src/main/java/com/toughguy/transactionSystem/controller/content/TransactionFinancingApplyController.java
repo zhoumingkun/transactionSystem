@@ -87,17 +87,21 @@ public class TransactionFinancingApplyController {
 			@ApiImplicitParam(name = "memberId", value = "会员id", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/lookPassFinancing", method = RequestMethod.GET)
 	public String lookPassFinancing(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
-		params1.put("memberId", memberId);
-		PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findPaginated = financingapplyFinancingMemberEnterpriseInfoService.findPaginated(params1);
-		List<FinancingapplyFinancingMemberEnterpriseInfo> data = findPaginated.getData();
-		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", data);
-		params.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
+			params1.put("memberId", memberId);
+			PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findPaginated = financingapplyFinancingMemberEnterpriseInfoService.findPaginated(params1);
+			List<FinancingapplyFinancingMemberEnterpriseInfo> data = findPaginated.getData();
+			int total = findPaginated.getTotal();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", data);
+			params.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 	
@@ -223,19 +227,23 @@ public class TransactionFinancingApplyController {
 			@ApiImplicitParam(name = "memberId", value = "会员的id", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/judgeSignup", method = RequestMethod.GET)
 	public String judgeSignup(HttpServletRequest request, HttpServletResponse response) {
-		int financingId = Integer.parseInt(request.getParameter("financingId"));
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
-		TransactionFinancingApply transactionFinancingApply = new TransactionFinancingApply();
-		transactionFinancingApply.setFinancingId(financingId);;
-		transactionFinancingApply.setMemberId(memberId);
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionFinancingApply judgeFinancingApply = transactionFinancingApplyService.judgeFinancingApply(transactionFinancingApply);
-		if (judgeFinancingApply != null) {
-			map.put("code", "500");
-			map.put("msg", "已报名");
-		} else {
-			map.put("code", "200");
-			map.put("msg", "未报名");
+		try {
+			int financingId = Integer.parseInt(request.getParameter("financingId"));
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
+			TransactionFinancingApply transactionFinancingApply = new TransactionFinancingApply();
+			transactionFinancingApply.setFinancingId(financingId);;
+			transactionFinancingApply.setMemberId(memberId);
+			TransactionFinancingApply judgeFinancingApply = transactionFinancingApplyService.judgeFinancingApply(transactionFinancingApply);
+			if (judgeFinancingApply != null) {
+				map.put("code", "500");
+				map.put("msg", "已报名");
+			} else {
+				map.put("code", "200");
+				map.put("msg", "未报名");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return JsonUtil.objectToJson(map);
 	}

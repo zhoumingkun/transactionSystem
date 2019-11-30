@@ -64,16 +64,20 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value="/definiteSignupDetails",method=RequestMethod.GET)
 	public String definiteSignupDetails(HttpServletRequest request,HttpServletResponse response) {
-		int activityId = Integer.parseInt(request.getParameter("activityId"));
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
-		ActivitySignupInfo activitySignupInfo = new ActivitySignupInfo();
-		activitySignupInfo.setActivityId(activityId);
-		activitySignupInfo.setMemberId(memberId);
 		Map<String, Object> map = new HashMap<String, Object>();
-		ActivitySignupInfo findDefiniteSignupDetails = acttivitySignupInfoService.findDefiniteSignupDetails(activitySignupInfo);
-		map.put("code", "200");
-	    map.put("msg", "查找成功");
-	    map.put("data", findDefiniteSignupDetails);
+		try {
+			int activityId = Integer.parseInt(request.getParameter("activityId"));
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
+			ActivitySignupInfo activitySignupInfo = new ActivitySignupInfo();
+			activitySignupInfo.setActivityId(activityId);
+			activitySignupInfo.setMemberId(memberId);
+			ActivitySignupInfo findDefiniteSignupDetails = acttivitySignupInfoService.findDefiniteSignupDetails(activitySignupInfo);
+			map.put("code", "200");
+		    map.put("msg", "查找成功");
+		    map.put("data", findDefiniteSignupDetails);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	    return JsonUtil.objectToJson(map);
 	}
 	
@@ -85,19 +89,23 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value="/judgeSignup",method=RequestMethod.GET)
 	public String judgeSignup(HttpServletRequest request,HttpServletResponse response) {
-		int activityId = Integer.parseInt(request.getParameter("activityId"));
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
-		TransactionSignup signup = new TransactionSignup();
-		signup.setActivityId(activityId);
-		signup.setMemberId(memberId);
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
-		if(judgeSignup!=null) {
-			map.put("code", "500");
-	        map.put("msg", "已报名");
-		}else {
-			map.put("code", "200");
-		    map.put("msg", "未报名");
+		try {
+			int activityId = Integer.parseInt(request.getParameter("activityId"));
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
+			TransactionSignup signup = new TransactionSignup();
+			signup.setActivityId(activityId);
+			signup.setMemberId(memberId);
+			TransactionSignup judgeSignup = transactionSignupService.judgeSignup(signup);
+			if(judgeSignup!=null) {
+				map.put("code", "500");
+		        map.put("msg", "已报名");
+			}else {
+				map.put("code", "200");
+			    map.put("msg", "未报名");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return JsonUtil.objectToJson(map);
 	}
@@ -157,17 +165,21 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
 	public String lookNoEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String activityName = request.getParameter("activityName");
-		params1.put("activityName", activityName);
-		PagerModel<ActivitySignupInfo> findPaginated = acttivitySignupInfoService.findPaginated(params1);
-		List<ActivitySignupInfo> data = findPaginated.getData();
-		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", data);
-		params.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String activityName = request.getParameter("activityName");
+			params1.put("activityName", activityName);
+			PagerModel<ActivitySignupInfo> findPaginated = acttivitySignupInfoService.findPaginated(params1);
+			List<ActivitySignupInfo> data = findPaginated.getData();
+			int total = findPaginated.getTotal();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", data);
+			params.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 	// 查看结束的活动报名情况
@@ -179,17 +191,21 @@ public class TransactionSignupController {
 	})
 	@RequestMapping(value = "/lookEnd", method = RequestMethod.GET)
 	public String lookEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String activityName = request.getParameter("activityName");
-		params1.put("activityName", activityName);
-		PagerModel<ActivitySignupInfo> findEndActivityPage = acttivitySignupInfoService.findEndActivityPageSignup(params1);
-		List<ActivitySignupInfo> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String activityName = request.getParameter("activityName");
+			params1.put("activityName", activityName);
+			PagerModel<ActivitySignupInfo> findEndActivityPage = acttivitySignupInfoService.findEndActivityPageSignup(params1);
+			List<ActivitySignupInfo> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 
@@ -228,14 +244,18 @@ public class TransactionSignupController {
 	@RequestMapping(value = "/lookStayJoinActivity", method = RequestMethod.GET)
 	public String lookStayJoinActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String, Object> param = new HashMap<String, Object>();
-		String memberId = request.getParameter("memberId");
-		param.put("memberId",memberId);
-		PagerModel<ActivitySignupInfo> findStayAttendActivityList = acttivitySignupInfoService.findStayAttendActivityList(param);
-		map.put("code", "200");
-		map.put("msg", "查找成功");
-		map.put("data", findStayAttendActivityList.getData());
-		map.put("total", findStayAttendActivityList.getTotal());
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			String memberId = request.getParameter("memberId");
+			param.put("memberId",memberId);
+			PagerModel<ActivitySignupInfo> findStayAttendActivityList = acttivitySignupInfoService.findStayAttendActivityList(param);
+			map.put("code", "200");
+			map.put("msg", "查找成功");
+			map.put("data", findStayAttendActivityList.getData());
+			map.put("total", findStayAttendActivityList.getTotal());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(map);
 	}
 	
@@ -248,14 +268,18 @@ public class TransactionSignupController {
 	@RequestMapping(value = "/lookEndJoinActivity", method = RequestMethod.GET)
 	public String lookEndJoinActivity(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String, Object> param = new HashMap<String, Object>();
-		String memberId = request.getParameter("memberId");
-		param.put("memberId", memberId);
-		PagerModel<ActivitySignupInfo> findEndAttendActivityList = acttivitySignupInfoService.findEndAttendActivityList(param);
-		map.put("code", "200");
-		map.put("msg", "查找成功");
-		map.put("data", findEndAttendActivityList.getData());
-		map.put("total", findEndAttendActivityList.getTotal());
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			String memberId = request.getParameter("memberId");
+			param.put("memberId", memberId);
+			PagerModel<ActivitySignupInfo> findEndAttendActivityList = acttivitySignupInfoService.findEndAttendActivityList(param);
+			map.put("code", "200");
+			map.put("msg", "查找成功");
+			map.put("data", findEndAttendActivityList.getData());
+			map.put("total", findEndAttendActivityList.getTotal());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(map);
 	}
 	
@@ -268,14 +292,18 @@ public class TransactionSignupController {
 	@RequestMapping(value = "/lookSpecificSignupEnterprise", method = RequestMethod.GET)
 	public String lookSpecificSignupEnterprise(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String, Object> param = new HashMap<String, Object>();
-		String activityId = request.getParameter("activityId");
-		param.put("activityId",activityId );
-		PagerModel<EnterpriseSignupInfo> findPaginated = enterpriseSignupInfoService.findPaginated(param);
-		map.put("code", "200");
-		map.put("msg", "查找成功");
-		map.put("data", findPaginated.getData());
-		map.put("total", findPaginated.getTotal());
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			String activityId = request.getParameter("activityId");
+			param.put("activityId",activityId );
+			PagerModel<EnterpriseSignupInfo> findPaginated = enterpriseSignupInfoService.findPaginated(param);
+			map.put("code", "200");
+			map.put("msg", "查找成功");
+			map.put("data", findPaginated.getData());
+			map.put("total", findPaginated.getTotal());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(map);
 	}
 	
@@ -285,13 +313,12 @@ public class TransactionSignupController {
 			@ApiImplicitParam(name = "primaryTitle", value = "标题也是文件名", required = true, dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "activityId", value = "活动id", required = true, dataType = "int", paramType = "query"),
 	})
-	@RequestMapping(value = "/exportSignupEnterprise", method = RequestMethod.POST)
+	@RequestMapping(value = "/exportSignupEnterprise", method = RequestMethod.GET)
 	public String exportSignupEnterprise(HttpServletResponse resp,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			JSONObject json = requestJSONUtil.request(request, resp);
-			String primaryTitle = json.getString("primaryTitle");
-			int activityId = json.getInteger("activityId");
+			String primaryTitle = request.getParameter("primaryTitle");
+			String activityId = request.getParameter("activityId");
 			List<String> titles=new ArrayList<String>();
 			titles.add("企业名称");
 			titles.add("报名时间");
@@ -305,6 +332,7 @@ public class TransactionSignupController {
 			// TODO: handle exception
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
+			e.printStackTrace();
 		}
 		return JsonUtil.objectToJson(map);
 	}

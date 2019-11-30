@@ -91,21 +91,25 @@ public class TransactionFinancingController {
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
 	public String lookNoEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String financingName = request.getParameter("financingName");
-		String tradeId = request.getParameter("tradeId");
-		String addressId = request.getParameter("addressId");
-		params1.put("financingName", financingName);
-		params1.put("tradeId", tradeId);
-		params1.put("addressId", addressId);
-		PagerModel<TransactionFinancing> findPaginated = transactionFinancingService.findPaginated(params1);
-		List<TransactionFinancing> data = findPaginated.getData();
-		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", data);
-		params.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String financingName = request.getParameter("financingName");
+			String tradeId = request.getParameter("tradeId");
+			String addressId = request.getParameter("addressId");
+			params1.put("financingName", financingName);
+			params1.put("tradeId", tradeId);
+			params1.put("addressId", addressId);
+			PagerModel<TransactionFinancing> findPaginated = transactionFinancingService.findPaginated(params1);
+			List<TransactionFinancing> data = findPaginated.getData();
+			int total = findPaginated.getTotal();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", data);
+			params.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 
@@ -118,17 +122,21 @@ public class TransactionFinancingController {
 	})
 	@RequestMapping(value = "/lookEnd", method = RequestMethod.GET)
 	public String lookEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String financingName = request.getParameter("financingName");
-		params1.put("financingName", financingName);
-		PagerModel<TransactionFinancing> findEndActivityPage = transactionFinancingService.findEndFinancingPage(params1);
-		List<TransactionFinancing> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String financingName = request.getParameter("financingName");
+			params1.put("financingName", financingName);
+			PagerModel<TransactionFinancing> findEndActivityPage = transactionFinancingService.findEndFinancingPage(params1);
+			List<TransactionFinancing> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	
@@ -139,8 +147,8 @@ public class TransactionFinancingController {
 	@RequestMapping(value = "/lookFinancing", method = RequestMethod.GET)
 	public String lookFinancing(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int financingId = Integer.parseInt(request.getParameter("financingId"));
 		try {
+			int financingId = Integer.parseInt(request.getParameter("financingId"));
 			TransactionFinancing find = transactionFinancingService.find(financingId);
 			map.put("code", "200");
 			map.put("msg", "查找成功");
@@ -160,17 +168,21 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingId", value = "融资id", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/lookStartFinancing", method = RequestMethod.GET)
 	public String lookStartFinancing(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String financingId = request.getParameter("financingId");
-		params1.put("financingId", financingId);
-		PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService.findStartFinancingList(params1);
-		List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String financingId = request.getParameter("financingId");
+			params1.put("financingId", financingId);
+			PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService.findStartFinancingList(params1);
+			List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	
@@ -182,18 +194,22 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingId", value = "融资id", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/lookRunFinancing", method = RequestMethod.GET)
 	public String lookRunFinancing(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String financingId = request.getParameter("financingId");
-		params1.put("financingId", financingId);
-		PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService
-				.findRunFinancingList(params1);
-		List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String financingId = request.getParameter("financingId");
+			params1.put("financingId", financingId);
+			PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService
+					.findRunFinancingList(params1);
+			List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	
@@ -205,18 +221,22 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingId", value = "融资id", required = true, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/lookEndFinancing", method = RequestMethod.GET)
 	public String lookEndFinancing(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String financingId = request.getParameter("financingId");
-		params1.put("financingId", financingId);
-		PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService
-				.findEndFinancingList(params1);
-		List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String financingId = request.getParameter("financingId");
+			params1.put("financingId", financingId);
+			PagerModel<FinancingapplyFinancingMemberEnterpriseInfo> findEndActivityPage = financingapplyFinancingInfoService
+					.findEndFinancingList(params1);
+			List<FinancingapplyFinancingMemberEnterpriseInfo> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	
@@ -231,8 +251,8 @@ public class TransactionFinancingController {
 		try {
 			int rootId = Integer.parseInt(request.getParameter("rootId"));
 			int financingId = Integer.parseInt(request.getParameter("financingId"));
-			transactionFinancingService.delete(financingId);
 			TransactionFinancing find = transactionFinancingService.find(financingId);
+			transactionFinancingService.delete(financingId);
 			logService.insert("删除了 "+find.getFinancingName()+"融资活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
@@ -273,16 +293,20 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingPv", value = "访问量", required = false, dataType = "int", paramType = "query"), })
 	@RequestMapping(value = "/lookHostFinancing", method = RequestMethod.GET)
 	public String lookHostFinancing(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		params1.put("financingPv", request.getParameter("financingPv"));
-		PagerModel<TransactionFinancing> findHostActivityPage = transactionFinancingService.findHostFinancingPage(params1);
-		List<TransactionFinancing> data = findHostActivityPage.getData();
-		int total = findHostActivityPage.getTotal();
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			params1.put("financingPv", request.getParameter("financingPv"));
+			PagerModel<TransactionFinancing> findHostActivityPage = transactionFinancingService.findHostFinancingPage(params1);
+			List<TransactionFinancing> data = findHostActivityPage.getData();
+			int total = findHostActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	

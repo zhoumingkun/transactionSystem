@@ -59,8 +59,8 @@ public class TransactionReghostController {
 	@RequestMapping(value = "/downFile", method = RequestMethod.GET)
 	public String downFile(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String filename = request.getParameter("filename");
 		try {
+			String filename = request.getParameter("filename");
 			DownFileUtil.download(response,filename,"UTF-8");
 			map.put("code", "200");
 			map.put("msg", "下载成功");
@@ -77,10 +77,14 @@ public class TransactionReghostController {
 	@RequestMapping(value = "/service/lookAll", method = RequestMethod.GET)
 	public String serviceLookAll(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		List<TransactionService> findAll = transactionServiceService.findAll();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", findAll);
+		try {
+			List<TransactionService> findAll = transactionServiceService.findAll();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", findAll);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 	
@@ -91,15 +95,19 @@ public class TransactionReghostController {
 	})
 	@RequestMapping(value = "/judgeReghost", method = RequestMethod.GET)
 	public String judgeReghost(HttpServletRequest request,HttpServletResponse response) {
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionReghost find = transactionReghostService.find(memberId);
-		if(find!=null) {
-			map.put("code", "500");
-			map.put("msg", "已经登记");
-		}else {
-			map.put("code", "200");
-			map.put("msg", "未进行登记");
+		try {
+			int memberId = Integer.parseInt(request.getParameter("memberId"));
+			TransactionReghost find = transactionReghostService.find(memberId);
+			if(find!=null) {
+				map.put("code", "500");
+				map.put("msg", "已经登记");
+			}else {
+				map.put("code", "200");
+				map.put("msg", "未进行登记");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return JsonUtil.objectToJson(map);
 	}
@@ -116,29 +124,33 @@ public class TransactionReghostController {
 	})
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addReghost(HttpServletRequest request,HttpServletResponse response) {
-		JSONObject json = requestJSONUtil.request(request, response);
-		TransactionReghost transactionReghost = new TransactionReghost();
-		transactionReghost.setServiceId(json.getInteger("serviceId"));
-		transactionReghost.setMemberId(json.getInteger("memberId"));
-//		transactionReghost.setReghostName(json.getString("reghostName"));
-//		transactionReghost.setEnterpriseTypeId(json.getInteger("enterpriseTypeId"));
-//		transactionReghost.setReghostPerson(json.getString("reghostPerson"));
-//		transactionReghost.setReghostTel(json.getString("reghostTel"));
 		Map<String, Object> map = new HashMap<String, Object>();
-		TransactionReghost find = transactionReghostService.find(transactionReghost.getMemberId());
-		if(find!=null) {
-			map.put("code", "500");
-			map.put("msg", "已经登记");
-		}else {
-			try {
-				transactionReghostService.save(transactionReghost);
-				map.put("code", "200");
-				map.put("msg", "登记成功");
-			} catch (Exception e) {
-				// TODO: handle exception
+		try {
+			JSONObject json = requestJSONUtil.request(request, response);
+			TransactionReghost transactionReghost = new TransactionReghost();
+			transactionReghost.setServiceId(json.getInteger("serviceId"));
+			transactionReghost.setMemberId(json.getInteger("memberId"));
+//			transactionReghost.setReghostName(json.getString("reghostName"));
+//			transactionReghost.setEnterpriseTypeId(json.getInteger("enterpriseTypeId"));
+//			transactionReghost.setReghostPerson(json.getString("reghostPerson"));
+//			transactionReghost.setReghostTel(json.getString("reghostTel"));
+			TransactionReghost find = transactionReghostService.find(transactionReghost.getMemberId());
+			if(find!=null) {
 				map.put("code", "500");
-				map.put("msg", "服务器错误");
+				map.put("msg", "已经登记");
+			}else {
+				try {
+					transactionReghostService.save(transactionReghost);
+					map.put("code", "200");
+					map.put("msg", "登记成功");
+				} catch (Exception e) {
+					// TODO: handle exception
+					map.put("code", "500");
+					map.put("msg", "服务器错误");
+				}
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return JsonUtil.objectToJson(map);
 	}
@@ -151,17 +163,21 @@ public class TransactionReghostController {
 			@ApiImplicitParam(name = "enterpriseName", value = "企业名称", required = false, dataType = "String", paramType = "query"), })
 	@RequestMapping(value = "/look", method = RequestMethod.GET)
 	public String look(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String enterpriseName = request.getParameter("enterpriseName");
-		params1.put("enterpriseName", enterpriseName);
-		PagerModel<ReghostServiceMemberEnterpriseInfo> findPaginated = reghostServiceMemberEnterpriseInfo.findPaginated(params1);
-		List<ReghostServiceMemberEnterpriseInfo> data = findPaginated.getData();
-		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", data);
-		params.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String enterpriseName = request.getParameter("enterpriseName");
+			params1.put("enterpriseName", enterpriseName);
+			PagerModel<ReghostServiceMemberEnterpriseInfo> findPaginated = reghostServiceMemberEnterpriseInfo.findPaginated(params1);
+			List<ReghostServiceMemberEnterpriseInfo> data = findPaginated.getData();
+			int total = findPaginated.getTotal();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", data);
+			params.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 

@@ -129,17 +129,21 @@ public class TransactionActivityController {
 	})
 	@RequestMapping(value = "/lookNoEnd", method = RequestMethod.GET)
 	public String lookNoEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
-		String activityName = request.getParameter("activityName");
-		params1.put("activityName", activityName);
-		PagerModel<TransactionActivity> findPaginated = transactionActivityService.findPaginated(params1);
-		List<TransactionActivity> data = findPaginated.getData();
-		int total = findPaginated.getTotal();
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("code", "200");
-		params.put("msg", "查找成功");
-		params.put("data", data);
-		params.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String activityName = request.getParameter("activityName");
+			params1.put("activityName", activityName);
+			PagerModel<TransactionActivity> findPaginated = transactionActivityService.findPaginated(params1);
+			List<TransactionActivity> data = findPaginated.getData();
+			int total = findPaginated.getTotal();
+			params.put("code", "200");
+			params.put("msg", "查找成功");
+			params.put("data", data);
+			params.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(params);
 	}
 	
@@ -153,17 +157,21 @@ public class TransactionActivityController {
 	})
 	@RequestMapping(value = "/lookEnd", method = RequestMethod.GET)
 	public String lookEnd(HttpServletRequest request,HttpServletResponse response) {
-		Map<String, Object> params1 = new HashMap<String, Object>();
 		Map<String, Object> param = new HashMap<String, Object>();
-		String activityName = request.getParameter("activityName");
-		params1.put("activityName", activityName);
-		PagerModel<ActivitySignupInfo> findEndActivityPage = activitySignupInfoService.findEndActivityPage(params1);
-		List<ActivitySignupInfo> data = findEndActivityPage.getData();
-		int total = findEndActivityPage.getTotal();
-		param.put("code", "200");
-		param.put("msg", "查找成功");
-		param.put("data", data);
-		param.put("total", total);
+		try {
+			Map<String, Object> params1 = new HashMap<String, Object>();
+			String activityName = request.getParameter("activityName");
+			params1.put("activityName", activityName);
+			PagerModel<ActivitySignupInfo> findEndActivityPage = activitySignupInfoService.findEndActivityPage(params1);
+			List<ActivitySignupInfo> data = findEndActivityPage.getData();
+			int total = findEndActivityPage.getTotal();
+			param.put("code", "200");
+			param.put("msg", "查找成功");
+			param.put("data", data);
+			param.put("total", total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return JsonUtil.objectToJson(param);
 	}
 	
@@ -179,15 +187,16 @@ public class TransactionActivityController {
 		try {
 			int rootId = Integer.parseInt(request.getParameter("rootId"));
 			int activityId = Integer.parseInt(request.getParameter("activityId"));
+			TransactionActivity find = transactionActivityService.find(activityId);
 			transactionActivityService.delete(activityId);
 			transactionSignupService.delete(activityId);
-			TransactionActivity find = transactionActivityService.find(activityId);
 			logService.insert("删除了"+find.getActivityName()+"活动", rootId);
 			map.put("code", "200");
 			map.put("msg", "删除成功");
 		} catch (Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器错误");
+			e.printStackTrace();
 		}
 		return JsonUtil.objectToJson(map);
 	}
