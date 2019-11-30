@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionIntegal">
+	<!-- 查找每个政策对应的积分 -->
+	<select id="find" resultType="TransactionIntegal">
+		select  * from transaction_integral where id = #{id}
+	</select>
+
+</mapper>

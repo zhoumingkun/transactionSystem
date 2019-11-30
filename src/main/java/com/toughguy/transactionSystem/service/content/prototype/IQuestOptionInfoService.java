@@ -25,13 +25,13 @@ public interface IQuestOptionInfoService extends IGenericService<QuestOptionInfo
 	 * @param info
 	 */
 	void insertInfo(QuestOptionInfo info);
-	/**
+/*	*//**
 	 * 
 	 * 查询所有已结束的问卷调差
 	 * @return
-	 */
+	 *//*
 	
-	List<QuestOptionInfo> selectEnd();
+	List<QuestOptionInfo> selectEnd();*/
 	
 	/**
 	 * 
@@ -41,5 +41,6 @@ public interface IQuestOptionInfoService extends IGenericService<QuestOptionInfo
 
 	public PagerModel<QuestOptionInfo> selectNoEnd(Map<String, Object> params);
 	
+
 	
 }

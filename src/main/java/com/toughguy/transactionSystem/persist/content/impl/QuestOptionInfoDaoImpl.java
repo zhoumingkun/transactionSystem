@@ -31,10 +31,10 @@ public class QuestOptionInfoDaoImpl
 	
 	
 	
-	@Override
+	/*@Override
 	public List<QuestOptionInfo> selectEnd() {
 		return sqlSessionTemplate.selectList(typeNameSpace+ ".selectEnd");
-	}
+	}*/
 
 	@Override
 	public PagerModel<QuestOptionInfo> selectNoEnd(Map<String, Object> params) {

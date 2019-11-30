@@ -30,14 +30,18 @@ public class QuestOptionInfoServiceImpl
 		infoDao.insertOneInfo(info);
 	}
 
-	@Override
+/*	@Override
 	public List<QuestOptionInfo> selectEnd() {
 		
 		return infoDao.selectEnd();
-	}
+	}*/
 
 	public PagerModel<QuestOptionInfo> selectNoEnd(Map<String, Object> params) {
 		return infoDao.selectNoEnd(params);
 	}
+
+
+	
+	
 
 }

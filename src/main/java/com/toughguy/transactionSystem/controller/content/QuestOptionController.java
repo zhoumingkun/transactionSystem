@@ -242,14 +242,14 @@ public class QuestOptionController {
 	public String insert(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-		/*	QuestOptionInfo info = new QuestOptionInfo();
+			QuestOptionInfo info = new QuestOptionInfo();
 			info.setCopiesTitle("关于****，你知道多少");
 			info.setQuestContent("关于股票，你了解的多么");
 			infoService.insertInfo(info);
 
 			TransactionOption option = new TransactionOption();
 			option.setQuestId(info.getQuestId());
-			option.setOptionContent("多，不多");*/
+			option.setOptionContent("多，不多");
 			int a  = 0;
 			int rootId =  Integer.parseInt(request.getParameter("rootId"));
 			logService.insert("新增"+a+"调查问卷", rootId);
@@ -322,7 +322,7 @@ public class QuestOptionController {
 				qos.add(qo);
 			}
 			map.put("date", qos);
-			map.put("total",qos.size());
+			map.put("total",infos.getTotal());
 			map.put("code", "200");
 		} catch (Exception e) {
 			map.put("code", 500);
@@ -388,7 +388,7 @@ public class QuestOptionController {
 				qos.add( qo);			
 			}  
 	    	map.put("data", qos);
-	    	map.put("total",qos.size());
+	    	map.put("total",infos.getTotal());
 			map.put("code", "200");
 		} catch (Exception e) {
 			map.put("code", 500);
@@ -397,5 +397,7 @@ public class QuestOptionController {
 		}
 		return JSON.toJSONString(map).toString();	
     }
+	
+	
 	
 }

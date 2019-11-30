@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
+import com.toughguy.transactionSystem.model.content.po.TransactionIntegal;
 import com.toughguy.transactionSystem.model.content.po.TransactionPolicy;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IEnterpriseService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionIntegalService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionLogService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionPolicyService;
 import com.toughguy.transactionSystem.util.DateUtil;
@@ -29,6 +31,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.ehcache.transaction.TransactionID;
 
 /**
  * 
@@ -50,6 +53,8 @@ public class TransactionPolicyController {
 	private ITransactionLogService logService;
 	@Autowired
 	private IEnterpriseService enterpriseService;
+	@Autowired
+	private ITransactionIntegalService integalService;
 	/**
 	 * 
 	 * 	查看所有的政策
@@ -94,24 +99,24 @@ public class TransactionPolicyController {
 		List<TransactionPolicy> lists = findPaginated.getData();
 		// - 遍历所有的政策信息，11对比
 		for (int i = 0; i <lists.size(); i++) {
-			// - 定义所占百分比
+			TransactionIntegal integral =  integalService.find(1);
 			int num = 0;
 			if(m.getEnterpriseAddressId()==lists.get(i).getEnterpriseAddressId()) {
-				// -如果所属地区一样，加20百分比
-				num += 20; 
+				num += integral.getEnterpriseAddress(); 
 			}
 			if(m.getEnterpriseTypeId() == lists.get(i).getEnterpriseTypeId()) {
-				// -如果企业类型一样，加25百分比
-				num += 25;
+				num += integral.getEnterpriseType();
 			}
-			if(m.getEnterpriseAreaId() == lists.get(i).getEnterpriseAreaId()) {
-				// -如果所属领域一样，加25百分比
-				num += 25;
+			if(m.getEnterpriseAreaId() == lists.get(i).getEnterpriseAreaId()) {				
+				num += integral.getEnterpriseArea();
 			}
 			if(m.getEnterpriseTradeId() == lists.get(i).getEnterpriseTradeId()) {
-				// -如果行业一样，加30百分比
-				num += 30;
+				num += integral.getEnterpriseTrade();
 			}
+			num = num*100 / (integral.getEnterpriseAddress()+
+								integral.getEnterpriseArea()+
+								integral.getEnterpriseTrade()+
+								integral.getEnterpriseType());
 			lists.get(i).setIntelligentMatching(num);
 		}
 		return JSON.toJSONString(lists);

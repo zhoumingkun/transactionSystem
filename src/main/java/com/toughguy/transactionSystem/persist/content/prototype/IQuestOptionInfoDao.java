@@ -29,11 +29,11 @@ public interface IQuestOptionInfoDao  extends IGenericDao<QuestOptionInfo, Integ
 	 */
 	void insertOneInfo(QuestOptionInfo info);
 	
-	/**
+/*	*//**
 	 * 	查询所有已结束的问卷调差
 	 * @return
-	 */
-	List<QuestOptionInfo> selectEnd();
+	 *//*
+	List<QuestOptionInfo> selectEnd();*/
 	/**
 	 * 	查询所有未结束的问卷调差
 	 * @return

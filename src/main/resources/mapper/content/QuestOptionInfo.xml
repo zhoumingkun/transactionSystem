@@ -7,6 +7,7 @@
 		left join transaction_copies b  on a.copies_id = b.copies_id where a.copies_id = #{copiesId} 
 		
 	</select>
+	<!-- 查询已结束的问卷调查的总条数 -->
 	<select id="getTotalOfItems" parameterType="Map" resultType="int">
 		select count(*) from transaction_copies where copies_end_time &lt; now()
 		<if test="copiesTitle != null and copiesTitle != '' ">
@@ -14,6 +15,7 @@
 		</if>
 		
 	</select>	
+	<!-- 查询已结束的问卷调查 -->
 	<select id="findPaginated" parameterType="Map" resultType="QuestOptionInfo">
 		select * from transaction_copies where copies_end_time &lt; now()
 		<if test="copiesTitle != null and copiesTitle != '' ">
@@ -22,7 +24,7 @@
 		limit #{offset} , #{limit}
 	</select>
 		
-		
+	<!-- 查询未结束的问卷调查的总条数 -->	
 	<select id="getTotalOfItemsNoEnd" parameterType="Map" resultType="int">
 		select count(*) from transaction_copies where copies_end_time &gt; now() 
 		<if test="copiesTitle != null and copiesTitle != '' ">
@@ -31,7 +33,7 @@
 		
 	</select>
 
-	
+	<!--  查询未结束的调查问卷 -->
 	<select id="selectNoEnd" parameterType="Map" resultType="QuestOptionInfo">
 		select * from transaction_copies where copies_end_time &gt; now() 
 		<if test="copiesTitle != null and copiesTitle != '' ">
@@ -47,7 +49,7 @@
 	</insert>
 	<!-- 插入一个问卷调差的问题 -->
 	<insert id="insertOneInfo2" parameterType="QuestOptionInfo">
-		insert into  transaction_quest(quest_content,copies_id) value (#{questContent},#{copiesId})
+		insert into  transaction_quest(quest_content,copies_id，quest_status) value (#{questContent},#{copiesId},#{questStatus})
 	</insert>
 
 
