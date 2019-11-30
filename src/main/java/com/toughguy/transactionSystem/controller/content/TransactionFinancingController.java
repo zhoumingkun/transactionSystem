@@ -54,7 +54,10 @@ public class TransactionFinancingController {
 			@ApiImplicitParam(name = "financingImg", value = "融资活动图片", required = true, dataType = "String", paramType = "query"),
 			@ApiImplicitParam(name = "financingStart", value = "活动开始时间", required = true, dataType = "Date", paramType = "query"),
 			@ApiImplicitParam(name = "financingEnd", value = "活动结束时间", required = true, dataType = "Date", paramType = "query"),
-			@ApiImplicitParam(name = "financingRank", value = "可报名等级", required = true, dataType = "int", paramType = "query"), })
+			@ApiImplicitParam(name = "financingRank", value = "可报名等级", required = true, dataType = "int", paramType = "query"), 
+			@ApiImplicitParam(name = "addressId", value = "区域id", required = true, dataType = "int", paramType = "query"), 
+			@ApiImplicitParam(name = "enterpriseTypeId", value = "企业类型id", required = true, dataType = "int", paramType = "query"), 
+	})
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addFinancing(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -68,6 +71,8 @@ public class TransactionFinancingController {
 			transactionFinancing.setFinancingStart(json.getDate("financingStart"));
 			transactionFinancing.setFinancingEnd(json.getDate("financingEnd"));
 			transactionFinancing.setFinancingRank(json.getInteger("financingRank"));
+			transactionFinancing.setAddressId(json.getInteger("addressId"));
+			transactionFinancing.setEnterpriseTypeId(json.getInteger("enterpriseTypeId"));
 			int rootId =  json.getInteger("rootId");
 			transactionFinancingService.save(transactionFinancing);
 			logService.insert("发布 "+json.getString("financingName")+"融资活动", rootId);

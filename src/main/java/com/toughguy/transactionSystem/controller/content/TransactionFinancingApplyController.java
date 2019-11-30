@@ -192,9 +192,9 @@ public class TransactionFinancingApplyController {
 				Boolean financingCompleteStatus = transactionFinancingApplyRepaymentplanInfo.getFinancingCompleteStatus();
 				// 还款结束
 				if (financingCompleteStatus) {
-					params.put("code", "500");
-					params.put("msg", "没有还款项目");
-					return JsonUtil.objectToJson(params);
+//					params.put("code", "500");
+//					params.put("msg", "没有还款项目");
+					continue;
 				} else {
 					//还款计划开始的时间
 					Date repaymentplanStart = transactionFinancingApplyRepaymentplanInfo.getRepaymentplanStart();
@@ -229,7 +229,9 @@ public class TransactionFinancingApplyController {
 						//将显示的列表添加到list集合
 						datas.add(transactionFinancingApplyRepaymentplanInfo);
 					}
+					
 				}
+				
 			}
 			params.put("code", 200);
 			params.put("msg", "查找成功");
@@ -237,6 +239,8 @@ public class TransactionFinancingApplyController {
 			params.put("total", datas.size());
 		} catch (Exception e) {
 			// TODO: handle exception
+			params.put("code", 500);
+			params.put("msg", "服务器异常");
 		}
 		return JsonUtil.objectToJson(params);
 	}
