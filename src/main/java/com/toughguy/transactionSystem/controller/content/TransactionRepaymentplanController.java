@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.toughguy.transactionSystem.model.content.po.TransactionFinancingApply;
 import com.toughguy.transactionSystem.model.content.po.TransactionRepaymentplan;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionFinancingApplyService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionRepaymentplanService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
@@ -35,6 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 public class TransactionRepaymentplanController {
 	@Autowired
 	private ITransactionRepaymentplanService transactionRepaymentplanService;
+	@Autowired
+	private ITransactionFinancingApplyService transactionFinancingApplyService;
 	
 	// 通过融资，新建还款计划
 	@ApiOperation(value = "新建还款计划", notes = "需要申请的id")
@@ -65,6 +69,16 @@ public class TransactionRepaymentplanController {
 			transactionRepaymentplan.setRepaymentplanPeriod(repaymentplanPeriod);
 			transactionRepaymentplan.setRepaymentplanPeriodMoney(repaymentplanPeriodMoney);
 			transactionRepaymentplanService.save(transactionRepaymentplan);
+			try {
+				//通过融资申请
+				TransactionFinancingApply transactionFinancingApply = new TransactionFinancingApply();
+				transactionFinancingApply.setApplyId(applyId);
+				transactionFinancingApplyService.update(transactionFinancingApply);
+			} catch (Exception e) {
+				map.put("code", "500");
+				map.put("msg", "融资申请通过失败");
+			}
+			
 			map.put("code", "200");
 			map.put("msg", "新建成功");
 		} catch (Exception e) {

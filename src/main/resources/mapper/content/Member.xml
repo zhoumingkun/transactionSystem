@@ -77,7 +77,7 @@
 		select * from transaction_member where open_id=#{openId};
 	</select>
 	<!-- 根据memberId查个人信息 -->
-	<select id="find" parameterType="TransactionMember" resultType="TransactionMember">
+	<select id="find" parameterType="int" resultType="TransactionMember">
 		select * from transaction_member where member_id=#{id};
 	</select>
 

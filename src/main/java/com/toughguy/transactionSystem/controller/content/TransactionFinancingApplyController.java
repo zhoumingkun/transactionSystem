@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.toughguy.transactionSystem.model.content.po.TransactionFinancing;
 import com.toughguy.transactionSystem.model.content.po.TransactionFinancingApply;
+import com.toughguy.transactionSystem.model.content.po.TransactionMember;
 import com.toughguy.transactionSystem.model.content.vo.FinancingapplyFinancingMemberEnterpriseInfo;
 import com.toughguy.transactionSystem.model.content.vo.TransactionFinancingApplyRepaymentplanInfo;
 import com.toughguy.transactionSystem.pagination.PagerModel;
 import com.toughguy.transactionSystem.service.content.prototype.IFinancingapplyFinancingMemberEnterpriseInfoService;
+import com.toughguy.transactionSystem.service.content.prototype.IMemberService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionFinancingApplyRepaymentplanInfoService;
 import com.toughguy.transactionSystem.service.content.prototype.ITransactionFinancingApplyService;
+import com.toughguy.transactionSystem.service.content.prototype.ITransactionFinancingService;
 import com.toughguy.transactionSystem.util.JsonUtil;
 import com.toughguy.transactionSystem.util.requestJSONUtil;
 
@@ -48,7 +52,10 @@ public class TransactionFinancingApplyController {
 	private IFinancingapplyFinancingMemberEnterpriseInfoService financingapplyFinancingMemberEnterpriseInfoService;
 	@Autowired
 	private ITransactionFinancingApplyRepaymentplanInfoService transactionFinancingApplyRepaymentplanInfo;
-	
+	@Autowired
+	private ITransactionFinancingService transactionFinancingService;
+	@Autowired
+	private IMemberService memberService; 
 	// 会员提交融资申请
 	@ApiOperation(value = "会员提交融资申请", notes = "填写融资申请的具体内容")
 	@ApiImplicitParams({
@@ -68,9 +75,16 @@ public class TransactionFinancingApplyController {
 				map.put("code", "500");
 				map.put("msg", "已报名");
 			}else {
-				transactionFinancingApplyService.save(transactionFinancingApply);
-				map.put("code", "200");
-				map.put("msg", "申请成功");
+				TransactionFinancing financing = transactionFinancingService.find(json.getInteger("financingId"));
+				TransactionMember member = memberService.find(json.getInteger("memberId"));
+				if(member.getMemberRank()>=financing.getFinancingRank()) {
+					transactionFinancingApplyService.save(transactionFinancingApply);
+					map.put("code", "200");
+					map.put("msg", "申请成功");
+				}else {
+					map.put("code", "500");
+					map.put("msg", "会员等级不够");
+				}
 			}
 		} catch (Exception e) {
 			map.put("code", "500");
