@@ -9,7 +9,7 @@
 	</select>
 	
 	<!-- 根据member_id获取信息 -->
-	<select id="find" parameterType="TransactionEnterprise" resultType="TransactionEnterprise">
+	<select id="find" parameterType="int" resultType="TransactionEnterprise">
 		select * from transaction_enterprise
 		where member_id = #{id}
 	</select>
