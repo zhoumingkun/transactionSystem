@@ -134,14 +134,15 @@ public class TransactionVoteController {
     })
             
 	@RequestMapping(value = "/voteoptionadd", method = RequestMethod.POST)
-	public Map<String,Object> voteOptionAdd(HttpServletRequest request) {
+	public Map<String,Object> voteOptionAdd(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = new HashMap<>();
+		JSONObject json = requestJSONUtil.request(request, response);
 		try {
-			String voteContent = request.getParameter("voteContent");
-			String voteOptionOne = request.getParameter("voteOptionOne");
-			String voteOptionTwo = request.getParameter("voteOptionTwo");
-			Date startTime = DateUtil.getDate(request.getParameter("startTime"), "yyyy-MM-dd"); 
-			Date endTime = DateUtil.getDate(request.getParameter("endTime"), "yyyy-MM-dd");
+			String voteContent = json.getString("voteContent");
+			String voteOptionOne = json.getString("voteOptionOne");
+			String voteOptionTwo = json.getString("voteOptionTwo");
+			Date startTime = json.getDate("startTime"); 
+			Date endTime = json.getDate("endTime");
 			//插入投票内容
 			contentService.save(
 					new TransactionVoteContent(voteContent,voteOptionOne,voteOptionTwo,startTime,endTime));
@@ -149,14 +150,13 @@ public class TransactionVoteController {
 			map.put("msg", "添加成功");
 			map.put("code", "200");
 			
-			int rootId =  Integer.parseInt
-					(request.getParameter("rootId"));
+			int rootId =  json.getInteger("rootId");
 			logService.insert("添加投票内容: "
 					+ voteContent
 					, rootId);
 			
 		}catch(Exception e) {
-			map.put("code", "404");
+			map.put("code", "500");
 			map.put("msg", "服务器异常");
 		}
 		return map;
