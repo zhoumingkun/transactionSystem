@@ -364,12 +364,16 @@ public class QuestOptionController {
 					for (int k = 0; k < ops.size(); k++) {
 						num += ops.get(k).getOptionCount();
 					}
+				
 				}
+				qo.setQuestCount(lists.size());
+				System.out.println(qo);
 				qo.setOptionCount(num);
 				qos.add(qo);
 			}
 			map.put("date", qos);
 			map.put("total",infos.getTotal());
+			System.out.println();
 			map.put("code", "200");
 		} catch (Exception e) {
 			map.put("code", 500);
