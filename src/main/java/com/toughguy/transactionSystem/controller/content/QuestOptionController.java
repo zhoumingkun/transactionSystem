@@ -71,6 +71,93 @@ public class QuestOptionController {
 	 * 
 	 * @return
 	 */
+	@ApiOperation(value = "问卷调查copiesId",notes = "查询某个问卷的所有的问题以及选项copiesId")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "copiesId", value = "问卷ID",
+            required = true, dataType = "int", paramType = "query")
+		
+	})
+	@RequestMapping(value = "/getcopies", method = RequestMethod.GET)
+	public String getCopies(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		
+		
+		
+		try {
+			int copiesId = 0;
+//			int memberId = 0;
+			try {
+				copiesId = Integer.parseInt(request.getParameter("copiesId"));
+			} catch (Exception e) {
+				map.put("code", "404");
+				map.put("msg", "请传入copiesId和memberId");
+				return JSON.toJSONString(map).toString();
+			}
+			
+//			TransactionStatistics statistics = new TransactionStatistics(copiesId,memberId);
+//			TransactionStatistics s = statisticsService.findStatistics(statistics);
+//			if(s!=null) {
+//				map.put("code", "404");
+//				map.put("msg", "您以做过本次调查问卷");
+//				return JSON.toJSONString(map).toString();
+//			}
+			
+			QuestOptionInfo t = new QuestOptionInfo();
+			t.setCopiesId(copiesId);
+			List<QuestOptionInfo> infos = infoService.findOne(t);
+			if(infos.size()==0||infos==null) {
+				map.put("code", "404");
+				map.put("msg", "没有找到该问卷");
+				return JSON.toJSONString(map).toString();
+			}
+			map.put("copiesId", infos.get(0).getCopiesId());
+			map.put("copiesTitle", infos.get(0).getCopiesTitle());
+			map.put("startTime", infos.get(0).getCopiesStartTime());
+			map.put("endTime", infos.get(0).getCopiesEndTime());
+			List<Map<String, Object>> lis = new ArrayList<>();
+			for (int i = 0; i < infos.size(); i++) {
+				Map<String, Object> map2 = new HashMap<>();
+				map2.put("questContent", infos.get(i).getQuestContent());
+				map2.put("questId", infos.get(i).getQuestId());
+				map2.put("questContent", infos.get(i).getQuestContent());
+				map2.put("questStatus", infos.get(i).getQuestStatus());
+				lis.add(map2);
+				TransactionOption option = new TransactionOption();
+				option.setQuestId(infos.get(i).getQuestId());
+				List<TransactionOption> ops = optionService.findOption(option);
+				List<Map<String,Object>> lists  = new ArrayList<>();
+				int num = 0;
+				for (int j = 0; j < ops.size(); j++) {
+					Map<String,Object> map3 = new HashMap<>();
+					map3.put("optionId", ops.get(j).getOptionId());
+					map3.put("optionContent", ops.get(j).getOptionContent());
+					map3.put("optionCount", ops.get(j).getOptionCount());
+					
+					num += ops.get(j).getOptionCount();
+					lists.add(map3);
+				}
+			map2.put("count", num);
+			map2.put("data", lists);
+			}
+			map.put("datas", lis);
+			map.put("code", 200);
+			map.put("total", infos.size());
+			return JsonUtil.objectToJson(map);
+		} catch (NumberFormatException e) {
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+			return JsonUtil.objectToJson(map);
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * 查询某个问卷的所有的问题以及选项
+	 * 
+	 * @return
+	 */
 	@ApiOperation(value = "问卷调查",notes = "查询某个问卷的所有的问题以及选项")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "copiesId", value = "问卷ID",
