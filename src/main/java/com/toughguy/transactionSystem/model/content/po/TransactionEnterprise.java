@@ -27,6 +27,11 @@ public class TransactionEnterprise {
 	private String enterpriseLegalPersonCard;	// 法定代表人身份证
 	private int enterpriseAuditStatusId;		// 企业审核状态
 	
+	private String enterprise_property;	// 企业性质
+	private String net_asset;	// 净资产
+	private String mailbox;	// 联系人邮箱
+	private String duty;	// 职务
+	private String business_scope;	//经营范围
 	
 	// 注册基本信息1
 	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
@@ -57,7 +62,8 @@ public class TransactionEnterprise {
 			/* Date enterpriseValidityDateStart, */
 			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
 			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-			String enterpriseLegalPersonCard) {
+			String enterpriseLegalPersonCard,String enterprise_property,String net_asset,
+			String mailbox,String duty,String business_scope) {
 		super();
 		this.memberId = memberId;
 		this.enterpriseName = enterpriseName;
@@ -77,6 +83,11 @@ public class TransactionEnterprise {
 		this.enterpriseRegMoney = enterpriseRegMoney;
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
+		this.enterprise_property = enterprise_property;
+		this.net_asset = enterpriseLegalPersonCard;
+		this.mailbox = mailbox;
+		this.duty = duty;
+		this.business_scope = business_scope;
 	}
 
 	public TransactionEnterprise(int memberId) {
@@ -345,8 +356,39 @@ public class TransactionEnterprise {
 	public void setEnterpriseAuditStatusId(int enterpriseAuditStatusId) {
 		this.enterpriseAuditStatusId = enterpriseAuditStatusId;
 	}
+	
 
 
+	public String getEnterprise_property() {
+		return enterprise_property;
+	}
+	public void setEnterprise_property(String enterprise_property) {
+		this.enterprise_property = enterprise_property;
+	}
+	public String getNet_asset() {
+		return net_asset;
+	}
+	public void setNet_asset(String net_asset) {
+		this.net_asset = net_asset;
+	}
+	public String getMailbox() {
+		return mailbox;
+	}
+	public void setMailbox(String mailbox) {
+		this.mailbox = mailbox;
+	}
+	public String getDuty() {
+		return duty;
+	}
+	public void setDuty(String duty) {
+		this.duty = duty;
+	}
+	public String getBusiness_scope() {
+		return business_scope;
+	}
+	public void setBusiness_scope(String business_scope) {
+		this.business_scope = business_scope;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -461,8 +503,6 @@ public class TransactionEnterprise {
 			return false;
 		return true;
 	}
-
-
 	@Override
 	public String toString() {
 		return "TransactionEnterprise [enterpriseId=" + enterpriseId + ", memberId=" + memberId + ", enterpriseName="
@@ -475,8 +515,13 @@ public class TransactionEnterprise {
 				+ enterpriseRegAddress + ", enterpriseStatusId=" + enterpriseStatusId + ", enterpriseRegDate="
 				+ enterpriseRegDate + ", enterpriseRegMoney=" + enterpriseRegMoney + ", enterpriseLegalPersonName="
 				+ enterpriseLegalPersonName + ", enterpriseLegalPersonCard=" + enterpriseLegalPersonCard
-				+ ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + "]";
+				+ ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + ", enterprise_property="
+				+ enterprise_property + ", net_asset=" + net_asset + ", mailbox=" + mailbox + ", duty=" + duty
+				+ ", business_scope=" + business_scope + "]";
 	}
+
+
+	
 
 	
 	

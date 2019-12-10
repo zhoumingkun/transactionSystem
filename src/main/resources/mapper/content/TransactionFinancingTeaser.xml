@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancingTeaser">
+	<!-- 新增融资信息发布 -->
+	<insert id="save" parameterType="TransactionFinancingTeaser">
+		insert into transaction_financing_Teaser(firm_name,business_address,principal_name,phoneNum,manage_yearTime,turnover_year,predict_turnover,deadline) values(#{firm_name},#{business_address},#{principal_name},#{phoneNum},#{manage_yearTime},#{turnover_year},#{predict_turnover},now(),#{deadline}) 
+	</insert>
+	
+	<!-- 获取全部的条目数 -->
+	<select id="getTotalOfItems" parameterType="Map" resultType="int">
+		select count(*) from transaction_financing_Teaser;
+		<include refid="paramsSQL"/>
+	</select>	
+	
+	<!-- 获取全部 -->
+	<select id="findAll" parameterType="Map" resultType="int">
+		select * from transaction_financing_Teaser;
+	</select>
+	
+	<!--  分页查找全部的融资信息 -->
+ 	<select id="findPaginated" resultType="TransactionFinancingTeaser">
+		select * from transaction_financing_Teaser 
+		<include refid="paramsSQL"/>
+		ORDER BY updateTime desc  limit #{offset}, #{limit}
+	</select> 
+	
+	<!-- 修个某条信息 -->
+	<update id="update" parameterType="TransactionFinancingTeaser">
+		update transaction_financing_Teaser
+		<set>
+		    <if test="firm_name != null and firm_name != ''">firm_name = #{firm_name},</if>
+		    <if test="business_address != null and business_address != ''">business_address = #{business_address},</if>
+			<if test="principal_name != null and principal_name != ''">principal_name = #{principal_name},</if>
+			<if test="phoneNum != null and phoneNum != ''">phoneNum = #{phoneNum},</if>
+			<if test="manage_yearTime != null and manage_yearTime != ''">manage_yearTime = #{manage_yearTime},</if>
+			<if test="turnover_year != null and turnover_year != ''">turnover_year = #{turnover_year},</if>
+			<if test="predict_turnover != null and predict_turnover != ''">predict_turnover = #{predict_turnover},</if>
+			<if test="deadline != null and deadline != ''">deadline = #{deadline},</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 通用的设置条件的查询SQL语句 -->
+	<sql id="paramsSQL">
+		<where>
+			<if test=" firm_name != null and firm_name != '' ">
+				and firm_name = #{firm_name}
+			</if>
+			<if test=" business_address != null and business_address != '' ">
+				and business_address = #{business_address}
+			</if>
+			<if test=" principal_name != null and principal_name != '' ">
+				and principal_name = #{principal_name}
+			</if>
+			<if test=" phoneNum != null and phoneNum != '' ">
+				and phoneNum = #{phoneNum}
+			</if>
+			
+		</where>
+	</sql>
+	
+	
+</mapper>
