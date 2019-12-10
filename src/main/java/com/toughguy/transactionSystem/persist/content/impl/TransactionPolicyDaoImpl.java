@@ -78,6 +78,19 @@ public class TransactionPolicyDaoImpl
 		return count;
 	}
 
-
+	@Override
+	public PagerModel<TransactionPolicy> findLikePolicyName(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<TransactionPolicy> pm = new PagerModel<TransactionPolicy>();
+		int total = getTotalNumOfItemsLike(params);
+		List<TransactionPolicy> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findLikePolicyName", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
 }
 

@@ -30,6 +30,13 @@ public interface ITransactionPolicyDao extends IGenericDao<TransactionPolicy, In
 	 * @return
 	 */
 	PagerModel<TransactionPolicy>  findLike(Map<String, Object> params);
+
+	/**
+	 * 根据政策名称模糊查询政策PC
+	 * @param params
+	 * @return
+	 */
+	PagerModel<TransactionPolicy> findLikePolicyName(Map<String, Object> params);
 	
 	
 	

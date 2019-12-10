@@ -36,4 +36,11 @@ public interface ITransactionPolicyService extends IGenericService<TransactionPo
 	 * @return
 	 */
 	PagerModel<TransactionPolicy>  findLike(Map<String, Object> params);
+	
+	/**
+	 * 根据政策名称模糊查询政策PC
+	 * @param map
+	 * @return
+	 */
+	PagerModel<TransactionPolicy> findLikePolicyName(Map<String, Object> map);
 }

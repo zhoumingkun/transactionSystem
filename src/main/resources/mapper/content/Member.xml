@@ -250,4 +250,20 @@
 	</select>
 	
 	
+	<select id="findEnterpriseName" parameterType="SqlGeneralInfo" resultType="MemberBasicInfo">
+		SELECT 
+		member.member_id,
+		enterprise.enterprise_name,
+		member.member_tel,
+		member.member_rank,
+		member.member_online_times,
+		member.member_date
+		FROM
+		transaction_enterprise enterprise
+		JOIN transaction_member member
+		ON member.member_id = enterprise.member_id
+		WHERE enterprise.enterprise_name like concat(concat('%', #{keyword, jdbcType=VARCHAR}),'%')
+		limit #{offset}, #{limit}
+	</select>
+	
 </mapper>

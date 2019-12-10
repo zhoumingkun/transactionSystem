@@ -393,4 +393,13 @@ public class TransactionPolicyController {
 		}
 		return JSON.toJSONString(map).toString();
 	}
+	
+	@RequestMapping(value  ="/findLikePolicyName",method=RequestMethod.GET)
+	public String findLikePolicyName(HttpServletRequest request) {
+		Map<String ,Object> map = new HashMap<>();
+		String policyName = request.getParameter("policyName");			//政策名称
+		map.put("policyName", policyName);
+		PagerModel<TransactionPolicy> list = policyService.findLikePolicyName(map);
+		return JSON.toJSONString(list).toString();
+	}
 }

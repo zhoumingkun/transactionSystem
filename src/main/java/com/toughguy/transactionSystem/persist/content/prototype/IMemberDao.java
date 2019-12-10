@@ -155,6 +155,13 @@ public interface IMemberDao extends IGenericDao<TransactionMember, Integer> {
 	 * @return
 	 */
 	public TransactionMember checkPwd(TransactionMember transactionMember);
+
+	/**
+	 * 根据企业名称查询会员管理
+	 * @param params
+	 * @return
+	 */
+	public PagerModel<MemberBasicInfo> findEnterpriseName(Map<String, Object> params);
 	
 	
 }

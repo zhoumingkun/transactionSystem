@@ -496,12 +496,17 @@ System.out.println("可以为空");
 			String openId = json.getString("openId");
 			
 			TransactionMember member = memberService.openIdFindUser(new TransactionMember(openId));
-			map.put("code", "200");
-			map.put("msg", "成功");
-			map.put("data", member);
+			if(member==null) {
+				map.put("code", "400");
+				map.put("msg", "用户暂未绑定");
+			}else {
+				map.put("code", "200");
+				map.put("msg", "成功");
+				map.put("data", member);
+			}
 		}catch (Exception e) {
 			// TODO: handle exception
-			map.put("code", "404");
+			map.put("code", "500");
 			map.put("msg", "用户错误");
 		}
 		
@@ -613,7 +618,11 @@ System.out.println("可以为空");
 			String enterpriseLegalPersonName = json.getString("enterpriseLegalPersonName");
 			String enterpriseLegalPersonCard = json.getString("enterpriseLegalPersonCard");
 			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
-			
+			String enterprise_property = json.getString("enterprise_property");
+			String net_asset = json.getString("net_asset");
+			String mailbox = json.getString("mailbox");
+			String duty = json.getString("duty");
+			String business_scope = json.getString("business_scope");
 			// 判断企业名唯一  是否为Null
 			boolean findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
 			if(!findName) {
@@ -633,8 +642,10 @@ System.out.println("可以为空");
 							enterpriseCertificationUnit, 
 							enterpriseRegAddress, enterpriseStatusId,
 							enterpriseRegDate, enterpriseRegMoney, 
-							enterpriseLegalPersonName, enterpriseLegalPersonCard)
-					
+							enterpriseLegalPersonName, enterpriseLegalPersonCard,
+							enterprise_property,net_asset,
+							mailbox,duty,business_scope)
+							
 					);
 			map.put("code", "200");
 			map.put("msg", "成功");
@@ -1028,4 +1039,24 @@ System.out.println("可以为空");
 		
 		return map;
 	}
+	
+	@RequestMapping("/findEnterpriseName")
+	public Map<String, Object> findEnterpriseName(HttpServletRequest request){
+		Map<String,Object> map = new HashMap<>();
+		try {
+			String keyword = request.getParameter("keyword");
+			Map<String, Object> hashMap = new HashMap<>();
+			hashMap.put("keyword", keyword);
+			PagerModel<MemberBasicInfo> member = memberService.findEnterpriseName(hashMap);
+			map.put("data", member);
+			map.put("msg", "成功");
+			map.put("code", "200");
+		} catch (Exception e) {
+			map.put("code", "500");
+			map.put("msg", "服务器异常");
+		}
+		return map;
+	}
+	
+	
 }

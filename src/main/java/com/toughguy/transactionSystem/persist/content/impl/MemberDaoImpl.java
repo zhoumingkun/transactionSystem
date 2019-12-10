@@ -176,5 +176,20 @@ implements IMemberDao{
 		return sqlSessionTemplate.selectOne(typeNameSpace + ".checkPwd", transactionMember);
 	}
 
+	@Override
+	public PagerModel<MemberBasicInfo> findEnterpriseName(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		if (params == null)
+			params = new HashMap<String, Object>();
+		params.put("offset", SystemContext.getOffset());
+		params.put("limit", SystemContext.getPageSize());
+		PagerModel<MemberBasicInfo> pm = new PagerModel<MemberBasicInfo>();
+		int total = getTotalFindKeyword(params);
+		List<MemberBasicInfo> entitys = sqlSessionTemplate.selectList(typeNameSpace + ".findEnterpriseName", params);
+		pm.setTotal(total);
+		pm.setData(entitys);
+		return pm;
+	}
+
 	
 }

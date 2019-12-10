@@ -39,13 +39,14 @@ public class WeixinController {
 	@RequestMapping(value = "/getOpenId")//此处填自己要用到的项目名。
 	//@RequiresPermissions("/wechat:getOpenId")
 	 public static Map<String,String> getOpenId(@RequestParam(value="code",required=true)String code) {//接收用户传过来的code，required=false表明如果这个参数没有传过来也可以。
-		  //接收从客户端获取的code
+		System.out.println("渣渣进来了"+code);
+		//接收从客户端获取的code
 		  //向微信后台发起请求获取openid的url
 		  String WX_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 	           //这三个参数就是之后要填上自己的值。
 	      //替换appid，appsecret，和code  wx018a842493263886  wx97731b21bc479485   8d6fe3ed2c65892c383c6b236537ca0f   d7e22e49c4861348410f33de06aec667
-	      String requestUrl = WX_URL.replace("APPID", "wx34e5351380c0d745").//填写自己的appid
-	        replace("SECRET", "63b7358c6e8a56e23e76a150cf6dc3db").replace("CODE", code).//填写自己的appsecret，
+	      String requestUrl = WX_URL.replace("APPID", "wx358485889535e0f9").//填写自己的appid
+	        replace("SECRET", "88ea414a51a673f173716508adf24252").replace("CODE", code).//填写自己的appsecret，
 	        replace("authorization_code", "authorization_code");
 		   
 	       //调用get方法发起get请求，并把返回值赋值给returnvalue

@@ -150,6 +150,12 @@ implements IMemberService{
 		return member == null;
 	}
 
+	@Override
+	public PagerModel<MemberBasicInfo> findEnterpriseName(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return dao.findEnterpriseName(params);
+	}
+
 
 
 	

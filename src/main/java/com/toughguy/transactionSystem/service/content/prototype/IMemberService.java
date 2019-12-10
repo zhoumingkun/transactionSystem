@@ -157,6 +157,13 @@ public interface IMemberService extends IGenericService<TransactionMember, Integ
 	 * @return
 	 */
 	public boolean checkPwd(TransactionMember transactionMember);
+
+	/**
+	 * 根据企业名称查询会员管理
+	 * @param hashMap
+	 * @return
+	 */
+	public PagerModel<MemberBasicInfo> findEnterpriseName(Map<String, Object> hashMap);
 	
 
 }

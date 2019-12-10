@@ -51,7 +51,13 @@
 		enterprise_reg_date=#{enterpriseRegDate},
 		enterprise_reg_money=#{enterpriseRegMoney},
 		enterprise_legal_person_name=#{enterpriseLegalPersonName},
-		enterprise_legal_person_card=#{enterpriseLegalPersonCard}
+		enterprise_legal_person_card=#{enterpriseLegalPersonCard},
+		<!-- 新增五个字段 -->
+		enterprise_property=#{enterprise_property},
+		net_asset=#{net_asset},
+		mailbox=#{mailbox},
+		duty=#{duty},
+		business_scope=#{business_scope}
 		where member_id=#{memberId};
 	</update>
 	
@@ -75,7 +81,13 @@
 		enterprise_reg_date is not null and
 		enterprise_reg_money is not null and
 		enterprise_legal_person_name is not null and
-		enterprise_legal_person_card is not null
+		enterprise_legal_person_card is not null and
+		<!-- 	新增五个字段-->
+		enterprise_property is not null and
+		net_asset is not null and
+		mailbox is not null and
+		duty is not null and
+		business_scope is not null
 	</select>
 	
 	
@@ -106,7 +118,13 @@
 		type.enterprise_type,
 		enterprise_status.enterprise_status,
 		area.enterprise_area,
-		address.address_name
+		address.address_name,
+		<!-- 新增五个 -->
+		enterprise.enterprise_property,
+		enterprise.net_asset,
+		enterprise.mailbox,
+		enterprise.duty,
+		enterprise.business_scope
 		from
 		transaction_enterprise enterprise
 		left join transaction_member member

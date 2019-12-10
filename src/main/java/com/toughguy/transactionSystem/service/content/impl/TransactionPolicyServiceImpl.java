@@ -36,5 +36,10 @@ public class TransactionPolicyServiceImpl
 		// TODO Auto-generated method stub
 		return policyDao.findLike(params);
 	}
+	@Override
+	public PagerModel<TransactionPolicy> findLikePolicyName(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return  policyDao.findLikePolicyName(params);
+	}
 
 }
