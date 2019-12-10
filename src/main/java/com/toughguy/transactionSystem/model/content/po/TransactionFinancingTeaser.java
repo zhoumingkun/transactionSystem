@@ -2,44 +2,62 @@ package com.toughguy.transactionSystem.model.content.po;
 
 import java.util.Date;
 
+import com.toughguy.transactionSystem.model.AbstractModel;
+
 /**
  * 融资信息实体类
- * @author liDongSheng
+ * @author ZMK
  *
  */
-public class TransactionFinancingTeaser {
+public class TransactionFinancingTeaser extends AbstractModel {
 	private int id;      				    //融资信息id
-	private String firm_name;				//企业名称
-	private String business_address;	    //经营地址
-	private String principal_name;			//负责人名字	
+	private String firmName;				//企业名称
+	private String businessAddress;	    //经营地址
+	private String principalName;			//负责人名字	
 	private String phoneNum;				//电话
-	private String manage_yearTime;			//经营年限
-	private String turnover_year;				//年营业额
-	private String predict_turnover;			//预计申请额度
+	private String manageYearTime;			//经营年限
+	private String turnoverYear;				//年营业额
+	private String predictTurnover;			//预计申请额度
 	private String deadline;					//期限
+	public TransactionFinancingTeaser() {
+		super();
+	}
+	public TransactionFinancingTeaser(int id, String firmName, String businessAddress, String principalName,
+			String phoneNum, String manageYearTime, String turnoverYear, String predictTurnover, String deadline) {
+		super();
+		this.id = id;
+		this.firmName = firmName;
+		this.businessAddress = businessAddress;
+		this.principalName = principalName;
+		this.phoneNum = phoneNum;
+		this.manageYearTime = manageYearTime;
+		this.turnoverYear = turnoverYear;
+		this.predictTurnover = predictTurnover;
+		this.deadline = deadline;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getFirm_name() {
-		return firm_name;
+	public String getFirmName() {
+		return firmName;
 	}
-	public void setFirm_name(String firm_name) {
-		this.firm_name = firm_name;
+	public void setFirmName(String firmName) {
+		this.firmName = firmName;
 	}
-	public String getBusiness_address() {
-		return business_address;
+	public String getBusinessAddress() {
+		return businessAddress;
 	}
-	public void setBusiness_address(String business_address) {
-		this.business_address = business_address;
+	public void setBusinessAddress(String businessAddress) {
+		this.businessAddress = businessAddress;
 	}
-	public String getPrincipal_name() {
-		return principal_name;
+	public String getPrincipalName() {
+		return principalName;
 	}
-	public void setPrincipal_name(String principal_name) {
-		this.principal_name = principal_name;
+	public void setPrincipalName(String principalName) {
+		this.principalName = principalName;
 	}
 	public String getPhoneNum() {
 		return phoneNum;
@@ -47,23 +65,23 @@ public class TransactionFinancingTeaser {
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
-	public String getManage_yearTime() {
-		return manage_yearTime;
+	public String getManageYearTime() {
+		return manageYearTime;
 	}
-	public void setManage_yearTime(String manage_yearTime) {
-		this.manage_yearTime = manage_yearTime;
+	public void setManageYearTime(String manageYearTime) {
+		this.manageYearTime = manageYearTime;
 	}
-	public String getTurnover_year() {
-		return turnover_year;
+	public String getTurnoverYear() {
+		return turnoverYear;
 	}
-	public void setTurnover_year(String turnover_year) {
-		this.turnover_year = turnover_year;
+	public void setTurnoverYear(String turnoverYear) {
+		this.turnoverYear = turnoverYear;
 	}
-	public String getPredict_turnover() {
-		return predict_turnover;
+	public String getPredictTurnover() {
+		return predictTurnover;
 	}
-	public void setPredict_turnover(String predict_turnover) {
-		this.predict_turnover = predict_turnover;
+	public void setPredictTurnover(String predictTurnover) {
+		this.predictTurnover = predictTurnover;
 	}
 	public String getDeadline() {
 		return deadline;
@@ -73,13 +91,10 @@ public class TransactionFinancingTeaser {
 	}
 	@Override
 	public String toString() {
-		return "TransactionFinancingTeaser [id=" + id + ", firm_name=" + firm_name + ", business_address="
-				+ business_address + ", principal_name=" + principal_name + ", phoneNum=" + phoneNum
-				+ ", manage_yearTime=" + manage_yearTime + ", turnover_year=" + turnover_year + ", predict_turnover="
-				+ predict_turnover + ", deadline=" + deadline + "]";
+		return "TransactionFinancingTeaser [id=" + id + ", firmName=" + firmName + ", businessAddress="
+				+ businessAddress + ", principalName=" + principalName + ", phoneNum=" + phoneNum + ", manageYearTime="
+				+ manageYearTime + ", turnoverYear=" + turnoverYear + ", predictTurnover=" + predictTurnover
+				+ ", deadline=" + deadline + "]";
 	}
-	
-	
-	
 	
 }	

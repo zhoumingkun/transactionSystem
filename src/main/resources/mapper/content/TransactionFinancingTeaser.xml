@@ -3,7 +3,8 @@
 <mapper namespace="com.toughguy.transactionSystem.model.content.po.TransactionFinancingTeaser">
 	<!-- 新增融资信息发布 -->
 	<insert id="save" parameterType="TransactionFinancingTeaser">
-		insert into transaction_financing_Teaser(firm_name,business_address,principal_name,phoneNum,manage_yearTime,turnover_year,predict_turnover,deadline) values(#{firm_name},#{business_address},#{principal_name},#{phoneNum},#{manage_yearTime},#{turnover_year},#{predict_turnover},now(),#{deadline}) 
+		insert into transaction_financing_Teaser(firm_name,business_address,principal_name,phoneNum,manage_yearTime,turnover_year,predict_turnover,deadline,createTime,updateTime) values
+											(#{firm_name},#{business_address},#{principal_name},#{phoneNum},#{manage_yearTime},#{turnover_year},#{predict_turnover},#{deadline},#{createTime},#{updateTime}) 
 	</insert>
 	
 	<!-- 获取全部的条目数 -->
@@ -18,9 +19,17 @@
 	</select>
 	
 	<!--  分页查找全部的融资信息 -->
- 	<select id="findPaginated" resultType="TransactionFinancingTeaser">
-		select * from transaction_financing_Teaser 
-		<include refid="paramsSQL"/>
+ 	<select id="findPaginated" parameterType="Map" resultType="TransactionFinancingTeaser">
+		select 
+		firm_name as firmName,
+		business_address as businessAddress,
+		principal_name as principalName,
+		phoneNum as phoneNum,
+		manage_yearTime as manageYearTime,
+		turnover_year as turnoverYear,
+		predict_turnover as predictTurnover,
+		deadline as deadline  
+		from transaction_financing_Teaser 
 		ORDER BY updateTime desc  limit #{offset}, #{limit}
 	</select> 
 	
