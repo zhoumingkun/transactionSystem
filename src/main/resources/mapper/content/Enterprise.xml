@@ -53,11 +53,11 @@
 		enterprise_legal_person_name=#{enterpriseLegalPersonName},
 		enterprise_legal_person_card=#{enterpriseLegalPersonCard},
 		<!-- 新增五个字段 -->
-		enterprise_property=#{enterprise_property},
-		net_asset=#{net_asset},
+		enterprise_property=#{enterpriseProperty},
+		net_asset=#{netAsset},
 		mailbox=#{mailbox},
 		duty=#{duty},
-		business_scope=#{business_scope}
+		business_scope=#{businessScope}
 		where member_id=#{memberId};
 	</update>
 	

@@ -27,11 +27,11 @@ public class TransactionEnterprise {
 	private String enterpriseLegalPersonCard;	// 法定代表人身份证
 	private int enterpriseAuditStatusId;		// 企业审核状态
 	
-	private String enterprise_property;	// 企业性质
-	private String net_asset;	// 净资产
+	private String enterpriseProperty;	// 企业性质
+	private String netAsset;	// 净资产
 	private String mailbox;	// 联系人邮箱
 	private String duty;	// 职务
-	private String business_scope;	//经营范围
+	private String businessScope;	//经营范围
 	
 	// 注册基本信息1
 	public TransactionEnterprise(int memberId, String enterpriseName, String enterpriseCardType,
@@ -83,11 +83,11 @@ public class TransactionEnterprise {
 		this.enterpriseRegMoney = enterpriseRegMoney;
 		this.enterpriseLegalPersonName = enterpriseLegalPersonName;
 		this.enterpriseLegalPersonCard = enterpriseLegalPersonCard;
-		this.enterprise_property = enterprise_property;
-		this.net_asset = enterpriseLegalPersonCard;
+		this.enterpriseProperty = enterpriseProperty;
+		this.netAsset = netAsset;
 		this.mailbox = mailbox;
 		this.duty = duty;
-		this.business_scope = business_scope;
+		this.businessScope = businessScope;
 	}
 
 	public TransactionEnterprise(int memberId) {
@@ -359,17 +359,17 @@ public class TransactionEnterprise {
 	
 
 
-	public String getEnterprise_property() {
-		return enterprise_property;
+	public String getEnterpriseProperty() {
+		return enterpriseProperty;
 	}
-	public void setEnterprise_property(String enterprise_property) {
-		this.enterprise_property = enterprise_property;
+	public void setEnterpriseProperty(String enterpriseProperty) {
+		this.enterpriseProperty = enterpriseProperty;
 	}
-	public String getNet_asset() {
-		return net_asset;
+	public String getNetAsset() {
+		return netAsset;
 	}
-	public void setNet_asset(String net_asset) {
-		this.net_asset = net_asset;
+	public void setNetAsset(String netAsset) {
+		this.netAsset = netAsset;
 	}
 	public String getMailbox() {
 		return mailbox;
@@ -383,11 +383,11 @@ public class TransactionEnterprise {
 	public void setDuty(String duty) {
 		this.duty = duty;
 	}
-	public String getBusiness_scope() {
-		return business_scope;
+	public String getBusinessScope() {
+		return businessScope;
 	}
-	public void setBusiness_scope(String business_scope) {
-		this.business_scope = business_scope;
+	public void setBusinessScope(String businessScope) {
+		this.businessScope = businessScope;
 	}
 	@Override
 	public int hashCode() {
@@ -515,9 +515,9 @@ public class TransactionEnterprise {
 				+ enterpriseRegAddress + ", enterpriseStatusId=" + enterpriseStatusId + ", enterpriseRegDate="
 				+ enterpriseRegDate + ", enterpriseRegMoney=" + enterpriseRegMoney + ", enterpriseLegalPersonName="
 				+ enterpriseLegalPersonName + ", enterpriseLegalPersonCard=" + enterpriseLegalPersonCard
-				+ ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + ", enterprise_property="
-				+ enterprise_property + ", net_asset=" + net_asset + ", mailbox=" + mailbox + ", duty=" + duty
-				+ ", business_scope=" + business_scope + "]";
+				+ ", enterpriseAuditStatusId=" + enterpriseAuditStatusId + ", enterpriseProperty="
+				+ enterpriseProperty + ", netAsset=" + netAsset + ", mailbox=" + mailbox + ", duty=" + duty
+				+ ", businessScope=" + businessScope + "]";
 	}
 
 
