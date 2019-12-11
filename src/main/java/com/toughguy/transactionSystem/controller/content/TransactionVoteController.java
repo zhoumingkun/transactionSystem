@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -184,10 +185,13 @@ public class TransactionVoteController {
 			
 			
 			int optionValue = json.getInteger("optionValue");
+			System.out.println(memberId+"-----"+voteContentId+"-------"+optionValue);
 			if(optionValue == 1) {
 				//sql语句+1
+				System.out.println("走了true");
 				contentService.updateVoteOptionOne(new TransactionVoteContent(voteContentId));
 			}else {
+				System.out.println("走了else");
 				contentService.updateVoteOptionTwo(new TransactionVoteContent(voteContentId));
 			}
 			countService.save(new TransactionVoteCount(memberId, voteContentId));
@@ -223,15 +227,23 @@ public class TransactionVoteController {
 			int memberId = json.getInteger("memberId");
 			int voteContentId = json.getInteger("voteContentId");
 			
-			boolean check = countService.check(new TransactionVoteCount(memberId, voteContentId));
-			if(check) {
+			String check = countService.check(new TransactionVoteCount(memberId, voteContentId));
+			if(check=="a" || check.equals("a") ) {
 				map.put("code", "200");
 				map.put("msg", "可以投票");
-			}else{
+			}
+			if(check=="b" || check.equals("b") ){
 				map.put("code", "404");
+				map.put("msg", "请在规定时间内投票");
+			}
+			if(check=="c" || check.equals("c") ){
+				map.put("code", "400");
 				map.put("msg", "已经投过票了");
 			}
-			
+			if(check=="d" || check.equals("d") ){
+				map.put("code", "403");
+				map.put("msg", "服务器异常");
+			}
 		}catch(Exception e) {
 			map.put("code", "500");
 			map.put("msg", "服务器异常");

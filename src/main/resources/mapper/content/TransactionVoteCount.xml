@@ -5,7 +5,7 @@
 		select * from transaction_vote_count 
 		where 
 		vote_content_id=#{voteContentId}
-	and member_id=#{memberId}
+		and member_id=#{memberId}
 	</select>
 	
 	<select id="findAll" resultType="TransactionVoteCount">
@@ -17,5 +17,10 @@
 		insert into transaction_vote_count(member_id,vote_content_id)
 		values(#{memberId},#{voteContentId});	
 	</insert>
+	
+	<select id="findTime" parameterType="TransactionVoteCount" resultType="TransactionVoteCount" >
+		select * from transaction_vote_content where vote_content_id=#{voteContentId} AND NOW() &gt;= start_time
+		AND NOW()&lt;=end_time 
+	</select>
 	
 </mapper>

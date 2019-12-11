@@ -10,6 +10,6 @@ public interface IVoteCountService extends IGenericService<TransactionVoteCount,
 	 * @param transactionVoteCount
 	 * @return
 	 */
-	public boolean check(TransactionVoteCount transactionVoteCount);
+	public String check(TransactionVoteCount transactionVoteCount);
 
 }
