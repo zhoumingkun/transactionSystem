@@ -1,5 +1,7 @@
 package com.toughguy.transactionSystem.service.content.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,10 @@ public class TransacrionStatisticsServiceImpl
 	@Override
 	public TransactionStatistics findStatistics(TransactionStatistics statistisc) {
 		return statisticsDao.findStatistics(statistisc);
+	}
+
+	@Override
+	public List<TransactionStatistics> findCopiesCount(TransactionStatistics statistisc) {
+		return statisticsDao.findCopiesCount(statistisc);
 	}
 }

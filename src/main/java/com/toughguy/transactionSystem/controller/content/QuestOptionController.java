@@ -455,7 +455,10 @@ public class QuestOptionController {
 				}
 				qo.setQuestCount(lists.size());
 				System.out.println(qo);
-				qo.setOptionCount(num);
+				TransactionStatistics statistisc = new TransactionStatistics();
+				statistisc.setCopiesId(qo.getCopiesId());
+				List<TransactionStatistics> statistiscs = statisticsService.findCopiesCount(statistisc);
+				qo.setOptionCount(statistiscs.size());
 				qos.add(qo);
 			}
 			map.put("date", qos);

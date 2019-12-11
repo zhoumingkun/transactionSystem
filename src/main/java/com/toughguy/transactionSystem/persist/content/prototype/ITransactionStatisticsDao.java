@@ -1,5 +1,7 @@
 package com.toughguy.transactionSystem.persist.content.prototype;
 
+import java.util.List;
+
 import com.toughguy.transactionSystem.model.content.po.TransactionStatistics;
 import com.toughguy.transactionSystem.persist.prototype.IGenericDao;
 
@@ -16,4 +18,6 @@ public interface ITransactionStatisticsDao  extends IGenericDao<TransactionStati
 	 * @return
 	 */
 	TransactionStatistics findStatistics(TransactionStatistics statistics);
+	
+	List<TransactionStatistics> findCopiesCount(TransactionStatistics statistics);
 }

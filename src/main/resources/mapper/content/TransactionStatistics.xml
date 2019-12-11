@@ -12,4 +12,8 @@
 		values(#{copiesId},#{memberId});	
 	</insert>
 	
+	<select id="findCount" parameterType="TransactionStatistics" resultType="TransactionStatistics">
+		select * from transaction_statistics
+		where copies_id=#{copiesId};
+	</select>
 </mapper>
