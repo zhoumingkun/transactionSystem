@@ -192,7 +192,7 @@ public class QuestOptionController {
 				return JSON.toJSONString(map).toString();
 			}
 			TransactionStatistics ss = statisticsService.findTime(statistics);
-			if(s==null) {
+			if(ss==null) {
 				map.put("code", "404");
 				map.put("msg", "请在规定时间内填写");
 				return JSON.toJSONString(map).toString();
