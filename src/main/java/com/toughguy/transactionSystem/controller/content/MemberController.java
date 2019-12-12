@@ -607,6 +607,7 @@ System.out.println("可以为空");
 			int enterpriseAreaId = json.getInteger("enterpriseTradeId");
 			int enterpriseAddressId = json.getInteger("enterpriseTradeId");
 			String enterpriseTaxpayer = json.getString("enterpriseTaxpayer");
+			
 //			Date enterpriseValidityDateStart = DateUtil.getDate(
 //					json.getString("enterpriseValidityDateStart"), "yyyy-MM-dd");
 			Date enterpriseValidityDateEnd = DateUtil.getDate(json.getString("enterpriseValidityDateEnd"),"yyyy-MM-dd");
@@ -615,14 +616,15 @@ System.out.println("可以为空");
 			int enterpriseStatusId = json.getInteger("enterpriseStatusId");
 			Date enterpriseRegDate = DateUtil.getDate(json.getString("enterpriseRegDate"),"yyyy-MM-dd");
 			Double enterpriseRegMoney = json.getDouble("enterpriseRegMoney");
+			System.out.println("走到这了1111111");
 			String enterpriseLegalPersonName = json.getString("enterpriseLegalPersonName");
 			String enterpriseLegalPersonCard = json.getString("enterpriseLegalPersonCard");
 			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
-			String enterprise_property = json.getString("enterprise_property");
-			String net_asset = json.getString("net_asset");
+			String enterpriseProperty = json.getString("enterpriseProperty");
+			String netAsset = json.getString("netAsset");
 			String mailbox = json.getString("mailbox");
 			String duty = json.getString("duty");
-			String business_scope = json.getString("business_scope");
+			String businessScope = json.getString("businessScope");
 			// 判断企业名唯一  是否为Null
 			boolean findName = enterpriseService.findEnterpriseName(new TransactionEnterprise(enterpriseName));
 			if(!findName) {
@@ -630,7 +632,7 @@ System.out.println("可以为空");
 				map.put("msg", "企业名已存在");
 				return map;
 			}
-			
+			System.out.println("走到这了");
 			enterpriseService.saveCompleteInfo(
 					new TransactionEnterprise(
 							memberId, enterpriseName,
@@ -643,10 +645,11 @@ System.out.println("可以为空");
 							enterpriseRegAddress, enterpriseStatusId,
 							enterpriseRegDate, enterpriseRegMoney, 
 							enterpriseLegalPersonName, enterpriseLegalPersonCard,
-							enterprise_property,net_asset,
-							mailbox,duty,business_scope)
+							enterpriseProperty,netAsset,
+							mailbox,duty,businessScope)
 							
 					);
+			System.out.println("走到这了2");
 			map.put("code", "200");
 			map.put("msg", "成功");
 		}catch(Exception e) {

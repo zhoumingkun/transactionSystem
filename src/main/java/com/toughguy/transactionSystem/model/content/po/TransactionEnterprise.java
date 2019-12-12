@@ -62,8 +62,8 @@ public class TransactionEnterprise {
 			/* Date enterpriseValidityDateStart, */
 			Date enterpriseValidityDateEnd, String enterpriseCertificationUnit, String enterpriseRegAddress,
 			int enterpriseStatusId, Date enterpriseRegDate, double enterpriseRegMoney, String enterpriseLegalPersonName,
-			String enterpriseLegalPersonCard,String enterprise_property,String net_asset,
-			String mailbox,String duty,String business_scope) {
+			String enterpriseLegalPersonCard,String enterpriseProperty,String netAsset,
+			String mailbox,String duty,String businessScope) {
 		super();
 		this.memberId = memberId;
 		this.enterpriseName = enterpriseName;
