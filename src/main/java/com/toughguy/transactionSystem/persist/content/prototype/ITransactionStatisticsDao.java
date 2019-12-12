@@ -20,4 +20,6 @@ public interface ITransactionStatisticsDao  extends IGenericDao<TransactionStati
 	TransactionStatistics findStatistics(TransactionStatistics statistics);
 	
 	List<TransactionStatistics> findCopiesCount(TransactionStatistics statistics);
+
+	TransactionStatistics findTime(TransactionStatistics statistisc);
 }

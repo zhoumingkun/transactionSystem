@@ -13,4 +13,11 @@ public interface ITransactionStatisticsService  extends IGenericService<Transact
 
 	TransactionStatistics findStatistics(TransactionStatistics statistisc);
 	List<TransactionStatistics> findCopiesCount(TransactionStatistics statistisc);
+	
+	/**
+	 * 查询该问卷是否在允许投票的时间区间内吗
+	 * @param statistisc
+	 * @return
+	 */
+	TransactionStatistics findTime(TransactionStatistics statistisc);
 }

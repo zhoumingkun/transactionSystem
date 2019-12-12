@@ -28,4 +28,10 @@ public class TransacrionStatisticsServiceImpl
 	public List<TransactionStatistics> findCopiesCount(TransactionStatistics statistisc) {
 		return statisticsDao.findCopiesCount(statistisc);
 	}
+
+	@Override
+	public TransactionStatistics findTime(TransactionStatistics statistisc) {
+		// TODO Auto-generated method stub
+		return statisticsDao.findTime(statistisc);
+	}
 }

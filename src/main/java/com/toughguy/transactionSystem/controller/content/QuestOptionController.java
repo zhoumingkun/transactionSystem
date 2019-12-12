@@ -191,6 +191,13 @@ public class QuestOptionController {
 				map.put("msg", "您以做过本次调查问卷");
 				return JSON.toJSONString(map).toString();
 			}
+			TransactionStatistics ss = statisticsService.findTime(statistics);
+			if(s==null) {
+				map.put("code", "404");
+				map.put("msg", "请在规定时间内填写");
+				return JSON.toJSONString(map).toString();
+			}
+			
 			
 			QuestOptionInfo t = new QuestOptionInfo();
 			t.setCopiesId(copiesId);

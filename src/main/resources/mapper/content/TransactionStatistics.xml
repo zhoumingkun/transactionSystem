@@ -16,4 +16,8 @@
 		select * from transaction_statistics
 		where copies_id=#{copiesId};
 	</select>
+	
+	<select id="findTime" resultType="TransactionStatistics">
+		select * from transaction_copies where copies_id=#{copiesId} and now() &gt;= copies_start_time and now() &lt;= copies_end_time
+	</select>
 </mapper>

@@ -24,4 +24,10 @@ public class TransactionStatisticsDaoImpl
 		return sqlSessionTemplate.selectList(typeNameSpace+".findCount",statistics );
 	}
 
+	@Override
+	public TransactionStatistics findTime(TransactionStatistics statistisc) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne(typeNameSpace+".findTime",statistisc );
+	}
+
 }
