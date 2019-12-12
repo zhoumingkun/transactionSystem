@@ -4,7 +4,7 @@
 	<!-- 新增融资信息发布 -->
 	<insert id="save" parameterType="TransactionFinancingTeaser">
 		insert into transaction_financing_Teaser(firm_name,business_address,principal_name,phoneNum,manage_yearTime,turnover_year,predict_turnover,deadline,createTime,updateTime) values
-											(#{firm_name},#{business_address},#{principal_name},#{phoneNum},#{manage_yearTime},#{turnover_year},#{predict_turnover},#{deadline},#{createTime},#{updateTime}) 
+											(#{firmName},#{businessAddress},#{principalName},#{phoneNum},#{manageYearTime},#{turnoverYear},#{predictTurnover},#{deadline},#{createTime},#{updateTime}) 
 	</insert>
 	
 	<!-- 获取全部的条目数 -->
