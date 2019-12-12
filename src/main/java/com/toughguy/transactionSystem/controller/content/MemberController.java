@@ -536,10 +536,10 @@ System.out.println("可以为空");
 			data.put("memberCard", memberMsg.getMemberCard());
 			data.put("memberTel", memberMsg.getMemberTel());
 			
-			if(enterpriseMsg.getEnterpriseName()==null) {
-				data.put("enterpriseName", "");
+			if(enterpriseMsg==null) {
+				data.put("enterprise", "");
 			}else {
-				data.put("enterpriseName",enterpriseMsg.getEnterpriseName());
+				data.put("enterprise",enterpriseMsg);
 			}
 			map.put("code", "200");
 			map.put("msg", "成功");
@@ -616,7 +616,6 @@ System.out.println("可以为空");
 			int enterpriseStatusId = json.getInteger("enterpriseStatusId");
 			Date enterpriseRegDate = DateUtil.getDate(json.getString("enterpriseRegDate"),"yyyy-MM-dd");
 			Double enterpriseRegMoney = json.getDouble("enterpriseRegMoney");
-			System.out.println("走到这了1111111");
 			String enterpriseLegalPersonName = json.getString("enterpriseLegalPersonName");
 			String enterpriseLegalPersonCard = json.getString("enterpriseLegalPersonCard");
 			int enterpriseTypeId = json.getInteger("enterpriseTypeId");
@@ -632,7 +631,6 @@ System.out.println("可以为空");
 				map.put("msg", "企业名已存在");
 				return map;
 			}
-			System.out.println("走到这了");
 			enterpriseService.saveCompleteInfo(
 					new TransactionEnterprise(
 							memberId, enterpriseName,
@@ -649,7 +647,6 @@ System.out.println("可以为空");
 							mailbox,duty,businessScope)
 							
 					);
-			System.out.println("走到这了2");
 			map.put("code", "200");
 			map.put("msg", "成功");
 		}catch(Exception e) {
