@@ -1,5 +1,6 @@
 package com.toughguy.transactionSystem.controller.content;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.druid.pool.vendor.SybaseExceptionSorter;
 import com.alibaba.fastjson.JSONObject;
 import com.toughguy.transactionSystem.model.content.po.TransactionEnterprise;
 import com.toughguy.transactionSystem.model.content.po.TransactionMember;
@@ -530,7 +532,6 @@ System.out.println("可以为空");
 			
 			TransactionMember memberMsg = memberService.find(memberId);
 			TransactionEnterprise enterpriseMsg = enterpriseService.find(memberId);
-			
 			Map<String,Object> data = new HashMap<>();
 			data.put("memberName", memberMsg.getMemberName());
 			data.put("memberCard", memberMsg.getMemberCard());
@@ -541,6 +542,11 @@ System.out.println("可以为空");
 			}else {
 				data.put("enterprise",enterpriseMsg);
 			}
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			data.put("enterpriseRegDate",sf.format(enterpriseMsg.getEnterpriseRegDate()));
+			data.put("enterpriseValidityDateEnd",sf.format(enterpriseMsg.getEnterpriseValidityDateEnd()));
+			data.put("enterpriseValidityDateStart",sf.format(enterpriseMsg.getEnterpriseValidityDateStart()));
+			
 			map.put("code", "200");
 			map.put("msg", "成功");
 			map.put("data", data);
