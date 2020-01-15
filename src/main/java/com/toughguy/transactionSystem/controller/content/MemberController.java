@@ -610,8 +610,8 @@ System.out.println("可以为空");
 			String enterpriseCardType = json.getString("enterpriseCardType");
 			String enterpriseCardId = json.getString("enterpriseCardId");
 			int enterpriseTradeId = json.getInteger("enterpriseTradeId");
-			int enterpriseAreaId = json.getInteger("enterpriseTradeId");
-			int enterpriseAddressId = json.getInteger("enterpriseTradeId");
+			int enterpriseAreaId = json.getInteger("enterpriseAreaId");
+			int enterpriseAddressId = json.getInteger("enterpriseAddressId");
 			String enterpriseTaxpayer = json.getString("enterpriseTaxpayer");
 			
 //			Date enterpriseValidityDateStart = DateUtil.getDate(
